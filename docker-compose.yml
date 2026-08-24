@@ -20,8 +20,20 @@ services:
     logging:
       driver: json-file
       options: { max-size: "10m", max-file: "5" }
-    networks: [shruti-astro]
+    networks:
+      shruti-astro:
+      # A shared network so the website's Caddy can reach this daemon by name.
+      # Publishing on 127.0.0.1 is not enough: a container arriving via the
+      # bridge gateway is not the host loopback and gets refused.
+      #
+      # This is still two separate programs talking over plain HTTP — sharing a
+      # docker network is not sharing a process, so the AGPL boundary in ADR
+      # 0001 is unaffected.
+      shruti-interop:
+        aliases: [shruti-astro]
 
 networks:
   shruti-astro:
     name: shruti-astro
+  shruti-interop:
+    external: true

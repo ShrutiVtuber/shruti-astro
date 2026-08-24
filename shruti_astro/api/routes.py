@@ -422,6 +422,7 @@ async def hindu_calendar_endpoint(
     when: str | None = Query(None, description="ISO-8601; defaults to now"),
     reckoning: str = Query("amanta", description="amanta (southern) | purnimanta (northern)"),
     ayanamsa: str = Query("lahiri"),
+    authority: str = Query("drik", description="drik | surya_siddhanta | both"),
 ) -> dict:
     """
     The lunar month, pakṣa and tithi.
@@ -432,7 +433,10 @@ async def hindu_calendar_endpoint(
     are kept.
     """
     from shruti_astro.core.hindu_calendar import RECKONINGS, hindu_date
+    from shruti_astro.core.surya_siddhanta import AUTHORITIES
 
+    if authority not in (*AUTHORITIES, "both"):
+        raise HTTPException(400, f"authority must be one of {[*AUTHORITIES, 'both']}")
     if reckoning not in RECKONINGS:
         raise HTTPException(400, f"reckoning must be one of {list(RECKONINGS)}")
     if ayanamsa not in AYANAMSAS:
@@ -443,15 +447,61 @@ async def hindu_calendar_endpoint(
     except ValueError as exc:
         raise HTTPException(400, str(exc))
 
-    return {
+    def render(x) -> dict:
+        return {
+            "month": {"name": x.month, "index": x.month_index,
+                      "adhika": x.is_adhika, "kshaya": x.is_kshaya},
+            "paksha": x.paksha,
+            "tithi": {"index": x.tithi_index, "name": x.tithi_name},
+            "lunation": {"start": x.month_start.isoformat(),
+                         "end": x.month_end.isoformat()},
+        }
+
+    out: dict = {
         "reckoning": d.reckoning,
-        "month": {"name": d.month, "index": d.month_index,
-                  "adhika": d.is_adhika, "kshaya": d.is_kshaya},
-        "paksha": d.paksha,
-        "tithi": {"index": d.tithi_index, "name": d.tithi_name},
+        "authority": authority,
         "years": d.years,
-        "lunation": {"start": d.month_start.isoformat(), "end": d.month_end.isoformat()},
+        **render(d),
     }
+
+    if authority in ("surya_siddhanta", "both"):
+        from shruti_astro.core.hindu_calendar import hindu_date_ss
+
+        ss = hindu_date_ss(_moment(when), reckoning)
+        if authority == "surya_siddhanta":
+            out.update(render(ss))
+        else:
+            # Both asked for. Present them side by side and say plainly whether
+            # they agree — a disagreement is a real state, not an error.
+            agree = (d.month == ss.month and d.paksha == ss.paksha
+                     and d.tithi_index == ss.tithi_index)
+            out["byAuthority"] = {
+                "drik": {**render(d), **AUTHORITIES["drik"]},
+                "surya_siddhanta": {**render(ss), **AUTHORITIES["surya_siddhanta"]},
+            }
+            out["authoritiesAgree"] = agree
+            if not agree:
+                out["disagreementNote"] = (
+                    "The two authorities name this day differently. Both are "
+                    "given. Which one governs is decided by the people you keep "
+                    "the festival with, not by this software."
+                )
+
+    return out
+
+
+@router.get("/authorities")
+async def list_authorities() -> dict:
+    """
+    The two computational authorities, described and **unranked**.
+
+    Dṛk gaṇita agrees with observation. Sūrya Siddhānta agrees with the
+    tradition's own tables. Where they disagree about a festival date, both are
+    shown — the software does not get to decide which almanac a household keeps.
+    """
+    from shruti_astro.core.surya_siddhanta import AUTHORITIES
+
+    return {"authorities": AUTHORITIES}
 
 
 @router.get("/reckonings")

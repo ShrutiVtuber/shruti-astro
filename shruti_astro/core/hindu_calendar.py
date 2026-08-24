@@ -180,3 +180,77 @@ def _sun_moon(jd: float) -> tuple[float, float]:
         swe.calc_ut(jd, swe.SUN, f)[0][0] % 360.0,
         swe.calc_ut(jd, swe.MOON, f)[0][0] % 360.0,
     )
+
+
+# ── the classical authority ─────────────────────────────────────────────────
+
+def hindu_date_ss(moment: datetime, reckoning: str = "amanta") -> HinduDate:
+    """
+    The same calendar, computed from Sūrya Siddhānta's own tables.
+
+    Not the modern engine with different constants — a separate theory, run in
+    its own terms. The two will sometimes name different days, and that is the
+    point of offering both.
+    """
+    from shruti_astro.core.surya_siddhanta import positions as ss_positions
+
+    if reckoning not in RECKONINGS:
+        raise ValueError(f"reckoning must be one of {RECKONINGS}")
+
+    jd = _julday(moment)
+
+    def elong(j: float) -> float:
+        p = ss_positions(j)
+        return (p.moon - p.sun) % 360.0
+
+    def find_new_moon(start: float, forward: bool) -> float:
+        step = 0.25 if forward else -0.25
+        j = start
+        prev = ((elong(j) + 180.0) % 360.0) - 180.0
+        for _ in range(200):
+            j += step
+            cur = ((elong(j) + 180.0) % 360.0) - 180.0
+            if (prev < 0) != (cur < 0) and abs(cur - prev) < 180.0:
+                lo, hi = (j - step, j) if forward else (j, j - step)
+                for _ in range(60):
+                    mid = (lo + hi) / 2
+                    a = ((elong(lo) + 180.0) % 360.0) - 180.0
+                    b = ((elong(mid) + 180.0) % 360.0) - 180.0
+                    if (a < 0) != (b < 0):
+                        hi = mid
+                    else:
+                        lo = mid
+                return (lo + hi) / 2
+            prev = cur
+        raise ValueError("could not bracket the Siddhāntic new moon")
+
+    prev_new = find_new_moon(jd, forward=False)
+    next_new = find_new_moon(jd, forward=True)
+
+    # Sūrya Siddhānta longitudes are already sidereal in its own frame, so the
+    # rāśi comes straight off the Sun without an ayanāṁśa.
+    rashi_start = int(ss_positions(prev_new).sun // 30)
+    rashi_end = int(ss_positions(next_new - 1e-4).sun // 30)
+    month_index = (rashi_start + 1) % 12
+    is_adhika = rashi_start == rashi_end
+    is_kshaya = ((rashi_end - rashi_start) % 12) >= 2
+
+    e = elong(jd)
+    tithi_idx = int(e // 12.0)
+    paksha = "Śukla" if tithi_idx < 15 else "Kṛṣṇa"
+    if reckoning == "purnimanta" and paksha == "Kṛṣṇa":
+        month_index = (month_index + 1) % 12
+
+    from shruti_astro.core.panchanga import tithi as tithi_of
+    p = ss_positions(jd)
+    t = tithi_of(p.sun, p.moon)
+
+    greg_year = moment.astimezone(timezone.utc).year
+    return HinduDate(
+        month=MONTHS[month_index], month_index=month_index + 1,
+        is_adhika=is_adhika, is_kshaya=is_kshaya,
+        paksha=paksha, tithi_index=t.index, tithi_name=t.name,
+        reckoning=reckoning,
+        years={k: greg_year + v for k, v in ERA_OFFSETS.items()},
+        month_start=_from_julday(prev_new), month_end=_from_julday(next_new),
+    )

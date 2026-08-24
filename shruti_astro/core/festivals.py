@@ -564,6 +564,89 @@ def resolve_recurring(
     return out
 
 
+def _sun_ingress(gregorian_year: int, degrees: float, ayanamsa: str = "lahiri",
+                 after: datetime | None = None) -> datetime | None:
+    """The instant the Sun reaches `degrees` of **sidereal** longitude."""
+    lo = after or datetime(gregorian_year, 1, 1, tzinfo=timezone.utc)
+    hi = datetime(gregorian_year + 1, 1, 1, tzinfo=timezone.utc)
+
+    def gap(m: datetime) -> float:
+        return ((longitudes(m, ayanamsa).sun_sidereal - degrees + 180.0) % 360.0) - 180.0
+
+    step = timedelta(days=1)
+    m = lo
+    prev = gap(m)
+    while m < hi:
+        nxt = m + step
+        cur = gap(nxt)
+        if prev < 0 <= cur:
+            a, b = m, nxt
+            for _ in range(50):
+                mid = a + (b - a) / 2
+                if gap(a) < 0 <= gap(mid):
+                    b = mid
+                else:
+                    a = mid
+            return a + (b - a) / 2
+        prev = cur
+        m = nxt
+    return None
+
+
+def resolve_solar(
+    anchor: dict, gregorian_year: int, lat: float = UJJAIN[0], lon: float = UJJAIN[1]
+) -> Resolved | list[Resolved]:
+    """
+    A **saṅkrānti**: the Sun's ingress into a sidereal degree.
+
+    Makara Saṅkrānti — Pongal in Tamil Nadu, Lohri in the Punjab, Magh Bihu in
+    Assam — is one of the largest observances in India and was returning
+    "unsupported anchor kind" until this existed, along with the twelve monthly
+    saṅkrāntis and the Ambubachi Mela.
+
+    **The frame is sidereal and that is not a detail.** Read tropically, 270°
+    is the December solstice; read sidereally it is 14 January. The corpus
+    states the frame on every solar anchor for exactly this reason.
+
+    Which civil day owns the ingress has its own regional nirṇaya — the
+    puṇyakāla rules that move the observance to the following day when the
+    Sun crosses after sunset, and which differ between Tamil, Bengali and
+    northern practice. Those are not modelled here, and the note says so
+    rather than implying a ruling.
+    """
+    degrees = float(anchor.get("degrees", 0.0))
+    every = anchor.get("recurrence") == "every 30 degrees"
+    note = ("the civil day is taken from the ingress instant; regional "
+            "puṇyakāla rules that can defer it to the next day are not applied")
+
+    def one(deg: float, at: datetime) -> Resolved:
+        local = at + timedelta(hours=lon / 15.0)
+        return Resolved(
+            key=anchor.get("key", ""), name=anchor.get("name", ""),
+            date=local.date(), anchor=anchor, note=note,
+        )
+
+    if not every:
+        at = _sun_ingress(gregorian_year, degrees)
+        if at is None:
+            return Resolved(
+                key=anchor.get("key", ""), name=anchor.get("name", ""), date=None,
+                anchor=anchor, skipped=True,
+                skipped_reason=(f"the Sun did not reach {degrees}° sidereal in "
+                                f"{gregorian_year}"),
+            )
+        return one(degrees, at)
+
+    out: list[Resolved] = []
+    for k in range(12):
+        deg = (degrees + 30.0 * k) % 360.0
+        at = _sun_ingress(gregorian_year, deg)
+        if at is not None:
+            out.append(one(deg, at))
+    out.sort(key=lambda r: r.date)
+    return out
+
+
 def resolve(anchor: dict | None, gregorian_year: int, **kw):
     """
     An annual anchor yields one Resolved; a recurring one yields a list.
@@ -606,6 +689,9 @@ def resolve(anchor: dict | None, gregorian_year: int, **kw):
         if anchor.get("recurrence") == "monthly" or "month" not in anchor:
             return resolve_crescent_monthly(anchor, gregorian_year, **attic_kw)
         return resolve_crescent(anchor, gregorian_year, **attic_kw)
+    if kind == "solar":
+        solar_kw = {k: v for k, v in kw.items() if k in ("lat", "lon")}
+        return resolve_solar(anchor, gregorian_year, **solar_kw)
     if kind == "relative":
         # Anchored to another festival rather than to the sky. Resolving it
         # needs that festival's date, which the caller has and this function

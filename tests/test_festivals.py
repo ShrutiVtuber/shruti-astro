@@ -532,3 +532,56 @@ def test_nothing_is_lost_to_ksaya():
         if "not current on any day" in (u.get("reason") or "")
     ]
     assert lost == []
+
+
+# --- saṅkrānti: the solar anchor kind ---------------------------------------
+
+
+def test_makara_sankranti_resolves_at_all():
+    """
+    kind:"solar" was never implemented, so the anchor fell through to
+    "unsupported anchor kind" and Makara Saṅkrānti — Pongal, Lohri, Magh Bihu —
+    was simply absent from the calendar.
+    """
+    from shruti_astro.core.festival_registry import year
+
+    f = [x for x in year("hindu", 2026)["festivals"]
+         if x["key"] == "makara-sankranti"]
+    assert len(f) == 1
+    assert f[0]["date"] == "2026-01-14"
+
+
+def test_the_solar_frame_is_sidereal_not_tropical():
+    """Read tropically, 270° is the December solstice — a month out."""
+    from shruti_astro.core.festivals import _sun_ingress
+
+    at = _sun_ingress(2026, 270.0)
+    assert at is not None and at.month == 1, "270° sidereal is mid-January"
+
+
+def test_every_thirty_degrees_means_twelve_sankrantis():
+    from shruti_astro.core.festival_registry import year
+
+    dates = [x["date"] for x in year("hindu", 2026)["festivals"]
+             if x["key"] == "sankranti"]
+    assert len(dates) == 12, "one ingress per sidereal sign"
+    assert dates == sorted(dates)
+
+
+def test_recurrence_survives_the_anchor_cleaner():
+    """
+    It was being stripped as provenance. It is not provenance: it is what tells
+    the solar branch that an anchor means twelve occurrences and not one.
+    """
+    from shruti_astro.core.festival_registry import _clean
+
+    assert _clean({"kind": "solar", "recurrence": "every 30 degrees"}) == {
+        "kind": "solar", "recurrence": "every 30 degrees",
+    }
+
+
+def test_only_the_container_is_undated_now():
+    from shruti_astro.core.festival_registry import year
+
+    undated = year("hindu", 2026)["undated"]
+    assert [u["key"] for u in undated] == ["dipavali"]

@@ -25,9 +25,13 @@ _PROVENANCE_KEYS = (
     "dayCertainty", "dayBeginsAtSunset", "dayBasis", "dayCandidates",
     "dayReconstructions", "spanReconstructions", "elaboratedYear",
     "sourceCount", "dayRuleReason", "monthSpellingNormalised",
-    "dayRuleUnmodelled", "hollowMonthRuleContested", "decad", "recurrence",
+    "dayRuleUnmodelled", "hollowMonthRuleContested", "decad",
     "note", "monthNote",
 )
+# NOT provenance: `recurrence` is semantics. It tells the solar branch that an
+# anchor means all twelve saṅkrāntis rather than one, and the crescent branch
+# reads it too — that one only worked because those anchors happen to carry no
+# `month` key to fall back on. Stripping it turned twelve occurrences into one.
 
 
 @dataclass

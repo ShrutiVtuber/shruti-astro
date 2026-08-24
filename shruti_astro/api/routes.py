@@ -490,6 +490,38 @@ async def hindu_calendar_endpoint(
     return out
 
 
+@router.get("/hindu-year")
+async def hindu_year_endpoint(
+    year: int = Query(..., ge=1, le=9999),
+    reckoning: str = Query("amanta"),
+    ayanamsa: str = Query("lahiri"),
+    authority: str = Query("drik", description="drik | surya_siddhanta"),
+) -> dict:
+    """
+    The year as a table of lunations.
+
+    Thirteen months in an intercalary year, not twelve — the table is walked new
+    moon to new moon rather than assumed. An **adhika māsa** is marked and
+    flagged `carriesFestivals: false`: observances wait for the *nija* month
+    that follows. Marking the repeat but letting festivals fall inside it puts
+    every observance a month early, which is worse than not marking it.
+    """
+    from shruti_astro.core.hindu_calendar import RECKONINGS, hindu_year
+    from shruti_astro.core.surya_siddhanta import AUTHORITIES
+
+    if reckoning not in RECKONINGS:
+        raise HTTPException(400, f"reckoning must be one of {list(RECKONINGS)}")
+    if authority not in AUTHORITIES:
+        raise HTTPException(400, f"authority must be one of {list(AUTHORITIES)}")
+    if ayanamsa not in AYANAMSAS:
+        raise HTTPException(400, f"unknown ayanamsa; choose from {sorted(AYANAMSAS)}")
+
+    try:
+        return hindu_year(year, reckoning, ayanamsa, authority)
+    except ValueError as exc:
+        raise HTTPException(400, str(exc))
+
+
 @router.get("/authorities")
 async def list_authorities() -> dict:
     """

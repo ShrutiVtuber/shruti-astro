@@ -254,3 +254,118 @@ def hindu_date_ss(moment: datetime, reckoning: str = "amanta") -> HinduDate:
         years={k: greg_year + v for k, v in ERA_OFFSETS.items()},
         month_start=_from_julday(prev_new), month_end=_from_julday(next_new),
     )
+
+
+# ── the year as a table of months ───────────────────────────────────────────
+
+def hindu_year(
+    gregorian_year: int,
+    reckoning: str = "amanta",
+    ayanamsa: str = "lahiri",
+    authority: str = "drik",
+) -> dict:
+    """
+    Every lunation of a Gregorian year, named, with its span.
+
+    Walks new moon to new moon rather than assuming twelve months, because a
+    year with an **adhika māsa** has thirteen and one of them repeats a name.
+
+    The intercalation rule carries a consequence the table must show: an adhika
+    month **holds no festivals**. They wait for the *nija* (true) month that
+    follows. Software that marks the repeat but lets festivals fall in it puts
+    every observance a month early, which is worse than not marking it at all.
+    """
+    if reckoning not in RECKONINGS:
+        raise ValueError(f"reckoning must be one of {RECKONINGS}")
+
+    use_ss = authority == "surya_siddhanta"
+    if use_ss:
+        from shruti_astro.core.surya_siddhanta import positions as ss_positions
+
+        def elong_at(j: float) -> float:
+            p = ss_positions(j)
+            return (p.moon - p.sun) % 360.0
+
+        def sun_rashi_at(j: float) -> int:
+            return int(ss_positions(j).sun // 30)
+    else:
+        def elong_at(j: float) -> float:
+            return _elongation(j)
+
+        def sun_rashi_at(j: float) -> int:
+            return _sun_rashi(j, ayanamsa)
+
+    def next_new_moon(after: float) -> float:
+        step = 0.25
+        j = after + 1.0            # step off the current root
+        prev = ((elong_at(j) + 180.0) % 360.0) - 180.0
+        for _ in range(200):
+            j += step
+            cur = ((elong_at(j) + 180.0) % 360.0) - 180.0
+            if (prev < 0) != (cur < 0) and abs(cur - prev) < 180.0:
+                lo, hi = j - step, j
+                for _ in range(60):
+                    mid = (lo + hi) / 2
+                    a = ((elong_at(lo) + 180.0) % 360.0) - 180.0
+                    b = ((elong_at(mid) + 180.0) % 360.0) - 180.0
+                    if (a < 0) != (b < 0):
+                        hi = mid
+                    else:
+                        lo = mid
+                return (lo + hi) / 2
+            prev = cur
+        raise ValueError("could not bracket the next new moon")
+
+    _ensure_init()
+    start = _julday(datetime(gregorian_year, 1, 1, tzinfo=timezone.utc)) - 40
+    end = _julday(datetime(gregorian_year, 12, 31, 23, 59, tzinfo=timezone.utc))
+
+    # Back up to a new moon before the window opens.
+    cursor = next_new_moon(start - 32)
+    months: list[dict] = []
+    seen_names: dict[str, int] = {}
+
+    while cursor < end:
+        nxt = next_new_moon(cursor)
+        rashi_start = sun_rashi_at(cursor)
+        rashi_end = sun_rashi_at(nxt - 1e-4)
+        is_adhika = rashi_start == rashi_end
+        spanned = (rashi_end - rashi_start) % 12
+        is_kshaya = spanned >= 2
+
+        index = (rashi_start + 1) % 12
+        name = MONTHS[index]
+        seen_names[name] = seen_names.get(name, 0) + 1
+
+        months.append({
+            "name": name,
+            "index": index + 1,
+            "adhika": is_adhika,
+            "kshaya": is_kshaya,
+            # The rule that makes intercalation matter rather than decorate.
+            "carriesFestivals": not is_adhika,
+            "displayName": f"Adhika {name}" if is_adhika else name,
+            "start": _from_julday(cursor).isoformat(),
+            "end": _from_julday(nxt).isoformat(),
+            "days": round(nxt - cursor, 4),
+        })
+        cursor = nxt
+
+    # Trim to lunations that actually touch the requested year.
+    lo = datetime(gregorian_year, 1, 1, tzinfo=timezone.utc).isoformat()
+    hi = datetime(gregorian_year, 12, 31, 23, 59, tzinfo=timezone.utc).isoformat()
+    months = [m for m in months if m["end"] > lo and m["start"] < hi]
+
+    from shruti_astro.core.samvatsara import eras
+
+    mid_year = _julday(datetime(gregorian_year, 6, 15, tzinfo=timezone.utc))
+    return {
+        "gregorianYear": gregorian_year,
+        "reckoning": reckoning,
+        "authority": authority,
+        "eras": eras(gregorian_year, sun_rashi_at(mid_year)),
+        "hasAdhikaMasa": any(m["adhika"] for m in months),
+        "hasKshayaMasa": any(m["kshaya"] for m in months),
+        "monthCount": len(months),
+        "months": months,
+    }

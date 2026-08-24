@@ -117,6 +117,14 @@ async def planetary_hours(
 async def panchanga_endpoint(
     when: str | None = Query(None, description="ISO-8601; defaults to now"),
     ayanamsa: str = Query("lahiri"),
+    convention: str = Query(
+        "hindu",
+        description=(
+            "hindu (centre of disc, no refraction) | visible_disc "
+            "(upper limb, with refraction). The vāra begins at sunrise, so "
+            "this moves the whole day rather than one number."
+        ),
+    ),
     lat: float | None = Query(None, ge=-90, le=90),
     lon: float | None = Query(None, ge=-180, le=180),
     at_sunrise: bool = Query(
@@ -135,7 +143,7 @@ async def panchanga_endpoint(
     prescribed**.
 
     **`at_sunrise=true` reproduces a printed Indian almanac**, which names the
-    day by the tithi prevailing at sunrise under the Hindu rise convention.
+    day by the tithi prevailing at sunrise under the selected rise convention.
 
     Cannot-compute: where the Sun does not rise, the day has no beginning. The
     vāra and the windows are then undefined — but the four Moon-and-Sun limbs
@@ -150,6 +158,8 @@ async def panchanga_endpoint(
     if ayanamsa not in AYANAMSAS:
         raise HTTPException(400, f"unknown ayanamsa; choose from {sorted(AYANAMSAS)}")
 
+    if convention not in RISE_CONVENTIONS:
+        raise HTTPException(400, f"unknown convention; choose from {sorted(RISE_CONVENTIONS)}")
     moment = _moment(when)
     evaluated_at = "instant"
     sunrise = sunset = moonrise = moonset = None
@@ -159,12 +169,12 @@ async def panchanga_endpoint(
 
     if lat is not None and lon is not None:
         try:
-            sunrise, sunset, _ = sun_events(moment, lat, lon, "hindu")
+            sunrise, sunset, _ = sun_events(moment, lat, lon, convention)
             # The Hindu day runs sunrise to sunrise: before dawn still belongs
             # to yesterday's vāra, and takes yesterday's windows.
             if moment < sunrise:
                 sunrise, sunset, _ = sun_events(
-                    moment - timedelta(days=1), lat, lon, "hindu"
+                    moment - timedelta(days=1), lat, lon, convention
                 )
             weekday = sunrise.weekday()
             name, ruler = mu.VARA[weekday]
@@ -200,6 +210,7 @@ async def panchanga_endpoint(
     return {
         "at": moment.isoformat(),
         "evaluatedAt": evaluated_at,
+        "convention": convention,
         "sunrise": sunrise.isoformat() if sunrise else None,
         "ayanamsa": {"name": L.ayanamsa_name, "degrees": round(L.ayanamsa, 6),
                      "note": "a different ayanāṁśa can move a nakṣatra boundary"},

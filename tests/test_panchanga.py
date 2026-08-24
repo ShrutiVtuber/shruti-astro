@@ -70,3 +70,30 @@ def test_known_sky_2026_08_24():
     assert nakshatra(moon_s).name == "Pūrva Āṣāḍhā"
     assert yoga(sun_s, moon_s).name == "Āyuṣmān"
     assert karana(sun_t, moon_t).name == "Bava"
+
+
+def test_the_sunrise_convention_moves_the_vara():
+    """
+    The vāra runs sunrise to sunrise, so the sunrise rule moves the whole day
+    rather than one number — which is why the design puts this control at the
+    top of the pañcāṅga page. The endpoint hardcoded "hindu" and took no
+    parameter, so the control would have been a label swap.
+    """
+    from fastapi.testclient import TestClient
+
+    from shruti_astro.api.app import app
+
+    client = TestClient(app)
+    a = client.get("/panchanga", params={"lat": 37.98, "lon": 23.73, "convention": "hindu"}).json()
+    b = client.get("/panchanga", params={"lat": 37.98, "lon": 23.73, "convention": "visible_disc"}).json()
+    assert a["convention"] == "hindu" and b["convention"] == "visible_disc"
+    assert a["sunrise"] != b["sunrise"], "the two conventions must give different sunrises"
+
+
+def test_an_unknown_panchanga_convention_is_refused():
+    from fastapi.testclient import TestClient
+
+    from shruti_astro.api.app import app
+
+    r = TestClient(app).get("/panchanga", params={"lat": 37.98, "lon": 23.73, "convention": "nope"})
+    assert r.status_code == 400

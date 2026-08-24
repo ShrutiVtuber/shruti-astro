@@ -46,6 +46,19 @@ DAY_RULES = {
 }
 
 
+# A recurring anchor names no month: it happens every lunation. Ekādaśī twice a
+# month, Pradoṣa twice, Saṅkaṣṭī Caturthī once. These matter more for daily
+# practice than the annual festivals do, and there are more of them in a year
+# than of everything else combined.
+RECURRING = "*"
+
+# A few observances exist ONLY in an intercalary month. Padminī and Paramā
+# Ekādaśī are the pair: an adhika māsa has its own two Ekādaśīs, and they occur
+# in no ordinary year at all. This is the exact opposite of the rule that
+# festivals wait for the nija month — these belong to the repeat itself.
+ADHIKA_ONLY = "adhika"
+
+
 @dataclass
 class Resolved:
     key: str
@@ -188,9 +201,83 @@ def resolve_crescent(anchor: dict, gregorian_year: int) -> Resolved:
     )
 
 
-def resolve(anchor: dict, gregorian_year: int, **kw) -> Resolved:
+def resolve_recurring(
+    anchor: dict, gregorian_year: int, lat: float = UJJAIN[0], lon: float = UJJAIN[1]
+) -> list[Resolved]:
+    """
+    Every occurrence in the year of an observance that recurs each lunation.
+
+    `month` is "*". Unlike an annual anchor this returns a **list** — Ekādaśī
+    falls about twenty-four times a year, and collapsing that to one date would
+    be a different and wrong answer rather than a partial one.
+
+    Adhika months are included: a recurring observance is not a festival waiting
+    for the nija month, it simply happens again.
+    """
+    paksha_raw = anchor["paksha"].strip().lower()
+    if paksha_raw.startswith(("s", "ś", "\u015b")):
+        bright = True
+    elif paksha_raw.startswith("k"):
+        bright = False
+    else:
+        raise ValueError(f"paksha must be shukla or krishna, got {anchor['paksha']!r}")
+
+    want_tithi = int(anchor["tithi"])
+    rule = anchor.get("dayRule", "sunrise")
+    if rule not in DAY_RULES:
+        raise ValueError(f"unknown day rule: {rule}; choose from {sorted(DAY_RULES)}")
+
+    target = want_tithi if bright else want_tithi + 15
+
+    adhika_only = anchor.get("month") == ADHIKA_ONLY
+
+    out: list[Resolved] = []
+    d = date_cls(gregorian_year, 1, 1)
+    end = date_cls(gregorian_year, 12, 31)
+    while d <= end:
+        got = _tithi_at(d, lat, lon, rule)
+        if got is not None and got[0] == target:
+            moment = _reckoning_moment(d, lat, lon, rule)
+            hd = hindu_date(moment, anchor.get("reckoning", "amanta"))
+            if not adhika_only or hd.is_adhika:
+                out.append(Resolved(
+                    key=anchor.get("key", ""), name=anchor.get("name", ""),
+                    date=d, anchor=anchor,
+                    note=(f"{'Adhika ' if hd.is_adhika else ''}{hd.month} "
+                          f"{hd.paksha}, judged at {rule}"),
+                ))
+        d += timedelta(days=1)
+
+    # Two consecutive occurrences mean the tithi spanned two reckoning moments
+    # — vṛddhi. Both are marked rather than one being dropped, because the
+    # choice between them is a real doctrinal one: on a doubled Ekādaśī the
+    # Smārta and Vaiṣṇava traditions fast on different days. Picking one here
+    # would be making that ruling on the practitioner's behalf.
+    for earlier, later in zip(out, out[1:]):
+        if (later.date - earlier.date).days == 1:
+            earlier.doubled = later.doubled = True
+            for r in (earlier, later):
+                r.note += ("; vṛddhi — the tithi spans two days and the "
+                           "traditions differ on which is kept")
+    return out
+
+
+def resolve(anchor: dict, gregorian_year: int, **kw):
+    """
+    An annual anchor yields one Resolved; a recurring one yields a list.
+
+    The return type genuinely differs because the questions differ — "when is
+    Dīpāvalī this year" has one answer and "when is Ekādaśī" has about
+    twenty-four. Returning a one-element list for the first would make every
+    caller unwrap it; returning only the first of the second would be wrong.
+    """
     kind = anchor.get("kind")
     if kind == "lunar":
+        if anchor.get("month") in (RECURRING, ADHIKA_ONLY):
+            # Both walk the year rather than seeking one month: "*" takes every
+            # lunation, "adhika" takes only the intercalary ones — which in most
+            # years is none, and that empty list is the correct answer.
+            return resolve_recurring(anchor, gregorian_year, **kw)
         return resolve_lunar(anchor, gregorian_year, **kw)
     if kind == "crescent":
         return resolve_crescent(anchor, gregorian_year)

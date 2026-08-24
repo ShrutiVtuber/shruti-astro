@@ -108,3 +108,72 @@ def test_a_day_a_hollow_month_does_not_have_is_reported_not_faked():
             return
         from shruti_astro.core.attic import attic_day
         assert attic_day(r.date).day == 30
+
+
+# ── recurring anchors ───────────────────────────────────────────────────────
+
+def test_a_recurring_anchor_returns_every_occurrence():
+    """
+    Ekādaśī falls about twenty-four times a year. Collapsing that to one date
+    would be a different and wrong answer rather than a partial one, so the
+    return type differs from an annual anchor's.
+    """
+    r = resolve({"kind": "lunar", "month": "*", "paksha": "shukla", "tithi": 11}, 2026)
+    assert isinstance(r, list)
+    assert 11 <= len(r) <= 13          # one per lunation, minus any kṣaya
+    assert all(x.date for x in r)
+
+
+def test_an_annual_anchor_still_returns_one_result():
+    r = resolve({"kind": "lunar", "month": "Phālguna", "paksha": "shukla", "tithi": 15}, 2026)
+    assert not isinstance(r, list)
+    assert r.date == date(2026, 3, 3)
+
+
+def test_recurring_amavasyas_match_the_lunation_starts():
+    """Cross-check against the calendar: every amāvāsyā ends a lunation."""
+    from shruti_astro.core.hindu_calendar import hindu_year
+
+    amavasyas = {x.date.isoformat()
+                 for x in resolve({"kind": "lunar", "month": "*",
+                                   "paksha": "krishna", "tithi": 15}, 2026)}
+    starts = {m["start"][:10] for m in hindu_year(2026)["months"]}
+    # A new moon ends one month and begins the next, so the amāvāsyā day sits
+    # within a day of a lunation boundary.
+    near = sum(1 for a in amavasyas
+               if any(abs((date.fromisoformat(a) - date.fromisoformat(s)).days) <= 1
+                      for s in starts))
+    assert near >= len(amavasyas) - 1
+
+
+def test_an_intercalary_only_observance_is_empty_in_ordinary_years():
+    """
+    Padminī and Paramā Ekādaśī exist only in an adhika māsa. In a year without
+    one, an empty list is the correct answer and not a failure.
+    """
+    anchor = {"kind": "lunar", "month": "adhika", "paksha": "shukla", "tithi": 11}
+    assert resolve(anchor, 2025) == []
+    assert resolve(anchor, 2027) == []
+    # 2026 has Adhika Jyeṣṭha and 2029 Adhika Chaitra.
+    assert resolve(anchor, 2026)
+    assert resolve(anchor, 2029)
+
+
+def test_a_doubled_tithi_is_marked_not_silently_deduped():
+    """
+    On a vṛddhi Ekādaśī the Smārta and Vaiṣṇava traditions fast on different
+    days. Dropping one would be making that ruling for the practitioner.
+    """
+    r = resolve({"kind": "lunar", "month": "adhika", "paksha": "shukla",
+                 "tithi": 11}, 2026)
+    if len(r) > 1 and (r[1].date - r[0].date).days == 1:
+        assert r[0].doubled and r[1].doubled
+        assert "vṛddhi" in r[0].note
+
+
+def test_a_recurring_anchor_honours_its_day_rule():
+    sunrise = resolve({"kind": "lunar", "month": "*", "paksha": "krishna",
+                       "tithi": 13}, 2026)
+    pradosha = resolve({"kind": "lunar", "month": "*", "paksha": "krishna",
+                        "tithi": 13, "dayRule": "pradosha"}, 2026)
+    assert [x.date for x in sunrise] != [x.date for x in pradosha]

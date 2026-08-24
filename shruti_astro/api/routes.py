@@ -1062,6 +1062,13 @@ async def today(
 async def festivals(
     tradition: str = Query("attic", description="attic | hindu"),
     year: int = Query(..., ge=1, le=9999),
+    lat: float | None = Query(None, ge=-90, le=90),
+    lon: float | None = Query(None, ge=-180, le=180),
+    school: str | None = Query(
+        None,
+        description="Pick one side of a contested reckoning — e.g. smarta, "
+                    "vaishnava, nishitha. Omit to receive every variant.",
+    ),
 ) -> dict:
     """
     A year of festivals, with the undatable ones reported rather than hidden.
@@ -1069,6 +1076,17 @@ async def festivals(
     **Verification status travels with the response.** The Attic corpus has been
     audited adversarially; the Hindu one has not yet, and says so in
     `verificationNote`. A consumer is entitled to know which it is reading.
+
+    **Give a location.** A tithi is current at an instant, and which civil day
+    owns it depends on when the Sun rises where you are. For 2026, five of seven
+    major Hindu festivals fall on a different day in Sydney than in Ujjain.
+    Without lat/lon this answers for Ujjain and says so — a default, not an
+    answer about you.
+
+    **`school` picks a side where traditions disagree.** Omit it and every
+    variant is returned, labelled. Smārta and Vaiṣṇava keep a daśamī-viddha
+    ekādaśī on different days and pañcāṅgas print both; choosing one silently
+    would make that ruling for the practitioner.
 
     `undated` is not an error list. Several Attic festivals are known to have
     happened and cannot be dated — the entry carries the reconstructions and
@@ -1080,7 +1098,7 @@ async def festivals(
     if tradition not in CORPORA:
         raise HTTPException(400, f"tradition must be one of {sorted(CORPORA)}")
     try:
-        return resolve_year(tradition, year)
+        return resolve_year(tradition, year, lat=lat, lon=lon, school=school)
     except ValueError as exc:
         raise HTTPException(400, str(exc))
 

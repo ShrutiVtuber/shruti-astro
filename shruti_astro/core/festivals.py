@@ -39,11 +39,22 @@ UJJAIN = (23.1765, 75.7885)
 # Fractions are of the daylight span (sunrise → sunset) unless noted.
 DAY_RULES = {
     "sunrise": None,                    # the tithi at sunrise — the default
+    "arunodaya": -0.08,                 # before dawn, roughly four ghaṭikās
+    "pratahkala": 0.1,                  # early morning
+    "purvahna": 0.25,                   # forenoon, the second of five parts
     "madhyahna": 0.5,                   # midday
     "aparahna": 0.75,                   # afternoon, the fourth of five parts
     "pradosha": 1.0,                    # sunset, running into the evening
     "nishitha": "midnight",             # true midnight, between the sunrises
 }
+
+# candrodaya — moonrise — is deliberately NOT here. It is not a fraction of the
+# daylight span like the others: it needs a moonrise computation, and moonrise
+# moves enough with longitude that the same festival genuinely falls on
+# different civil days in different cities. That is a true fact rather than a
+# defect, but expressing it means returning two answers with the place attached,
+# and a single dayRule value cannot say that. Entries that need it carry
+# dayRuleUnmodelled: "candrodaya" until there is a surface that can show it.
 
 
 # A recurring anchor names no month: it happens every lunation. Ekādaśī twice a
@@ -151,6 +162,13 @@ def resolve_lunar(
 
     avoid_bhadra = bool(anchor.get("avoidBhadra"))
 
+    # Daśamī-viddha: an ekādaśī "pierced" by the tenth. Where the tithi spans
+    # two sunrises, Smārtas fast on the first day and Vaiṣṇavas on the second,
+    # and pañcāṅgas print both as separate dated calendars. This models the
+    # doubled case, which is where the two traditions actually diverge; it does
+    # not attempt the fuller nirṇaya, and says so rather than implying it does.
+    avoid_dashami_viddha = bool(anchor.get("avoidDashamiViddha"))
+
     hits: list[date_cls] = []
     d = date_cls(gregorian_year, 1, 1)
     end = date_cls(gregorian_year, 12, 31)
@@ -167,6 +185,11 @@ def resolve_lunar(
             if hd.month == month and not hd.is_adhika:
                 hits.append(d)
         d += timedelta(days=1)
+
+    if avoid_dashami_viddha and len(hits) > 1:
+        # Two sunrises carried the tithi, so the first is touched by the tenth.
+        # The Vaiṣṇava observance takes the second.
+        hits = hits[1:]
 
     # Bhadrā does not cancel the rite, it postpones it. Where bhadrā covers the
     # moment the observance would be kept, it waits until bhadrā ends — which
@@ -216,6 +239,8 @@ def resolve_lunar(
         )
 
     note = f"judged at {rule}"
+    if avoid_dashami_viddha:
+        note += "; daśamī-viddha deferred, as the Vaiṣṇava reckoning keeps it"
     if deferred_from is not None:
         note += (f"; deferred from {deferred_from.isoformat()} because bhadrā "
                  f"(viṣṭi karaṇa) covered that moment")
@@ -401,6 +426,28 @@ def resolve_recurring(
             for r in (earlier, later):
                 r.note += ("; vṛddhi — the tithi spans two days and the "
                            "traditions differ on which is kept")
+
+    # The Vaiṣṇava reckoning takes the second of a doubled pair: the first is
+    # touched by the tenth. Smārtas keep the first, and pañcāṅgas print both as
+    # separate dated calendars.
+    #
+    # This must be applied HERE and not only in resolve_lunar. Every ekādaśī
+    # entry anchors with month "*", so it routes through this function — the
+    # flag was read only in the annual path at first, which made the Vaiṣṇava
+    # variant return dates identical to the Smārta one. A choice that is not a
+    # choice is worse than not offering one.
+    if anchor.get("avoidDashamiViddha"):
+        drop = set()
+        for i, (earlier, later) in enumerate(zip(out, out[1:])):
+            if earlier.doubled and later.doubled and \
+                    (later.date - earlier.date).days == 1:
+                drop.add(i)
+        if drop:
+            out = [r for i, r in enumerate(out) if i not in drop]
+            for r in out:
+                if r.doubled:
+                    r.note += ("; the Vaiṣṇava reckoning keeps the second day, "
+                               "the first being daśamī-viddha")
     return out
 
 

@@ -73,66 +73,119 @@ def _clean(anchor: dict | None) -> dict | None:
     return {k: v for k, v in anchor.items() if k not in _PROVENANCE_KEYS}
 
 
-def year(tradition: str, gregorian_year: int, **kw) -> dict:
+def year(
+    tradition: str,
+    gregorian_year: int,
+    lat: float | None = None,
+    lon: float | None = None,
+    school: str | None = None,
+    **kw,
+) -> dict:
     """
-    Every occurrence in the year, with the undatable ones reported as such.
+    Every occurrence in the year, for a place.
 
-    Undated entries are returned alongside the dated ones rather than filtered
-    out. A festival that cannot be dated is a fact about the record, and
-    dropping it silently would leave a consumer believing the corpus is smaller
-    and more certain than it is.
+    **The place is not decoration.** A tithi is current at an instant, and which
+    civil day owns it depends on when the Sun rises where you are. Measured for
+    2026, five of seven major festivals fall on different days in Sydney than in
+    Ujjain. Serving one location's answer to everyone is the single easiest way
+    for a calendar to be quietly wrong for most of its users.
+
+    Where no location is given, Ujjain is used — the classical prime meridian of
+    Indian astronomy — and the response says so, so a consumer knows it is
+    reading a default rather than an answer about them.
+
+    `school` selects among variants where traditions genuinely disagree. Without
+    it, an entry that has variants returns **all** of them rather than a
+    default: picking one silently would make a doctrinal ruling on the
+    practitioner's behalf.
+
+    Undated entries are returned alongside the dated ones. A festival that
+    cannot be dated is a fact about the record, and dropping it would leave a
+    consumer believing the corpus is smaller and more certain than it is.
     """
+    from shruti_astro.core.festivals import UJJAIN
+
+    defaulted = lat is None or lon is None
+    if defaulted:
+        lat, lon = UJJAIN
+    kw.update(lat=lat, lon=lon)
+
     corpus = load(tradition)
     dated: list[dict] = []
     undated: list[dict] = []
 
     for entry in corpus.entries:
-        anchor = _clean(entry.get("anchor"))
-        try:
-            result = resolve(anchor, gregorian_year, **kw)
-        except Exception as exc:                   # noqa: BLE001
-            undated.append({
-                "key": entry.get("key"), "name": entry.get("name"),
-                "reason": f"could not resolve: {exc}",
-            })
-            continue
+        base = _clean(entry.get("anchor"))
 
-        occurrences: list[Resolved] = result if isinstance(result, list) else [result]
-        placed = False
-        for r in occurrences:
-            if r.date is None:
-                continue
-            placed = True
-            dated.append({
-                "key": entry.get("key"), "name": entry.get("name"),
-                "date": r.date.isoformat(),
-                "summary": entry.get("summary", ""),
-                "confidence": entry.get("confidence"),
-                "tags": entry.get("tags", []),
-                "note": r.note,
-                "doubled": r.doubled,
-                "lasts": entry.get("lasts"),
-                "sources": entry.get("sources", []),
-            })
-        if not placed:
-            reason = (occurrences[0].skipped_reason if occurrences
-                      else "no occurrence this year")
-            undated.append({
-                "key": entry.get("key"), "name": entry.get("name"),
-                "reason": reason,
-                "confidence": entry.get("confidence"),
-            })
+        # Variants are alternatives a practitioner chooses between, not
+        # refinements of one answer. Each is resolved and labelled.
+        variants = entry.get("variants") or []
+        if variants and school:
+            chosen = [v for v in variants if v.get("school") == school]
+            candidates = [(school, _clean(v.get("anchor") or base)) for v in chosen] \
+                or [(None, base)]
+        elif variants:
+            candidates = [(v.get("school"), _clean(v.get("anchor") or base))
+                          for v in variants]
+        else:
+            candidates = [(None, base)]
+
+        for label, anchor in candidates:
+            _place(entry, anchor, label, gregorian_year, kw, dated, undated)
 
     dated.sort(key=lambda x: x["date"])
     return {
         "tradition": tradition,
         "year": gregorian_year,
+        "location": {"lat": lat, "lon": lon, "defaulted": defaulted,
+                     "note": ("no location was given, so this is computed for "
+                              "Ujjain — festival dates differ by location and "
+                              "this may not be the answer where you are")
+                             if defaulted else None},
+        "school": school,
         "verified": corpus.verified,
         "verificationNote": corpus.verification_note,
         "counts": {"entries": len(corpus.entries),
                    "dated": len(dated), "undated": len(undated)},
         "festivals": dated,
-        # Present, not filtered: a festival that cannot be dated is a fact about
-        # the record, not an absence.
         "undated": undated,
     }
+
+
+def _place(entry, anchor, label, gregorian_year, kw, dated, undated) -> None:
+    """Resolve one anchor and file the result under dated or undated."""
+    try:
+        result = resolve(anchor, gregorian_year, **kw)
+    except Exception as exc:                       # noqa: BLE001
+        undated.append({
+            "key": entry.get("key"), "name": entry.get("name"),
+            "school": label, "reason": f"could not resolve: {exc}",
+        })
+        return
+
+    occurrences: list[Resolved] = result if isinstance(result, list) else [result]
+    placed = False
+    for r in occurrences:
+        if r.date is None:
+            continue
+        placed = True
+        dated.append({
+            "key": entry.get("key"), "name": entry.get("name"),
+            "school": label,
+            "date": r.date.isoformat(),
+            "summary": entry.get("summary", ""),
+            "confidence": entry.get("confidence"),
+            "restriction": entry.get("restriction", "none"),
+            "tags": entry.get("tags", []),
+            "note": r.note,
+            "doubled": r.doubled,
+            "lasts": entry.get("lasts"),
+            "sources": entry.get("sources", []),
+        })
+    if not placed:
+        undated.append({
+            "key": entry.get("key"), "name": entry.get("name"), "school": label,
+            "reason": (occurrences[0].skipped_reason if occurrences
+                       else "no occurrence this year"),
+            "confidence": entry.get("confidence"),
+        })

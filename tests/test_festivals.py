@@ -366,3 +366,99 @@ def test_no_dated_festival_disappears_across_five_years():
             if not isinstance(result, list) and result.date is None:
                 vanished.append((entry["key"], year))
     assert not vanished, f"these vanish in some years: {vanished}"
+
+
+# ── a universal service: location, and choice where traditions disagree ─────
+
+def test_festival_dates_depend_on_location():
+    """
+    A tithi is current at an instant; which civil day owns it depends on when
+    the Sun rises where you are. Serving one place's answer to everyone is the
+    easiest way for a calendar to be quietly wrong for most of its users.
+    """
+    anchor = {"kind": "lunar", "month": "Śrāvaṇa", "paksha": "krishna",
+              "tithi": 8, "reckoning": "purnimanta", "dayRule": "nishitha"}
+    ujjain = resolve(anchor, 2026, lat=23.1765, lon=75.7885).date
+    sydney = resolve(anchor, 2026, lat=-33.8688, lon=151.2093).date
+    assert ujjain != sydney
+
+
+def test_a_missing_location_is_reported_not_hidden():
+    from shruti_astro.core.festival_registry import year
+
+    defaulted = year("hindu", 2026)["location"]
+    assert defaulted["defaulted"] is True
+    assert "may not be the answer where you are" in defaulted["note"]
+
+    given = year("hindu", 2026, lat=51.5074, lon=-0.1278)["location"]
+    assert given["defaulted"] is False and given["note"] is None
+
+
+def test_variants_are_all_returned_when_no_school_is_chosen():
+    """
+    Picking one silently would make a doctrinal ruling for the practitioner.
+    """
+    from shruti_astro.core.festival_registry import year
+
+    everything = year("hindu", 2026)
+    kaushiki = [f for f in everything["festivals"] if f["key"] == "kaushiki-amavasya"]
+    assert len(kaushiki) == 2
+    assert {f["school"] for f in kaushiki} == {"sunrise", "nishitha"}
+    assert kaushiki[0]["date"] != kaushiki[1]["date"]
+
+
+def test_choosing_a_school_narrows_to_one_answer():
+    from shruti_astro.core.festival_registry import year
+
+    for school in ("sunrise", "nishitha"):
+        chosen = year("hindu", 2026, school=school)
+        kaushiki = [f for f in chosen["festivals"] if f["key"] == "kaushiki-amavasya"]
+        assert len(kaushiki) == 1 and kaushiki[0]["school"] == school
+
+
+def test_the_vaishnava_variant_actually_differs():
+    """
+    The regression this guards: `avoidDashamiViddha` was read only in the annual
+    path, while every ekādaśī anchors with month "*" and routes through the
+    recurring one — so the Vaiṣṇava variant returned dates identical to the
+    Smārta one. A choice that is not a choice is worse than not offering one.
+    """
+    base = {"kind": "lunar", "month": "*", "paksha": "shukla", "tithi": 11}
+    smarta = {r.date for r in resolve(base, 2026)}
+    vaishnava = {r.date for r in resolve({**base, "avoidDashamiViddha": True}, 2026)}
+    assert smarta != vaishnava
+    assert smarta - vaishnava == {date(2026, 5, 26)}
+
+
+def test_a_year_with_no_vrddhi_ekadashi_gives_the_schools_the_same_answer():
+    """Correct, not a failure — the traditions only diverge on a doubled tithi."""
+    base = {"kind": "lunar", "month": "*", "paksha": "shukla", "tithi": 11}
+    assert ({r.date for r in resolve(base, 2027)}
+            == {r.date for r in resolve({**base, "avoidDashamiViddha": True}, 2027)})
+
+
+def test_restriction_is_one_uniform_field():
+    import json
+    from pathlib import Path
+
+    data = json.loads(
+        (Path(__file__).resolve().parent.parent
+         / "shruti_astro" / "data" / "hindu-festivals.json").read_text()
+    )
+    levels = {e.get("restriction") for e in data}
+    assert levels <= {"none", "detail-withheld", "initiatory"}
+    assert all("restriction" in e for e in data), "every entry must declare a level"
+    # The three overlapping tags it replaced must be gone.
+    for e in data:
+        assert not ({"initiatory", "restricted", "restricted-detail"}
+                    & set(e.get("tags") or []))
+
+
+def test_the_cheap_day_rules_were_added_and_candrodaya_was_not():
+    from shruti_astro.core.festivals import DAY_RULES
+
+    assert {"arunodaya", "pratahkala", "purvahna"} <= set(DAY_RULES)
+    # candrodaya needs a moonrise computation and is longitude-dependent enough
+    # to split one festival across two civil days for two cities. It waits for a
+    # surface that can express that.
+    assert "candrodaya" not in DAY_RULES

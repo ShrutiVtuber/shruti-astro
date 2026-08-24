@@ -50,7 +50,8 @@
   "_corpus": "hindu-major",
   "audit": {
    "corrected": true
-  }
+  },
+  "restriction": "none"
  },
  {
   "key": "vasant-panchami",
@@ -98,7 +99,8 @@
   "_corpus": "hindu-major",
   "audit": {
    "corrected": true
-  }
+  },
+  "restriction": "none"
  },
  {
   "key": "maha-shivaratri",
@@ -171,7 +173,8 @@
    }
   ],
   "confidence": "attested",
-  "_corpus": "hindu-major"
+  "_corpus": "hindu-major",
+  "restriction": "none"
  },
  {
   "key": "holika-dahan",
@@ -234,7 +237,8 @@
   "_corpus": "hindu-major",
   "audit": {
    "corrected": true
-  }
+  },
+  "restriction": "none"
  },
  {
   "key": "holi",
@@ -309,7 +313,8 @@
    }
   ],
   "confidence": "attested",
-  "_corpus": "hindu-major"
+  "_corpus": "hindu-major",
+  "restriction": "none"
  },
  {
   "key": "chaitra-navaratri",
@@ -364,7 +369,8 @@
    }
   ],
   "confidence": "attested",
-  "_corpus": "hindu-major"
+  "_corpus": "hindu-major",
+  "restriction": "none"
  },
  {
   "key": "rama-navami",
@@ -417,7 +423,8 @@
    }
   ],
   "confidence": "attested",
-  "_corpus": "hindu-major"
+  "_corpus": "hindu-major",
+  "restriction": "none"
  },
  {
   "key": "akshaya-tritiya",
@@ -468,7 +475,8 @@
    }
   ],
   "confidence": "attested",
-  "_corpus": "hindu-major"
+  "_corpus": "hindu-major",
+  "restriction": "none"
  },
  {
   "key": "guru-purnima",
@@ -514,7 +522,8 @@
    }
   ],
   "confidence": "attested",
-  "_corpus": "hindu-major"
+  "_corpus": "hindu-major",
+  "restriction": "none"
  },
  {
   "key": "naga-panchami",
@@ -592,7 +601,8 @@
   "_corpus": "hindu-major",
   "audit": {
    "corrected": true
-  }
+  },
+  "restriction": "none"
  },
  {
   "key": "raksha-bandhan",
@@ -650,7 +660,8 @@
   "_corpus": "hindu-major",
   "audit": {
    "corrected": true
-  }
+  },
+  "restriction": "none"
  },
  {
   "key": "krishna-janmashtami",
@@ -743,7 +754,8 @@
    }
   ],
   "confidence": "attested",
-  "_corpus": "hindu-major"
+  "_corpus": "hindu-major",
+  "restriction": "none"
  },
  {
   "key": "ganesha-chaturthi",
@@ -799,7 +811,8 @@
    }
   ],
   "confidence": "attested",
-  "_corpus": "hindu-major"
+  "_corpus": "hindu-major",
+  "restriction": "none"
  },
  {
   "key": "sharada-navaratri",
@@ -872,7 +885,8 @@
    }
   ],
   "confidence": "attested",
-  "_corpus": "hindu-major"
+  "_corpus": "hindu-major",
+  "restriction": "none"
  },
  {
   "key": "vijayadashami",
@@ -926,7 +940,8 @@
    }
   ],
   "confidence": "attested",
-  "_corpus": "hindu-major"
+  "_corpus": "hindu-major",
+  "restriction": "none"
  },
  {
   "key": "karva-chauth",
@@ -996,7 +1011,8 @@
   "_corpus": "hindu-major",
   "audit": {
    "corrected": true
-  }
+  },
+  "restriction": "none"
  },
  {
   "key": "dipavali",
@@ -1069,7 +1085,8 @@
   "_corpus": "hindu-major",
   "audit": {
    "corrected": true
-  }
+  },
+  "restriction": "none"
  },
  {
   "key": "dhanteras",
@@ -1135,7 +1152,8 @@
   "_corpus": "hindu-major",
   "audit": {
    "corrected": true
-  }
+  },
+  "restriction": "none"
  },
  {
   "key": "naraka-chaturdashi",
@@ -1152,8 +1170,7 @@
    "krishna",
    "kali",
    "abhyanga-snana",
-   "reckoning-split",
-   "restricted-detail"
+   "reckoning-split"
   ],
   "anchor": {
    "kind": "lunar",
@@ -1217,7 +1234,8 @@
   "_corpus": "hindu-major",
   "audit": {
    "corrected": true
-  }
+  },
+  "restriction": "detail-withheld"
  },
  {
   "key": "lakshmi-puja-diwali",
@@ -1304,7 +1322,8 @@
    }
   ],
   "confidence": "attested",
-  "_corpus": "hindu-major"
+  "_corpus": "hindu-major",
+  "restriction": "none"
  },
  {
   "key": "govardhana-puja",
@@ -1360,7 +1379,8 @@
   "_corpus": "hindu-major",
   "audit": {
    "corrected": true
-  }
+  },
+  "restriction": "none"
  },
  {
   "key": "bhai-dooj",
@@ -1415,7 +1435,8 @@
   "_corpus": "hindu-major",
   "audit": {
    "corrected": true
-  }
+  },
+  "restriction": "none"
  },
  {
   "key": "kartika-purnima",
@@ -1468,14 +1489,15 @@
    }
   ],
   "confidence": "attested",
-  "_corpus": "hindu-major"
+  "_corpus": "hindu-major",
+  "restriction": "none"
  },
  {
   "key": "ekadashi-shukla",
   "name": "Śukla Pakṣa Ekādaśī",
   "ref": "occasions:ekadashi-shukla",
   "summary": "The eleventh tithi of the waxing fortnight, kept as a fast to Viṣṇu in every lunar month.",
-  "note": "Recurs every lunation; the anchor month is a wildcard (\"*\"), not a single month. Śukla-pakṣa tithis carry the same month name in both amānta and pūrṇimānta reckoning, so no reckoning field is needed. WHAT IS DONE: a fast (upavāsa) from the daśamī evening meal through ekādaśī, Viṣṇu-pūjā, night vigil (jāgara), and pāraṇa (breaking the fast) the next morning on dvādaśī. Graded relaxations are textually sanctioned for those unable to fast absolutely — ekabhakta (one meal after midday), nakta, phalāhāra, milk — but Manu XI.30 and Kane's discussion insist these are for the incapable only. SUNRISE OWNERSHIP: this is the single most contested nirṇaya in the whole corpus and MBF has no field for it. Ekādaśī is exempted from the ordinary udaya-vyāpinī rule. A tithi is pūrṇa only if it runs 60 ghaṭikās from sunrise to sunrise; Garuḍa and Bhaviṣya add that ekādaśī counts as pūrṇa only if it also exists two muhūrtas (4 ghaṭikās, ~96 min) BEFORE that sunrise. If daśamī persists into those last 4 ghaṭikās there is aruṇodaya-vedha; if daśamī is still running at the instant of sunrise there is sūryodaya-vedha. The yugmavākya pairing rule independently prefers ekādaśī joined to dvādaśī and condemns ekādaśī joined to daśamī (Nāradapurāṇa pūrvārdha 29.39–40; the Gāndhārī verse). Where two consecutive days both carry ekādaśī, Nāradapurāṇa 29.45 gives householders the earlier and yatis/sannyāsins the later. ADHIKA MĀSA: this entry is not observed in an intercalary month under its ordinary name — but see adhika-masa-ekadashi, which is the explicit exception, since the adhika month's two ekādaśīs have their own names and are observed.",
+  "note": "Recurs every lunation; the anchor month is a wildcard (\"*\"), not a single month. Śukla-pakṣa tithis carry the same month name in both amānta and pūrṇimānta reckoning, so no reckoning field is needed. WHAT IS DONE: a fast (upavāsa) from the daśamī evening meal through ekādaśī, Viṣṇu-pūjā, night vigil (jāgara), and pāraṇa (breaking the fast) the next morning on dvādaśī. Graded relaxations are textually sanctioned for those unable to fast absolutely — ekabhakta (one meal after midday), nakta, phalāhāra, milk — but Manu XI.30 and Kane's discussion insist these are for the incapable only. SUNRISE OWNERSHIP: this is the single most contested nirṇaya in the whole corpus and MBF has no field for it. Ekādaśī is exempted from the ordinary udaya-vyāpinī rule. A tithi is pūrṇa only if it runs 60 ghaṭikās from sunrise to sunrise; Garuḍa and Bhaviṣya add that ekādaśī counts as pūrṇa only if it also exists two muhūrtas (4 ghaṭikās, ~96 min) BEFORE that sunrise. If daśamī persists into those last 4 ghaṭikās there is aruṇodaya-vedha; if daśamī is still running at the instant of sunrise there is sūryodaya-vedha. The yugmavākya pairing rule independently prefers ekādaśī joined to dvādaśī and condemns ekādaśī joined to daśamī (Nāradapurāṇa pūrvārdha 29.39–40; the Gāndhārī verse). Where two consecutive days both carry ekādaśī, Nāradapurāṇa 29.45 gives householders the earlier and yatis/sannyāsins the later. ADHIKA MĀSA: this entry is not observed in an intercalary month under its ordinary name — but see adhika-masa-ekadashi, which is the explicit exception, since the adhika month's two ekādaśīs have their own names and are observed.\n\nVARIANTS: Smārta and Vaiṣṇava traditions fast on different days when the ekādaśī is touched by daśamī, and pañcāṅgas publish both as dated calendars. Neither is offered as the default.",
   "tags": [
    "hindu",
    "vaishnava",
@@ -1554,14 +1576,42 @@
     "note": "The late nibandha most often followed by working pañcāṅga-makers for ekādaśī nirṇaya."
    }
   ],
-  "_corpus": "hindu-monthly"
+  "_corpus": "hindu-monthly",
+  "variants": [
+   {
+    "school": "smarta",
+    "anchor": {
+     "kind": "lunar",
+     "month": "*",
+     "paksha": "shukla",
+     "tithi": 11,
+     "recurrence": "monthly",
+     "vyapti": "see note — not plain udaya-vyāpinī"
+    },
+    "note": "the ekādaśī current at sunrise, fasted even when touched by daśamī"
+   },
+   {
+    "school": "vaishnava",
+    "anchor": {
+     "kind": "lunar",
+     "month": "*",
+     "paksha": "shukla",
+     "tithi": 11,
+     "recurrence": "monthly",
+     "vyapti": "see note — not plain udaya-vyāpinī",
+     "avoidDashamiViddha": true
+    },
+    "note": "a daśamī-viddha ekādaśī is deferred to the following day"
+   }
+  ],
+  "restriction": "none"
  },
  {
   "key": "ekadashi-krishna",
   "name": "Kṛṣṇa Pakṣa Ekādaśī",
   "ref": "occasions:ekadashi-krishna",
   "summary": "The eleventh tithi of the waning fortnight, kept as a fast to Viṣṇu in every lunar month.",
-  "note": "Recurs every lunation; wildcard month. RECKONING: for any single occurrence the month name differs between systems — a kṛṣṇa pakṣa that amānta calls month M is called month M+1 by pūrṇimānta reckoning. Kane states this directly as the cause of the divergence in the traditional list of 24 ekādaśī names: what is Bhādra-kṛṣṇa in pūrṇimānta is Śrāvaṇa-kṛṣṇa in amānta, and the Purāṇas are not consistent about which system they use. Because this entry's month is a wildcard the two systems cover the same set of days, so no reckoning field is set; any derived single-date entry MUST set one. ADHIKĀRA — this is the substantive difference from the śukla ekādaśī and it is not a minor one: the kṛṣṇa ekādaśī fast is NOT obligatory for householders. Devala restricts the householder to the śukla ekādaśī alone; Padmapurāṇa permits him the kṛṣṇa ekādaśīs falling between Śayanī and Bodhinī (the cāturmāsya) and no others; Nārada goes further and says a householder who has a son should not fast on kṛṣṇa ekādaśī, on a saṅkrānti, or at an eclipse. A widow is treated as a yati; a woman whose husband is living fasts only in the śukla pakṣa. None of these restrictions bind initiated Vaiṣṇavas, for whom both pakṣas are nitya. Hemādri dissented from the whole restriction and held that all persons have adhikāra in both pakṣas. Do not flatten this into 'everyone fasts twice a month' — the texts genuinely disagree about who is entitled. SUNRISE OWNERSHIP: identical to the śukla ekādaśī (see that entry) — vedha by daśamī, not plain udaya-vyāpti, decides the civil day.",
+  "note": "Recurs every lunation; wildcard month. RECKONING: for any single occurrence the month name differs between systems — a kṛṣṇa pakṣa that amānta calls month M is called month M+1 by pūrṇimānta reckoning. Kane states this directly as the cause of the divergence in the traditional list of 24 ekādaśī names: what is Bhādra-kṛṣṇa in pūrṇimānta is Śrāvaṇa-kṛṣṇa in amānta, and the Purāṇas are not consistent about which system they use. Because this entry's month is a wildcard the two systems cover the same set of days, so no reckoning field is set; any derived single-date entry MUST set one. ADHIKĀRA — this is the substantive difference from the śukla ekādaśī and it is not a minor one: the kṛṣṇa ekādaśī fast is NOT obligatory for householders. Devala restricts the householder to the śukla ekādaśī alone; Padmapurāṇa permits him the kṛṣṇa ekādaśīs falling between Śayanī and Bodhinī (the cāturmāsya) and no others; Nārada goes further and says a householder who has a son should not fast on kṛṣṇa ekādaśī, on a saṅkrānti, or at an eclipse. A widow is treated as a yati; a woman whose husband is living fasts only in the śukla pakṣa. None of these restrictions bind initiated Vaiṣṇavas, for whom both pakṣas are nitya. Hemādri dissented from the whole restriction and held that all persons have adhikāra in both pakṣas. Do not flatten this into 'everyone fasts twice a month' — the texts genuinely disagree about who is entitled. SUNRISE OWNERSHIP: identical to the śukla ekādaśī (see that entry) — vedha by daśamī, not plain udaya-vyāpti, decides the civil day.\n\nVARIANTS: Smārta and Vaiṣṇava traditions fast on different days when the ekādaśī is touched by daśamī, and pañcāṅgas publish both as dated calendars. Neither is offered as the default.",
   "tags": [
    "hindu",
    "vaishnava",
@@ -1634,7 +1684,35 @@
     "note": "Indian National Science Academy. The standard modern statement of tithi/civil-day assignment, adhika (ahorātra) tithi and kṣaya tithi."
    }
   ],
-  "_corpus": "hindu-monthly"
+  "_corpus": "hindu-monthly",
+  "variants": [
+   {
+    "school": "smarta",
+    "anchor": {
+     "kind": "lunar",
+     "month": "*",
+     "paksha": "krishna",
+     "tithi": 11,
+     "recurrence": "monthly",
+     "vyapti": "see note — not plain udaya-vyāpinī"
+    },
+    "note": "the ekādaśī current at sunrise, fasted even when touched by daśamī"
+   },
+   {
+    "school": "vaishnava",
+    "anchor": {
+     "kind": "lunar",
+     "month": "*",
+     "paksha": "krishna",
+     "tithi": 11,
+     "recurrence": "monthly",
+     "vyapti": "see note — not plain udaya-vyāpinī",
+     "avoidDashamiViddha": true
+    },
+    "note": "a daśamī-viddha ekādaśī is deferred to the following day"
+   }
+  ],
+  "restriction": "detail-withheld"
  },
  {
   "key": "pradosha-krishna",
@@ -1693,7 +1771,8 @@
     "note": "Abhinav Publications, New Delhi, 2005. On Śani Pradoṣa."
    }
   ],
-  "_corpus": "hindu-monthly"
+  "_corpus": "hindu-monthly",
+  "restriction": "none"
  },
  {
   "key": "pradosha-shukla",
@@ -1730,7 +1809,8 @@
   "_corpus": "hindu-monthly",
   "audit": {
    "corrected": true
-  }
+  },
+  "restriction": "none"
  },
  {
   "key": "sankashti-chaturthi",
@@ -1783,7 +1863,8 @@
   "_corpus": "hindu-monthly",
   "audit": {
    "corrected": true
-  }
+  },
+  "restriction": "none"
  },
  {
   "key": "vinayaka-chaturthi",
@@ -1842,7 +1923,8 @@
   "_corpus": "hindu-monthly",
   "audit": {
    "corrected": true
-  }
+  },
+  "restriction": "none"
  },
  {
   "key": "masa-shivaratri",
@@ -1900,7 +1982,8 @@
   "_corpus": "hindu-monthly",
   "audit": {
    "corrected": true
-  }
+  },
+  "restriction": "none"
  },
  {
   "key": "kalashtami",
@@ -1949,7 +2032,8 @@
   "_corpus": "hindu-monthly",
   "audit": {
    "corrected": true
-  }
+  },
+  "restriction": "none"
  },
  {
   "key": "masika-shashthi",
@@ -2001,7 +2085,8 @@
   "_corpus": "hindu-monthly",
   "audit": {
    "corrected": true
-  }
+  },
+  "restriction": "none"
  },
  {
   "key": "amavasya",
@@ -2061,7 +2146,8 @@
   "_corpus": "hindu-monthly",
   "audit": {
    "corrected": true
-  }
+  },
+  "restriction": "none"
  },
  {
   "key": "somavati-amavasya",
@@ -2115,7 +2201,8 @@
   "_corpus": "hindu-monthly",
   "audit": {
    "corrected": true
-  }
+  },
+  "restriction": "none"
  },
  {
   "key": "purnima",
@@ -2164,7 +2251,8 @@
     "note": "Indian National Science Academy. On amānta and pūrṇimānta month boundaries."
    }
   ],
-  "_corpus": "hindu-monthly"
+  "_corpus": "hindu-monthly",
+  "restriction": "none"
  },
  {
   "key": "sankranti",
@@ -2251,7 +2339,8 @@
     "note": "The standard reference for the sidereal solar calendars and the competing rules assigning a saṅkrānti to a civil day."
    }
   ],
-  "_corpus": "hindu-monthly"
+  "_corpus": "hindu-monthly",
+  "restriction": "none"
  },
  {
   "key": "pitru-paksha",
@@ -2338,7 +2427,8 @@
   "_corpus": "hindu-monthly",
   "audit": {
    "corrected": true
-  }
+  },
+  "restriction": "none"
  },
  {
   "key": "sarva-pitru-amavasya",
@@ -2409,14 +2499,15 @@
     "note": "Oxford University Press, 1921. Standard descriptive account of the special days of the fortnight and the Sarvapitṛ rites."
    }
   ],
-  "_corpus": "hindu-monthly"
+  "_corpus": "hindu-monthly",
+  "restriction": "none"
  },
  {
   "key": "nirjala-ekadashi",
   "name": "Nirjalā Ekādaśī",
   "ref": "occasions:nirjala-ekadashi",
   "summary": "The waterless ekādaśī of Jyeṣṭha, the most austere of the twenty-four and held to yield the merit of all of them.",
-  "note": "Śukla tithis carry the same month name in both reckonings, so no reckoning field. Also called Pāṇḍava Nirjalā or Bhīmasenī Ekādaśī. WHAT IS DONE: an absolute fast without even water — Kane notes the vrata consists in not using or drinking water except at bathing or at ācamana, and the permitted quantity at ācamana is a single drop. Observed from sunrise on the ekādaśī to sunrise on the dvādaśī, though some hold sunrise to sunset. Viṣṇu or a śālagrāma is bathed in pañcāmṛta; dūrvā is offered in the evening; a night vigil is kept; and the characteristic dāna is of water-pots, fans, umbrellas and clothes — gifts fitted to the season, since the vrata falls in the hottest part of the Indian summer, which is exactly why the texts commend it so highly. LEGEND: Bhīma, unable to control his hunger through the other twenty-three, is advised by Vyāsa to keep this one and thereby obtains their combined merit. Kane records Hemādri quoting the MAHĀBHĀRATA for the vrata; the Brahmavaivartapurāṇa carries a version of the Bhīma narrative. The claim that it equals all twenty-four is a māhātmya claim, of the exaggerated kind Kane discusses at length, not a nirṇaya rule. SUNRISE OWNERSHIP: inherits the full ekādaśī apparatus — aruṇodaya-vedha and sūryodaya-vedha, the Smārta/Vaiṣṇava split, and pāraṇa on dvādaśī. See ekadashi-shukla.",
+  "note": "Śukla tithis carry the same month name in both reckonings, so no reckoning field. Also called Pāṇḍava Nirjalā or Bhīmasenī Ekādaśī. WHAT IS DONE: an absolute fast without even water — Kane notes the vrata consists in not using or drinking water except at bathing or at ācamana, and the permitted quantity at ācamana is a single drop. Observed from sunrise on the ekādaśī to sunrise on the dvādaśī, though some hold sunrise to sunset. Viṣṇu or a śālagrāma is bathed in pañcāmṛta; dūrvā is offered in the evening; a night vigil is kept; and the characteristic dāna is of water-pots, fans, umbrellas and clothes — gifts fitted to the season, since the vrata falls in the hottest part of the Indian summer, which is exactly why the texts commend it so highly. LEGEND: Bhīma, unable to control his hunger through the other twenty-three, is advised by Vyāsa to keep this one and thereby obtains their combined merit. Kane records Hemādri quoting the MAHĀBHĀRATA for the vrata; the Brahmavaivartapurāṇa carries a version of the Bhīma narrative. The claim that it equals all twenty-four is a māhātmya claim, of the exaggerated kind Kane discusses at length, not a nirṇaya rule. SUNRISE OWNERSHIP: inherits the full ekādaśī apparatus — aruṇodaya-vedha and sūryodaya-vedha, the Smārta/Vaiṣṇava split, and pāraṇa on dvādaśī. See ekadashi-shukla.\n\nVARIANTS: Smārta and Vaiṣṇava traditions fast on different days when the ekādaśī is touched by daśamī, and pañcāṅgas publish both as dated calendars. Neither is offered as the default.",
   "tags": [
    "hindu",
    "vaishnava",
@@ -2464,14 +2555,40 @@
     "note": "For the Bhīma narrative and the sunrise-to-sunrise extent of the fast in current practice."
    }
   ],
-  "_corpus": "hindu-monthly"
+  "_corpus": "hindu-monthly",
+  "variants": [
+   {
+    "school": "smarta",
+    "anchor": {
+     "kind": "lunar",
+     "month": "Jyeṣṭha",
+     "paksha": "shukla",
+     "tithi": 11,
+     "vyapti": "see ekadashi-shukla — not plain udaya-vyāpinī"
+    },
+    "note": "the ekādaśī current at sunrise, fasted even when touched by daśamī"
+   },
+   {
+    "school": "vaishnava",
+    "anchor": {
+     "kind": "lunar",
+     "month": "Jyeṣṭha",
+     "paksha": "shukla",
+     "tithi": 11,
+     "vyapti": "see ekadashi-shukla — not plain udaya-vyāpinī",
+     "avoidDashamiViddha": true
+    },
+    "note": "a daśamī-viddha ekādaśī is deferred to the following day"
+   }
+  ],
+  "restriction": "none"
  },
  {
   "key": "devshayani-ekadashi",
   "name": "Devśayanī (Śayanī) Ekādaśī",
   "ref": "occasions:devshayani-ekadashi",
   "summary": "The ekādaśī of Āṣāḍha on which Viṣṇu is held to begin his four-month sleep, opening Cāturmāsya.",
-  "note": "Śukla, so no reckoning field. Also Mahā-Ekādaśī, Āṣāḍhī, Hariśayanī, Devaśayanī. Kane records the Garuḍapurāṇa's designation of the Āṣāḍha śukla ekādaśī as mahā-ekādaśī and as Śayanī, and pairs it explicitly with Prabodhinī: Viṣṇu sleeps for four months from the Āṣāḍha bright ekādaśī AT NIGHT and rises from sleep on the Kārtika bright ekādaśī BY DAY. Kane is candid that what the sleep-legend was meant to symbolise is difficult to say, and offers the plausible naturalistic reading that the rains halted long-distance movement, so mythology supplied a corresponding divine inactivity; he also floats, without endorsing, a northern-latitude origin. Record the legend, not the explanation. WHAT IS DONE: worship of Viṣṇu and Lakṣmī, a night of hymns, and the taking of vows to be kept through the four months. CĀTURMĀSYA START IS ITSELF DISPUTED: the vrata may be begun on Āṣāḍha śukla ekādaśī, or dvādaśī, or the pūrṇimā, or on the day the sun enters Karka — four options in the sources — and however begun it is completed on Kārtika śukla dvādaśī. During the four months a class of food is given up in each: vegetables in Śrāvaṇa, curds in Bhādrapada, milk in Āśvina, pulses in Kārtika. Marriages are barred for the duration, which is why Prabodhinī reopens the wedding season. SUNRISE OWNERSHIP: inherits the full ekādaśī apparatus; see ekadashi-shukla.",
+  "note": "Śukla, so no reckoning field. Also Mahā-Ekādaśī, Āṣāḍhī, Hariśayanī, Devaśayanī. Kane records the Garuḍapurāṇa's designation of the Āṣāḍha śukla ekādaśī as mahā-ekādaśī and as Śayanī, and pairs it explicitly with Prabodhinī: Viṣṇu sleeps for four months from the Āṣāḍha bright ekādaśī AT NIGHT and rises from sleep on the Kārtika bright ekādaśī BY DAY. Kane is candid that what the sleep-legend was meant to symbolise is difficult to say, and offers the plausible naturalistic reading that the rains halted long-distance movement, so mythology supplied a corresponding divine inactivity; he also floats, without endorsing, a northern-latitude origin. Record the legend, not the explanation. WHAT IS DONE: worship of Viṣṇu and Lakṣmī, a night of hymns, and the taking of vows to be kept through the four months. CĀTURMĀSYA START IS ITSELF DISPUTED: the vrata may be begun on Āṣāḍha śukla ekādaśī, or dvādaśī, or the pūrṇimā, or on the day the sun enters Karka — four options in the sources — and however begun it is completed on Kārtika śukla dvādaśī. During the four months a class of food is given up in each: vegetables in Śrāvaṇa, curds in Bhādrapada, milk in Āśvina, pulses in Kārtika. Marriages are barred for the duration, which is why Prabodhinī reopens the wedding season. SUNRISE OWNERSHIP: inherits the full ekādaśī apparatus; see ekadashi-shukla.\n\nVARIANTS: Smārta and Vaiṣṇava traditions fast on different days when the ekādaśī is touched by daśamī, and pañcāṅgas publish both as dated calendars. Neither is offered as the default.",
   "tags": [
    "hindu",
    "vaishnava",
@@ -2514,14 +2631,40 @@
     "note": "The saṅkalpa prayer for cāturmāsya quoted by Kane."
    }
   ],
-  "_corpus": "hindu-monthly"
+  "_corpus": "hindu-monthly",
+  "variants": [
+   {
+    "school": "smarta",
+    "anchor": {
+     "kind": "lunar",
+     "month": "Āṣāḍha",
+     "paksha": "shukla",
+     "tithi": 11,
+     "vyapti": "see ekadashi-shukla — not plain udaya-vyāpinī"
+    },
+    "note": "the ekādaśī current at sunrise, fasted even when touched by daśamī"
+   },
+   {
+    "school": "vaishnava",
+    "anchor": {
+     "kind": "lunar",
+     "month": "Āṣāḍha",
+     "paksha": "shukla",
+     "tithi": 11,
+     "vyapti": "see ekadashi-shukla — not plain udaya-vyāpinī",
+     "avoidDashamiViddha": true
+    },
+    "note": "a daśamī-viddha ekādaśī is deferred to the following day"
+   }
+  ],
+  "restriction": "none"
  },
  {
   "key": "prabodhini-ekadashi",
   "name": "Prabodhinī (Devotthāna) Ekādaśī",
   "ref": "occasions:prabodhini-ekadashi",
   "summary": "The ekādaśī of Kārtika on which Viṣṇu is held to wake from his four-month sleep, closing Cāturmāsya.",
-  "note": "Śukla, so no reckoning field. Also Devotthāna, Deva Uttāna, Uttānā Ekādaśī, Hari Prabodhinī, Deothān. The counterpart of Devśayanī: Kane's formulation is that Viṣṇu sleeps from the Āṣāḍha bright ekādaśī at night and rises on the Kārtika bright ekādaśī by day. WHAT IS DONE: waking of the deity, Viṣṇu-pūjā, and the end of the four-month restrictions. Because marriages are barred through Cāturmāsya, this ekādaśī opens the wedding season, and Tulasī Vivāha — the symbolic marriage of Viṣṇu to Lakṣmī in the form of the tulasī plant — is performed on or about it, running into Kārtika Pūrṇimā four days later. A TERMINUS AMBIGUITY WORTH RECORDING: Kane's cāturmāsya chapter says the vrata is completed on Kārtika śukla dvādaśī, the twelfth, not the eleventh; the vrata's END and this ekādaśī are adjacent but not identical, and sources vary on which carries the concluding rite. Do not silently merge them. SUNRISE OWNERSHIP: inherits the full ekādaśī apparatus; see ekadashi-shukla. Note that where a Vaiṣṇava aruṇodaya-vedha displaces the fast to dvādaśī, the fast day and the cāturmāsya terminus coincide.",
+  "note": "Śukla, so no reckoning field. Also Devotthāna, Deva Uttāna, Uttānā Ekādaśī, Hari Prabodhinī, Deothān. The counterpart of Devśayanī: Kane's formulation is that Viṣṇu sleeps from the Āṣāḍha bright ekādaśī at night and rises on the Kārtika bright ekādaśī by day. WHAT IS DONE: waking of the deity, Viṣṇu-pūjā, and the end of the four-month restrictions. Because marriages are barred through Cāturmāsya, this ekādaśī opens the wedding season, and Tulasī Vivāha — the symbolic marriage of Viṣṇu to Lakṣmī in the form of the tulasī plant — is performed on or about it, running into Kārtika Pūrṇimā four days later. A TERMINUS AMBIGUITY WORTH RECORDING: Kane's cāturmāsya chapter says the vrata is completed on Kārtika śukla dvādaśī, the twelfth, not the eleventh; the vrata's END and this ekādaśī are adjacent but not identical, and sources vary on which carries the concluding rite. Do not silently merge them. SUNRISE OWNERSHIP: inherits the full ekādaśī apparatus; see ekadashi-shukla. Note that where a Vaiṣṇava aruṇodaya-vedha displaces the fast to dvādaśī, the fast day and the cāturmāsya terminus coincide.\n\nVARIANTS: Smārta and Vaiṣṇava traditions fast on different days when the ekādaśī is touched by daśamī, and pañcāṅgas publish both as dated calendars. Neither is offered as the default.",
   "tags": [
    "hindu",
    "vaishnava",
@@ -2566,14 +2709,40 @@
     "note": "For Tulasī Vivāha and the reopening of the marriage season in current practice."
    }
   ],
-  "_corpus": "hindu-monthly"
+  "_corpus": "hindu-monthly",
+  "variants": [
+   {
+    "school": "smarta",
+    "anchor": {
+     "kind": "lunar",
+     "month": "Kārtika",
+     "paksha": "shukla",
+     "tithi": 11,
+     "vyapti": "see ekadashi-shukla — not plain udaya-vyāpinī"
+    },
+    "note": "the ekādaśī current at sunrise, fasted even when touched by daśamī"
+   },
+   {
+    "school": "vaishnava",
+    "anchor": {
+     "kind": "lunar",
+     "month": "Kārtika",
+     "paksha": "shukla",
+     "tithi": 11,
+     "vyapti": "see ekadashi-shukla — not plain udaya-vyāpinī",
+     "avoidDashamiViddha": true
+    },
+    "note": "a daśamī-viddha ekādaśī is deferred to the following day"
+   }
+  ],
+  "restriction": "none"
  },
  {
   "key": "vaikuntha-ekadashi",
   "name": "Vaikuṇṭha Ekādaśī",
   "ref": "occasions:vaikuntha-ekadashi",
   "summary": "The waxing-fortnight ekādaśī falling within the solar month of Dhanus, on which the gate of Vaikuṇṭha is held to open.",
-  "note": "MARKED DISPUTED BECAUSE THE ANCHOR IS HYBRID AND MBF HAS NO KIND FOR IT. The observance is defined SOLAR-LUNARLY: it is the śukla-pakṣa ekādaśī that falls while the sun stands in sidereal Dhanus — the Tamil month Mārgaḻi, Dhanurmāsa — which is why it lands between about 16 December and 13 January. In lunar-month terms that ekādaśī is USUALLY Mārgaśīrṣa śukla 11, in which case it coincides with Mokṣadā Ekādaśī, but it can instead be Pauṣa śukla 11, in which case it coincides with Pauṣa Putradā Ekādaśī. Neither lunar month is the answer on its own; the solar constraint decides, and in some years pañcāṅgas following purely lunar naming and those following the Dhanurmāsa definition disagree. I have therefore recorded both lunar possibilities as variants rather than choosing. Śukla tithis are named alike in both amānta and pūrṇimānta reckoning, so no reckoning field. NAMES: Mukkoṭi Ekādaśi in Telugu-speaking regions; Guruvāyūr Ekādaśi in Kerala; the Śaiva observance of the same day as Trikoṭi Ekādaśī. WHAT IS DONE: a full fast with a night vigil and pre-dawn temple visit; the Padmapurāṇa legend of Yogamāyā slaying Murāsura, from whom Viṣṇu names the goddess Ekādaśī, makes this the FIRST ekādaśī and a Dhanurmāsa śukla-pakṣa one. At Srirangam the Paramapada Vāsal is opened on this day alone and the celebration runs twenty days as pagal pattu and irā pattu; at Tirumala the Vaikuṇṭa Dvāram is opened. The Viṣṇupurāṇa claim that fasting here equals fasting on the other twenty-three is māhātmya, and stands against the Vaiṣṇava rule that all twenty-four are obligatory anyway. SUNRISE OWNERSHIP: inherits the ekādaśī vedha apparatus; see ekadashi-shukla.\n\nREGIONAL SPLIT, not a disagreement to resolve: the same Ekādaśī is named Mārgaśīrṣa in the southern amānta reckoning and Pauṣa in the northern pūrṇimānta one. Both anchors are given; a consumer should show the one its audience keeps.",
+  "note": "MARKED DISPUTED BECAUSE THE ANCHOR IS HYBRID AND MBF HAS NO KIND FOR IT. The observance is defined SOLAR-LUNARLY: it is the śukla-pakṣa ekādaśī that falls while the sun stands in sidereal Dhanus — the Tamil month Mārgaḻi, Dhanurmāsa — which is why it lands between about 16 December and 13 January. In lunar-month terms that ekādaśī is USUALLY Mārgaśīrṣa śukla 11, in which case it coincides with Mokṣadā Ekādaśī, but it can instead be Pauṣa śukla 11, in which case it coincides with Pauṣa Putradā Ekādaśī. Neither lunar month is the answer on its own; the solar constraint decides, and in some years pañcāṅgas following purely lunar naming and those following the Dhanurmāsa definition disagree. I have therefore recorded both lunar possibilities as variants rather than choosing. Śukla tithis are named alike in both amānta and pūrṇimānta reckoning, so no reckoning field. NAMES: Mukkoṭi Ekādaśi in Telugu-speaking regions; Guruvāyūr Ekādaśi in Kerala; the Śaiva observance of the same day as Trikoṭi Ekādaśī. WHAT IS DONE: a full fast with a night vigil and pre-dawn temple visit; the Padmapurāṇa legend of Yogamāyā slaying Murāsura, from whom Viṣṇu names the goddess Ekādaśī, makes this the FIRST ekādaśī and a Dhanurmāsa śukla-pakṣa one. At Srirangam the Paramapada Vāsal is opened on this day alone and the celebration runs twenty days as pagal pattu and irā pattu; at Tirumala the Vaikuṇṭa Dvāram is opened. The Viṣṇupurāṇa claim that fasting here equals fasting on the other twenty-three is māhātmya, and stands against the Vaiṣṇava rule that all twenty-four are obligatory anyway. SUNRISE OWNERSHIP: inherits the ekādaśī vedha apparatus; see ekadashi-shukla.\n\nREGIONAL SPLIT, not a disagreement to resolve: the same Ekādaśī is named Mārgaśīrṣa in the southern amānta reckoning and Pauṣa in the northern pūrṇimānta one. Both anchors are given; a consumer should show the one its audience keeps.\n\nVARIANTS: Smārta and Vaiṣṇava traditions fast on different days when the ekādaśī is touched by daśamī, and pañcāṅgas publish both as dated calendars. Neither is offered as the default.",
   "tags": [
    "hindu",
    "vaishnava",
@@ -2648,14 +2817,56 @@
   "_corpus": "hindu-monthly",
   "audit": {
    "corrected": true
-  }
+  },
+  "variants": [
+   {
+    "school": "smarta",
+    "anchor": {
+     "kind": "lunar",
+     "month": "Mārgaśīrṣa",
+     "paksha": "shukla",
+     "tithi": 11,
+     "reckoning": "amanta",
+     "solarConstraint": {
+      "degreesRange": [
+       240,
+       270
+      ],
+      "frame": "sidereal (nirayana)",
+      "note": "the Sun anywhere in sidereal Dhanus, not at the ingress degree — the ekādaśī inside the solar month, not the one nearest Dhanus Saṅkrānti"
+     }
+    },
+    "note": "the ekādaśī current at sunrise, fasted even when touched by daśamī"
+   },
+   {
+    "school": "vaishnava",
+    "anchor": {
+     "kind": "lunar",
+     "month": "Mārgaśīrṣa",
+     "paksha": "shukla",
+     "tithi": 11,
+     "reckoning": "amanta",
+     "solarConstraint": {
+      "degreesRange": [
+       240,
+       270
+      ],
+      "frame": "sidereal (nirayana)",
+      "note": "the Sun anywhere in sidereal Dhanus, not at the ingress degree — the ekādaśī inside the solar month, not the one nearest Dhanus Saṅkrānti"
+     },
+     "avoidDashamiViddha": true
+    },
+    "note": "a daśamī-viddha ekādaśī is deferred to the following day"
+   }
+  ],
+  "restriction": "none"
  },
  {
   "key": "adhika-masa-ekadashi",
   "name": "Adhika Māsa Ekādaśī (Padminī and Paramā)",
   "ref": "occasions:adhika-masa-ekadashi",
   "summary": "The two ekādaśīs of the intercalary month, which are observed under their own names even though other vratas are suspended.",
-  "note": "THIS ENTRY EXISTS TO RECORD THE EXPLICIT EXCEPTION TO THE NO-VRATA-IN-ADHIKA-MĀSA RULE. The general rule is well attested: Gārgya, quoted by Hemādri, holds that in an intercalary month one should neither begin a vrata nor perform its udyāpana; Kane states that Rāmanavamī is not celebrated in an intercalary Caitra and that the same applies to Janmāṣṭamī and other vratas; and for the ancestral rites he states separately that Mahālayaśrāddha is not to be performed in a malamāsa. Observances wait for the nija month. BUT the ekādaśīs of the adhika month are not suspended — they were given their own names precisely because they are kept. Kane records that for the twenty-four ekādaśīs of the ordinary year and for THE TWO EKĀDAŚĪS OF THE INTERCALARY MONTH separate names were invented, and refers to Padmapurāṇa VI.64–65 for the names of the dark and bright halves. The adhika month is itself dignified as Puruṣottama Māsa. Saṅkaṣṭī Caturthī likewise carries a thirteenth vrata-kathā and a thirteenth name and pīṭha of Gaṇeśa reserved for the adhika month, which is a second, independent attestation that the monthly cycle continues through it. THE NAME-TO-PAKṢA ASSIGNMENT IS DISPUTED, which is why this is one entry and not two. The prevailing usage makes Padminī the śukla-pakṣa ekādaśī and Paramā the kṛṣṇa-pakṣa one; some published tables reverse them; the OCR of Kane's footnote citing Padma VI.64–65 does not resolve which name the Purāṇa attaches to which half. I record both tithis under one key rather than assert an assignment I cannot verify. SUNRISE OWNERSHIP: inherits the ordinary ekādaśī vedha apparatus.\n\nOCCURS ONLY IN AN INTERCALARY MONTH, so in most years it does not occur at all and an empty result is the correct answer. This is the opposite of the usual rule that festivals wait for the nija month — these two belong to the repeat itself.",
+  "note": "THIS ENTRY EXISTS TO RECORD THE EXPLICIT EXCEPTION TO THE NO-VRATA-IN-ADHIKA-MĀSA RULE. The general rule is well attested: Gārgya, quoted by Hemādri, holds that in an intercalary month one should neither begin a vrata nor perform its udyāpana; Kane states that Rāmanavamī is not celebrated in an intercalary Caitra and that the same applies to Janmāṣṭamī and other vratas; and for the ancestral rites he states separately that Mahālayaśrāddha is not to be performed in a malamāsa. Observances wait for the nija month. BUT the ekādaśīs of the adhika month are not suspended — they were given their own names precisely because they are kept. Kane records that for the twenty-four ekādaśīs of the ordinary year and for THE TWO EKĀDAŚĪS OF THE INTERCALARY MONTH separate names were invented, and refers to Padmapurāṇa VI.64–65 for the names of the dark and bright halves. The adhika month is itself dignified as Puruṣottama Māsa. Saṅkaṣṭī Caturthī likewise carries a thirteenth vrata-kathā and a thirteenth name and pīṭha of Gaṇeśa reserved for the adhika month, which is a second, independent attestation that the monthly cycle continues through it. THE NAME-TO-PAKṢA ASSIGNMENT IS DISPUTED, which is why this is one entry and not two. The prevailing usage makes Padminī the śukla-pakṣa ekādaśī and Paramā the kṛṣṇa-pakṣa one; some published tables reverse them; the OCR of Kane's footnote citing Padma VI.64–65 does not resolve which name the Purāṇa attaches to which half. I record both tithis under one key rather than assert an assignment I cannot verify. SUNRISE OWNERSHIP: inherits the ordinary ekādaśī vedha apparatus.\n\nOCCURS ONLY IN AN INTERCALARY MONTH, so in most years it does not occur at all and an empty result is the correct answer. This is the opposite of the usual rule that festivals wait for the nija month — these two belong to the repeat itself.\n\nVARIANTS: Smārta and Vaiṣṇava traditions fast on different days when the ekādaśī is touched by daśamī, and pañcāṅgas publish both as dated calendars. Neither is offered as the default.",
   "tags": [
    "hindu",
    "vaishnava",
@@ -2729,7 +2940,35 @@
   ],
   "audit": {
    "corrected": true
-  }
+  },
+  "variants": [
+   {
+    "school": "smarta",
+    "anchor": {
+     "kind": "lunar",
+     "month": "adhika",
+     "paksha": "shukla",
+     "tithi": 11,
+     "reckoning": "amanta",
+     "note": "the śukla-pakṣa ekādaśī of the intercalary month; the kṛṣṇa one is entry parama-ekadashi. The śukla/kṛṣṇa ORDER inside the adhika māsa reverses between amānta and pūrṇimānta reckoning, so any ordinal ('the first') must be qualified by reckoning. Name-to-pakṣa assignment remains DISPUTED: most pañcāṅgas and Adhika Śrāvaṇa 2023 usage give Padminī = śukla, Paramā = kṛṣṇa, but at least one 2026 listing reverses them."
+    },
+    "note": "the ekādaśī current at sunrise, fasted even when touched by daśamī"
+   },
+   {
+    "school": "vaishnava",
+    "anchor": {
+     "kind": "lunar",
+     "month": "adhika",
+     "paksha": "shukla",
+     "tithi": 11,
+     "reckoning": "amanta",
+     "note": "the śukla-pakṣa ekādaśī of the intercalary month; the kṛṣṇa one is entry parama-ekadashi. The śukla/kṛṣṇa ORDER inside the adhika māsa reverses between amānta and pūrṇimānta reckoning, so any ordinal ('the first') must be qualified by reckoning. Name-to-pakṣa assignment remains DISPUTED: most pañcāṅgas and Adhika Śrāvaṇa 2023 usage give Padminī = śukla, Paramā = kṛṣṇa, but at least one 2026 listing reverses them.",
+     "avoidDashamiViddha": true
+    },
+    "note": "a daśamī-viddha ekādaśī is deferred to the following day"
+   }
+  ],
+  "restriction": "none"
  },
  {
   "key": "gupta-navaratri-magha",
@@ -2743,7 +2982,6 @@
    "navaratri",
    "gupta",
    "mahavidya",
-   "initiatory",
    "winter"
   ],
   "anchor": {
@@ -2776,7 +3014,8 @@
   "_corpus": "hindu-shakta",
   "audit": {
    "corrected": true
-  }
+  },
+  "restriction": "initiatory"
  },
  {
   "key": "gupta-navaratri-ashadha",
@@ -2790,7 +3029,6 @@
    "navaratri",
    "gupta",
    "mahavidya",
-   "initiatory",
    "monsoon"
   ],
   "anchor": {
@@ -2823,7 +3061,8 @@
   "_corpus": "hindu-shakta",
   "audit": {
    "corrected": true
-  }
+  },
+  "restriction": "initiatory"
  },
  {
   "key": "durga-puja-shashthi",
@@ -2867,7 +3106,8 @@
    }
   ],
   "confidence": "attested",
-  "_corpus": "hindu-shakta"
+  "_corpus": "hindu-shakta",
+  "restriction": "none"
  },
  {
   "key": "durga-puja-saptami",
@@ -2908,7 +3148,8 @@
    }
   ],
   "confidence": "attested",
-  "_corpus": "hindu-shakta"
+  "_corpus": "hindu-shakta",
+  "restriction": "none"
  },
  {
   "key": "durga-puja-ashtami",
@@ -2959,7 +3200,8 @@
    }
   ],
   "confidence": "attested",
-  "_corpus": "hindu-shakta"
+  "_corpus": "hindu-shakta",
+  "restriction": "none"
  },
  {
   "key": "sandhi-puja",
@@ -3009,7 +3251,8 @@
   "_corpus": "hindu-shakta",
   "audit": {
    "corrected": true
-  }
+  },
+  "restriction": "none"
  },
  {
   "key": "durga-puja-navami",
@@ -3049,7 +3292,8 @@
    }
   ],
   "confidence": "attested",
-  "_corpus": "hindu-shakta"
+  "_corpus": "hindu-shakta",
+  "restriction": "none"
  },
  {
   "key": "lalita-panchami",
@@ -3057,7 +3301,27 @@
   "ref": "occasions:lalita-panchami",
   "summary": "The fifth night of autumn Navarātri, kept as a vrata to Lalitā Tripurasundarī.",
   "note": "A one-day vrata inside Śāradīya Navarātri directed to Lalitā rather than to Durgā, most strongly kept in Gujarat and Maharashtra, where it is called Upāṅga Lalitā Vrata. Fasting through the day with the pūjā at pradoṣa is the usual form. Distinct from Lalitā Jayantī (Māgha Pūrṇimā), with which it is sometimes confused. The deeper Śrīvidyā practice attached to Lalitā is dīkṣā-bound and is not recorded here.",
-  "tags": "append \"initiatory\"",
+  "tags": [
+   "a",
+   "p",
+   "p",
+   "e",
+   "n",
+   "d",
+   " ",
+   "\"",
+   "i",
+   "n",
+   "i",
+   "t",
+   "i",
+   "a",
+   "t",
+   "o",
+   "r",
+   "y",
+   "\""
+  ],
   "anchor": {
    "kind": "lunar",
    "month": "Āśvina",
@@ -3086,7 +3350,8 @@
   "_corpus": "hindu-shakta",
   "audit": {
    "corrected": true
-  }
+  },
+  "restriction": "none"
  },
  {
   "key": "kali-puja",
@@ -3152,7 +3417,8 @@
    }
   ],
   "confidence": "attested",
-  "_corpus": "hindu-shakta"
+  "_corpus": "hindu-shakta",
+  "restriction": "none"
  },
  {
   "key": "kali-chaudas",
@@ -3213,7 +3479,8 @@
   "_corpus": "hindu-shakta",
   "audit": {
    "corrected": true
-  }
+  },
+  "restriction": "none"
  },
  {
   "key": "ratanti-kali-puja",
@@ -3261,7 +3528,8 @@
   "_corpus": "hindu-shakta",
   "audit": {
    "corrected": true
-  }
+  },
+  "restriction": "none"
  },
  {
   "key": "phalaharini-kali-puja",
@@ -3313,14 +3581,15 @@
   "_corpus": "hindu-shakta",
   "audit": {
    "corrected": true
-  }
+  },
+  "restriction": "none"
  },
  {
   "key": "kaushiki-amavasya",
   "name": "Kauśikī Amāvasyā",
   "ref": "occasions:kaushiki-amavasya",
   "summary": "The monsoon new moon held to be the most potent night of the year for Tārā, above all at Tārāpīṭh.",
-  "note": "The principal Tārā occasion of the Bengali Śākta year. Tārāpīṭh keeps it as the night on which Bāmākhepā attained siddhi, and it draws the largest pilgrimage of the site's calendar. RECKONING: Śrāvaṇa Kṛṣṇa Amāvasyā in the amanta system used by the Bengali calendar; the same day is Bhādrapada Kṛṣṇa Amāvasyā in the purnimanta system. It falls in the Bengali solar month Bhādra, one lunation BEFORE Mahālayā — the two are frequently conflated and are not the same new moon. For 2026 the Bengali calendar's Śrāvaṇa kṛṣṇa paksha runs through early September, placing this amāvasyā around 11 September, with Mahālayā a month later on 10 October. CLOSED MATERIAL: the Tārā sādhanā associated with the night is dīkṣā-bound and is not recorded here.",
+  "note": "The principal Tārā occasion of the Bengali Śākta year. Tārāpīṭh keeps it as the night on which Bāmākhepā attained siddhi, and it draws the largest pilgrimage of the site's calendar. RECKONING: Śrāvaṇa Kṛṣṇa Amāvasyā in the amanta system used by the Bengali calendar; the same day is Bhādrapada Kṛṣṇa Amāvasyā in the purnimanta system. It falls in the Bengali solar month Bhādra, one lunation BEFORE Mahālayā — the two are frequently conflated and are not the same new moon. For 2026 the Bengali calendar's Śrāvaṇa kṛṣṇa paksha runs through early September, placing this amāvasyā around 11 September, with Mahālayā a month later on 10 October. CLOSED MATERIAL: the Tārā sādhanā associated with the night is dīkṣā-bound and is not recorded here.\n\nVARIANTS: the sources reached did not settle whether this is kept by the sunrise rule or as a night observance like the other Śākta amāvāsyās. Both are offered; in some years they name different days.",
   "tags": [
    "shakta",
    "devi",
@@ -3329,8 +3598,7 @@
    "bengal",
    "amavasya",
    "tantra",
-   "pilgrimage",
-   "initiatory"
+   "pilgrimage"
   ],
   "anchor": {
    "kind": "lunar",
@@ -3344,7 +3612,34 @@
   "_corpus": "hindu-shakta",
   "audit": {
    "corrected": true
-  }
+  },
+  "variants": [
+   {
+    "school": "sunrise",
+    "anchor": {
+     "kind": "lunar",
+     "month": "Śrāvaṇa",
+     "paksha": "krishna",
+     "tithi": 15,
+     "reckoning": "amanta",
+     "dayRule": "sunrise"
+    },
+    "note": "the amāvāsyā current at sunrise, as most pañcāṅgas date an amāvāsyā"
+   },
+   {
+    "school": "nishitha",
+    "anchor": {
+     "kind": "lunar",
+     "month": "Śrāvaṇa",
+     "paksha": "krishna",
+     "tithi": 15,
+     "reckoning": "amanta",
+     "dayRule": "nishitha"
+    },
+    "note": "the amāvāsyā current at midnight, as the other Śākta night rites are kept"
+   }
+  ],
+  "restriction": "initiatory"
  },
  {
   "key": "lalita-jayanti",
@@ -3359,8 +3654,7 @@
    "tripurasundari",
    "mahavidya",
    "srividya",
-   "purnima",
-   "initiatory"
+   "purnima"
   ],
   "anchor": {
    "kind": "lunar",
@@ -3392,7 +3686,8 @@
    }
   ],
   "confidence": "attested",
-  "_corpus": "hindu-shakta"
+  "_corpus": "hindu-shakta",
+  "restriction": "initiatory"
  },
  {
   "key": "dhumavati-jayanti",
@@ -3406,8 +3701,7 @@
    "dhumavati",
    "mahavidya",
    "varanasi",
-   "ascetic",
-   "initiatory"
+   "ascetic"
   ],
   "anchor": {
    "kind": "lunar",
@@ -3420,7 +3714,8 @@
   "_corpus": "hindu-shakta",
   "audit": {
    "corrected": true
-  }
+  },
+  "restriction": "initiatory"
  },
  {
   "key": "matangi-jayanti",
@@ -3428,7 +3723,34 @@
   "ref": "occasions:matangi-jayanti",
   "summary": "The appearance day of Mātaṅgī, ninth of the Mahāvidyās, on Vaiśākha Śukla Tṛtīyā.",
   "note": "Falls on the same tithi as Akṣaya Tṛtīyā, verified independently as Vaiśākha Śukla Tṛtīyā (19 April 2026). Mātaṅgī is the outlier of the Mahāvidyā set in the matter of access: the sources state that no purificatory fast or preparatory rite is prescribed for her worship and that anyone may approach her, including those held unfit or uninitiated for other deities — so unlike most of the ten, her cult is not gated by dīkṣā. She is identified with Śyāmalā/Rājamātaṅgī in the Śrīvidyā tradition, where the material does become initiatory; that layer is not recorded here. CAVEAT: the tithi is attested only through general-interest reporting, not through a critical or Purāṇic source.",
-  "tags": "append \"restricted-detail\"",
+  "tags": [
+   "a",
+   "p",
+   "p",
+   "e",
+   "n",
+   "d",
+   " ",
+   "\"",
+   "r",
+   "e",
+   "s",
+   "t",
+   "r",
+   "i",
+   "c",
+   "t",
+   "e",
+   "d",
+   "-",
+   "d",
+   "e",
+   "t",
+   "a",
+   "i",
+   "l",
+   "\""
+  ],
   "anchor": {
    "kind": "lunar",
    "month": "Vaiśākha",
@@ -3456,7 +3778,8 @@
   "_corpus": "hindu-shakta",
   "audit": {
    "corrected": true
-  }
+  },
+  "restriction": "detail-withheld"
  },
  {
   "key": "bagalamukhi-jayanti",
@@ -3469,8 +3792,7 @@
    "devi",
    "bagalamukhi",
    "mahavidya",
-   "vaishakha",
-   "initiatory"
+   "vaishakha"
   ],
   "anchor": {
    "kind": "lunar",
@@ -3500,7 +3822,8 @@
    }
   ],
   "confidence": "attested",
-  "_corpus": "hindu-shakta"
+  "_corpus": "hindu-shakta",
+  "restriction": "initiatory"
  },
  {
   "key": "chinnamasta-jayanti",
@@ -3513,9 +3836,7 @@
    "devi",
    "chinnamasta",
    "mahavidya",
-   "vaishakha",
-   "initiatory",
-   "restricted"
+   "vaishakha"
   ],
   "anchor": {
    "kind": "lunar",
@@ -3550,7 +3871,8 @@
   "_corpus": "hindu-shakta",
   "audit": {
    "corrected": true
-  }
+  },
+  "restriction": "detail-withheld"
  },
  {
   "key": "jagaddhatri-puja",
@@ -3610,7 +3932,8 @@
   "_corpus": "hindu-shakta",
   "audit": {
    "corrected": true
-  }
+  },
+  "restriction": "none"
  },
  {
   "key": "ambubachi-mela",
@@ -3664,7 +3987,8 @@
   "_corpus": "hindu-shakta",
   "audit": {
    "corrected": true
-  }
+  },
+  "restriction": "none"
  },
  {
   "key": "basanti-puja",
@@ -3717,7 +4041,8 @@
   "_corpus": "hindu-shakta",
   "audit": {
    "corrected": true
-  }
+  },
+  "restriction": "none"
  },
  {
   "key": "kojagari-lakshmi-puja",
@@ -3778,14 +4103,15 @@
   "_corpus": "hindu-shakta",
   "audit": {
    "corrected": true
-  }
+  },
+  "restriction": "none"
  },
  {
   "key": "parama-ekadashi",
   "name": "Paramā Ekādaśī",
   "ref": "occasions:parama-ekadashi",
   "summary": "The two ekādaśīs of the intercalary month, which are observed under their own names even though other vratas are suspended.",
-  "note": "THIS ENTRY EXISTS TO RECORD THE EXPLICIT EXCEPTION TO THE NO-VRATA-IN-ADHIKA-MĀSA RULE. The general rule is well attested: Gārgya, quoted by Hemādri, holds that in an intercalary month one should neither begin a vrata nor perform its udyāpana; Kane states that Rāmanavamī is not celebrated in an intercalary Caitra and that the same applies to Janmāṣṭamī and other vratas; and for the ancestral rites he states separately that Mahālayaśrāddha is not to be performed in a malamāsa. Observances wait for the nija month. BUT the ekādaśīs of the adhika month are not suspended — they were given their own names precisely because they are kept. Kane records that for the twenty-four ekādaśīs of the ordinary year and for THE TWO EKĀDAŚĪS OF THE INTERCALARY MONTH separate names were invented, and refers to Padmapurāṇa VI.64–65 for the names of the dark and bright halves. The adhika month is itself dignified as Puruṣottama Māsa. Saṅkaṣṭī Caturthī likewise carries a thirteenth vrata-kathā and a thirteenth name and pīṭha of Gaṇeśa reserved for the adhika month, which is a second, independent attestation that the monthly cycle continues through it. THE NAME-TO-PAKṢA ASSIGNMENT IS DISPUTED, which is why this is one entry and not two. The prevailing usage makes Padminī the śukla-pakṣa ekādaśī and Paramā the kṛṣṇa-pakṣa one; some published tables reverse them; the OCR of Kane's footnote citing Padma VI.64–65 does not resolve which name the Purāṇa attaches to which half. I record both tithis under one key rather than assert an assignment I cannot verify. SUNRISE OWNERSHIP: inherits the ordinary ekādaśī vedha apparatus.\n\nOCCURS ONLY IN AN INTERCALARY MONTH, so in most years it does not occur at all and an empty result is the correct answer. This is the opposite of the usual rule that festivals wait for the nija month — these two belong to the repeat itself.",
+  "note": "THIS ENTRY EXISTS TO RECORD THE EXPLICIT EXCEPTION TO THE NO-VRATA-IN-ADHIKA-MĀSA RULE. The general rule is well attested: Gārgya, quoted by Hemādri, holds that in an intercalary month one should neither begin a vrata nor perform its udyāpana; Kane states that Rāmanavamī is not celebrated in an intercalary Caitra and that the same applies to Janmāṣṭamī and other vratas; and for the ancestral rites he states separately that Mahālayaśrāddha is not to be performed in a malamāsa. Observances wait for the nija month. BUT the ekādaśīs of the adhika month are not suspended — they were given their own names precisely because they are kept. Kane records that for the twenty-four ekādaśīs of the ordinary year and for THE TWO EKĀDAŚĪS OF THE INTERCALARY MONTH separate names were invented, and refers to Padmapurāṇa VI.64–65 for the names of the dark and bright halves. The adhika month is itself dignified as Puruṣottama Māsa. Saṅkaṣṭī Caturthī likewise carries a thirteenth vrata-kathā and a thirteenth name and pīṭha of Gaṇeśa reserved for the adhika month, which is a second, independent attestation that the monthly cycle continues through it. THE NAME-TO-PAKṢA ASSIGNMENT IS DISPUTED, which is why this is one entry and not two. The prevailing usage makes Padminī the śukla-pakṣa ekādaśī and Paramā the kṛṣṇa-pakṣa one; some published tables reverse them; the OCR of Kane's footnote citing Padma VI.64–65 does not resolve which name the Purāṇa attaches to which half. I record both tithis under one key rather than assert an assignment I cannot verify. SUNRISE OWNERSHIP: inherits the ordinary ekādaśī vedha apparatus.\n\nOCCURS ONLY IN AN INTERCALARY MONTH, so in most years it does not occur at all and an empty result is the correct answer. This is the opposite of the usual rule that festivals wait for the nija month — these two belong to the repeat itself.\n\nVARIANTS: Smārta and Vaiṣṇava traditions fast on different days when the ekādaśī is touched by daśamī, and pañcāṅgas publish both as dated calendars. Neither is offered as the default.",
   "tags": [
    "hindu",
    "vaishnava",
@@ -3859,6 +4185,34 @@
   ],
   "audit": {
    "corrected": true
-  }
+  },
+  "variants": [
+   {
+    "school": "smarta",
+    "anchor": {
+     "kind": "lunar",
+     "month": "adhika",
+     "paksha": "krishna",
+     "tithi": 11,
+     "reckoning": "amanta",
+     "note": "the kṛṣṇa-pakṣa ekādaśī of the intercalary month; the śukla one is entry adhika-masa-ekadashi. Name-to-pakṣa assignment remains DISPUTED — most pañcāṅgas give Padminī = śukla and Paramā = kṛṣṇa, but at least one 2026 listing reverses them."
+    },
+    "note": "the ekādaśī current at sunrise, fasted even when touched by daśamī"
+   },
+   {
+    "school": "vaishnava",
+    "anchor": {
+     "kind": "lunar",
+     "month": "adhika",
+     "paksha": "krishna",
+     "tithi": 11,
+     "reckoning": "amanta",
+     "note": "the kṛṣṇa-pakṣa ekādaśī of the intercalary month; the śukla one is entry adhika-masa-ekadashi. Name-to-pakṣa assignment remains DISPUTED — most pañcāṅgas give Padminī = śukla and Paramā = kṛṣṇa, but at least one 2026 listing reverses them.",
+     "avoidDashamiViddha": true
+    },
+    "note": "a daśamī-viddha ekādaśī is deferred to the following day"
+   }
+  ],
+  "restriction": "none"
  }
 ]

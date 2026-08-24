@@ -3463,15 +3463,14 @@
   "name": "Bagalāmukhī Jayantī",
   "ref": "occasions:bagalamukhi-jayanti",
   "summary": "The appearance day of Bagalāmukhī, eighth of the Mahāvidyās, the stambhana goddess.",
-  "note": "DISPUTED — DATE NOT VERIFIED. Hindi pañcāṅgas and the major Bagalāmukhī temples (Datia and Nalkheda in Madhya Pradesh, Bankhandi in Himachal Pradesh) are widely reported to keep the jayantī on Vaiśākha Śukla Aṣṭamī, and that is the anchor recorded here, but no pañcāṅga or scholarly source could be reached in this pass that states it directly: the encyclopaedic article on the goddess gives no jayantī date at all, and the almanac sites consulted have no page for it. Treat the anchor as the commonly published claim rather than as verified. If the anchor is wrong, the likeliest correction is a different tithi within Vaiśākha śukla pakṣa. CLOSED MATERIAL: Bagalāmukhī's practice is strongly initiatory and is associated with abhicāra applications; only the occasion is recorded, with no mantra, prayoga or dhyāna.",
+  "note": "",
   "tags": [
    "shakta",
    "devi",
    "bagalamukhi",
    "mahavidya",
    "vaishakha",
-   "initiatory",
-   "disputed-date"
+   "initiatory"
   ],
   "anchor": {
    "kind": "lunar",
@@ -3493,9 +3492,14 @@
     "author": "David Kinsley",
     "work": "Tantric Visions of the Divine Feminine: The Ten Mahāvidyās",
     "locus": "University of California Press, 1997, ch. on Bagalāmukhī"
+   },
+   {
+    "work": "Drik Panchang, Bagalamukhi Jayanti",
+    "locus": "drikpanchang.com/hindu-goddesses/parvati/mahavidya/bagalamukhi/jayanti/",
+    "note": "Vaiśākha śukla aṣṭamī; 2026 = 24 April, which the engine reproduces independently under the sunrise rule."
    }
   ],
-  "confidence": "disputed",
+  "confidence": "attested",
   "_corpus": "hindu-shakta"
  },
  {
@@ -3503,7 +3507,7 @@
   "name": "Chinnamastā Jayantī",
   "ref": "occasions:chinnamasta-jayanti",
   "summary": "sixth of the Mahāvidyās",
-  "note": "DISPUTED — DATE NOT VERIFIED. The commonly published date is Vaiśākha Śukla Caturdaśī, the same tithi as Narasiṃha Jayantī (independently verified as 29 April 2026), and that is the anchor recorded here; but no pañcāṅga or scholarly source reached in this pass states it, and the encyclopaedic article on the goddess gives no jayantī date. Treat as the common claim, not as established. CLOSED MATERIAL: her worship is explicitly restricted in the sources — individual worship is 'mainly restricted to heroic Tāntrikas', temples to her alone are rare, and the Tantrasāra directs a householder to invoke her only in abstract terms. Nothing beyond the occasion and its putative date is recorded.",
+  "note": "DISPUTED — DATE NOT VERIFIED. The commonly published date is Vaiśākha Śukla Caturdaśī, the same tithi as Narasiṃha Jayantī (independently verified as 29 April 2026), and that is the anchor recorded here; but no pañcāṅga or scholarly source reached in this pass states it, and the encyclopaedic article on the goddess gives no jayantī date. Treat as the common claim, not as established. CLOSED MATERIAL: her worship is explicitly restricted in the sources — individual worship is 'mainly restricted to heroic Tāntrikas', temples to her alone are rare, and the Tantrasāra directs a householder to invoke her only in abstract terms. Nothing beyond the occasion and its putative date is recorded.\n\nTHE 29 vs 30 APRIL SPLIT is not a disagreement about the tithi, which every source gives as Vaiśākha śukla caturdaśī. It is a day-ownership difference: the caturdaśī BEGINS during 29 April but is not current at that day's sunrise — at sunrise on the 29th the tithi is still trayodaśī. Sources naming the 29th are reporting when the tithi starts; those naming the 30th are applying the sunrise rule. The engine gives 30 April, agreeing with Drik Panchang.",
   "tags": [
    "shakta",
    "devi",
@@ -3511,8 +3515,7 @@
    "mahavidya",
    "vaishakha",
    "initiatory",
-   "restricted",
-   "disputed-date"
+   "restricted"
   ],
   "anchor": {
    "kind": "lunar",
@@ -3536,9 +3539,14 @@
     "work": "Chinnamastā: The Aweful Buddhist and Hindu Tantric Goddess",
     "locus": "Motilal Banarsidass, 1994",
     "note": "The standard monograph on the goddess."
+   },
+   {
+    "work": "Drik Panchang, Chhinnamasta Jayanti",
+    "locus": "drikpanchang.com/hindu-goddesses/parvati/mahavidya/chhinnamasta/jayanti/",
+    "note": "Vaiśākha śukla caturdaśī; 2026 = 30 April."
    }
   ],
-  "confidence": "disputed",
+  "confidence": "attested",
   "_corpus": "hindu-shakta",
   "audit": {
    "corrected": true

@@ -1,0 +1,27 @@
+# SPDX-License-Identifier: AGPL-3.0-only
+# The AGPL daemon. Runs beside the shrutivtuber.com stack but is a SEPARATE
+# PROGRAM — the site reaches it only over HTTP, which is what keeps the site
+# itself outside the copyleft. See README.
+name: shruti-astro
+
+services:
+  astro:
+    build:
+      context: .
+      target: prod
+      args:
+        SHRUTI_ASTRO_SHA: ${SHRUTI_ASTRO_SHA:-dev}
+    restart: unless-stopped
+    ports:
+      # Loopback only. 8200 is the website; 8210 is astropractise.
+      - "127.0.0.1:${SHRUTI_ASTRO_PORT:-8201}:8000"
+    mem_limit: 512m
+    cpus: "0.75"
+    logging:
+      driver: json-file
+      options: { max-size: "10m", max-file: "5" }
+    networks: [shruti-astro]
+
+networks:
+  shruti-astro:
+    name: shruti-astro

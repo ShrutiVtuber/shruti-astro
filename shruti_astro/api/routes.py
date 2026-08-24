@@ -490,6 +490,51 @@ async def hindu_calendar_endpoint(
     return out
 
 
+@router.get("/attic-calendar")
+async def attic_calendar_endpoint(
+    when: str | None = Query(None, description="ISO-8601 date; defaults to today"),
+) -> dict:
+    """
+    The Attic calendar of Athens.
+
+    The month opens at the noumenia and runs full (30) or hollow (29) as the
+    next conjunction falls. **The last third is counted backwards** — δεκάτη
+    φθίνοντος is the tenth *from the end* — and the final day is ἕνη καὶ νέα,
+    "old and new", belonging to both months at once.
+
+    Cannot-compute: before 432 BCE the Metonic cycle was not in use and Athens'
+    intercalations were magistrates' decisions, argued about at the time and not
+    recoverable. Those years are refused rather than invented, and **no archon
+    year is ever fabricated**.
+    """
+    from datetime import date as date_cls
+
+    from shruti_astro.core.attic import BeforeTheCycle, attic_day
+
+    d = _moment(when).date() if when else date_cls.today()
+    try:
+        a = attic_day(d)
+    except BeforeTheCycle as exc:
+        raise HTTPException(422, str(exc))
+    except ValueError as exc:
+        raise HTTPException(400, str(exc))
+
+    return {
+        "gregorian": a.gregorian.isoformat(),
+        "month": {"name": a.month, "greek": a.month_greek, "index": a.month_index,
+                  "intercalary": a.is_intercalary,
+                  "length": a.month_length, "full": a.is_full},
+        "day": {"number": a.day, "greek": a.day_name_greek,
+                "transliteration": a.day_name_translit,
+                "decad": a.decad, "remaining": a.days_remaining},
+        "moonAgeDays": a.moon_age_days,
+        "nextNoumenia": a.next_noumenia.isoformat(),
+        "year": {"months": a.months_in_year, "intercalary": a.year_is_intercalary},
+        "archonYear": None,
+        "archonNote": "Archon years are not derivable from the astronomy and are never invented here.",
+    }
+
+
 @router.get("/hindu-year")
 async def hindu_year_endpoint(
     year: int = Query(..., ge=1, le=9999),

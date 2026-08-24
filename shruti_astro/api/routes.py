@@ -25,8 +25,38 @@ router = APIRouter()
 
 
 def _moment(when: str | None) -> datetime:
+    """
+    Parse a requested instant.
+
+    **The floor is 1 CE, and that is a real limit rather than a choice.**
+    Python's `datetime` cannot hold a year below 1 at all — `replace(year=-490)`
+    raises — so a BCE date is not expressible anywhere the API takes a
+    `datetime`, which is everywhere.
+
+    One consequence is worth stating plainly because it looks like a bug: the
+    Attic calendar's "before the Metonic cycle" refusal, which the design lists
+    as a cannot-compute state, is UNREACHABLE through the API. Not because the
+    check is missing — `_attic_year` raises `BeforeTheCycle` correctly, and it
+    is tested directly — but because 432 BCE is on the far side of a floor that
+    sits at 1 CE. You cannot ask the question that would trigger it.
+
+    Reaching it needs the core to work in Julian Days rather than datetimes,
+    since `swe.julday` takes negative years quite happily. That is a real
+    change, not a patch, and it is in the backlog rather than half-done here.
+    """
     if not when:
         return datetime.now(timezone.utc)
+
+    if when.lstrip().startswith("-"):
+        raise HTTPException(
+            400,
+            "dates before 1 CE cannot be expressed by this API: the calculation "
+            "layer works in datetimes, which have no year below 1. The Attic "
+            "calendar refuses years before 432 BCE for a different reason — the "
+            "intercalations are not recoverable — but you cannot reach that "
+            "refusal from here.",
+        )
+
     try:
         m = datetime.fromisoformat(when.replace("Z", "+00:00"))
     except ValueError:

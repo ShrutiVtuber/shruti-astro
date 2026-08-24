@@ -186,3 +186,21 @@ def test_intercalation_does_not_depend_on_the_observer():
             for rk in RECKONINGS
         }
         assert len(counts) == 1, f"{y}: year length disagrees across observers"
+
+
+def test_the_api_floor_is_stated_rather_than_pretended():
+    """
+    `BeforeTheCycle` is raised correctly and tested directly — but it cannot be
+    reached through the HTTP API, because `datetime` has no year below 1 and
+    432 BCE is on the far side of that floor. The API says so instead of
+    returning a confusing parse error.
+    """
+    from fastapi.testclient import TestClient
+
+    from shruti_astro.api.app import app
+
+    r = TestClient(app).get("/attic-calendar", params={"when": "-0490-09-12"})
+    assert r.status_code == 400
+    detail = r.json()["detail"]
+    assert "before 1 CE" in detail
+    assert "not recoverable" in detail    # names the other, different refusal

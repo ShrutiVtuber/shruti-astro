@@ -188,3 +188,45 @@ def test_special_characters_are_escaped():
 
 def test_dedications_reach_the_summary():
     assert "Hekate Phosphoros" in _ics(preset="hellenic")
+
+
+def test_the_moon_carries_its_phase():
+    """
+    The lunar tracker is designed around a phase column beside the times, and
+    the payload had neither phase nor age. A moonrise at the dark moon and one
+    at the full are not the same event to anyone keeping the stations.
+    """
+    from datetime import date
+
+    from shruti_astro.core.stations import stations_for_day
+
+    day = stations_for_day(date(2026, 8, 24), 37.98, 23.73, body="moon")
+    assert day.phase in {
+        "new", "waxing crescent", "first quarter", "waxing gibbous",
+        "full", "waning gibbous", "last quarter", "waning crescent",
+    }
+    assert day.moon_age_days is not None and 0 <= day.moon_age_days <= 29.6
+    assert day.illumination is not None and 0.0 <= day.illumination <= 1.0
+
+
+def test_the_sun_has_no_phase_column():
+    """Phase belongs to the Moon; the solar table must not sprout an empty one."""
+    from datetime import date
+
+    from shruti_astro.core.stations import stations_for_day
+
+    day = stations_for_day(date(2026, 8, 24), 37.98, 23.73, body="sun")
+    assert day.phase == "" and day.moon_age_days is None
+
+
+def test_phase_tracks_the_month():
+    """Age must actually advance, and the name change with it."""
+    from datetime import date, timedelta
+
+    from shruti_astro.core.stations import stations_for_day
+
+    names = set()
+    for offset in range(0, 28, 4):
+        day = stations_for_day(date(2026, 8, 1) + timedelta(days=offset), 37.98, 23.73, body="moon")
+        names.add(day.phase)
+    assert len(names) >= 5, f"a month should pass through most phases, saw {names}"

@@ -802,6 +802,15 @@ async def stations_endpoint(
                      "dedication": s.dedication}
                     for s in d.stations
                 ],
+                # Moon only. The lunar tracker is designed around a phase
+                # column beside the times — a moonrise means something
+                # different at the full than at the dark.
+                **({"phase": d.phase,
+                    "moonAgeDays": round(d.moon_age_days, 2)
+                    if d.moon_age_days is not None else None,
+                    "illumination": round(d.illumination, 3)
+                    if d.illumination is not None else None}
+                   if d.body == "moon" else {}),
             }
             for d in rows
         ],

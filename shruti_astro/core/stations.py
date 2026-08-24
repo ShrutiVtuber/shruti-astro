@@ -21,6 +21,7 @@ data, and is reported as such rather than left blank.
 
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass
 from datetime import date as date_cls
 from datetime import datetime, timedelta, timezone
@@ -78,11 +79,40 @@ class Station:
         return self.at is not None
 
 
+# The eight conventional phase names, by the Moon's elongation from the Sun.
+# Anyone tracking lunar stations wants the phase beside the times — the design
+# gives it its own column, because a moonrise means something different at the
+# full than at the dark.
+PHASE_NAMES = (
+    "new", "waxing crescent", "first quarter", "waxing gibbous",
+    "full", "waning gibbous", "last quarter", "waning crescent",
+)
+SYNODIC_MONTH = 29.530588
+
+
+def moon_phase(moment: datetime) -> tuple[str, float, float]:
+    """(phase name, age in days since the conjunction, illuminated fraction)."""
+    from shruti_astro.core.ephemeris import longitudes
+
+    L = longitudes(moment)
+    elongation = (L.moon_tropical - L.sun_tropical) % 360.0
+    # Eight equal 45° arcs, centred so "full" spans the actual full moon
+    # rather than beginning at it.
+    index = int(((elongation + 22.5) % 360.0) // 45.0)
+    age = elongation / 360.0 * SYNODIC_MONTH
+    illumination = (1.0 - math.cos(math.radians(elongation))) / 2.0
+    return PHASE_NAMES[index], age, illumination
+
+
 @dataclass
 class StationDay:
     date: date_cls
     body: str
     stations: list[Station]
+    # Moon only: the phase column the lunar tracker is designed around.
+    phase: str = ""
+    moon_age_days: float | None = None
+    illumination: float | None = None
 
 
 def _transit(jd_start: float, body: int, rsmi: int, lat: float, lon: float) -> datetime | None:
@@ -145,7 +175,17 @@ def stations_for_day(
         out.append(Station(name=name, at=moment, absent_reason=reason,
                            dedication=dedications.get(name, "")))
 
-    return StationDay(date=day, body=body, stations=out)
+    phase = ""
+    age: float | None = None
+    lit: float | None = None
+    if body == "moon":
+        # Judged at local noon, so the column describes the day as a whole
+        # rather than whichever instant happened to be first in the list.
+        noon = _from_julday(jd0 + 0.5 - lon / 360.0)
+        phase, age, lit = moon_phase(noon)
+
+    return StationDay(date=day, body=body, stations=out,
+                      phase=phase, moon_age_days=age, illumination=lit)
 
 
 def stations_for_range(

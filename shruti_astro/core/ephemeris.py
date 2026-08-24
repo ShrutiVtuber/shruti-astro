@@ -77,8 +77,18 @@ def _ensure_init() -> None:
 
 
 def _flags(sidereal: bool = False) -> int:
+    """
+    Calculation flags.
+
+    **FLG_SPEED is not optional.** Swiss Ephemeris fills the speed slot only
+    when it is asked to; without it every body comes back at 0.0 °/day. That is
+    not a cosmetic gap — `retrograde` is derived as `speed < 0`, so with the
+    flag missing NOTHING IS EVER RETROGRADE. Mercury on 1 March 2026 reads as
+    direct at -0.50 °/day. It also silently zeroed the Moon's daily motion, the
+    applying/separating judgement in the aspect code, and every speed the API reports.
+    """
     base = swe.FLG_SWIEPH if os.environ.get("SHRUTI_EPHE_PATH") else swe.FLG_MOSEPH
-    return base | (swe.FLG_SIDEREAL if sidereal else 0)
+    return base | swe.FLG_SPEED | (swe.FLG_SIDEREAL if sidereal else 0)
 
 
 def _julday(moment: datetime) -> float:

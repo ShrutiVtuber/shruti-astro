@@ -462,3 +462,73 @@ def test_the_cheap_day_rules_were_added_and_candrodaya_was_not():
     # to split one festival across two civil days for two cities. It waits for a
     # surface that can express that.
     assert "candrodaya" not in DAY_RULES
+
+
+# --- multi-day observances --------------------------------------------------
+
+
+def test_a_nine_day_festival_is_nine_tithis_not_nine_days():
+    """
+    The corpus notes have said this all along: a kṣaya tithi compresses
+    Navarātri to eight civil days and a vṛddhi stretches it to ten. Printing
+    the declared count as a span of days is wrong in most years.
+    """
+    from shruti_astro.core.festival_registry import year
+
+    spans = set()
+    for y in (2026, 2029, 2030, 2032):
+        f = next((x for x in year("hindu", y)["festivals"]
+                  if x["key"] == "sharada-navaratri"), None)
+        if f:
+            spans.add(f["spanDays"])
+    assert spans - {9}, "nine tithis must not always be nine civil days"
+    assert spans <= {8, 9, 10}
+
+
+def test_a_span_that_differs_from_its_declared_length_says_so():
+    from shruti_astro.core.festival_registry import year
+
+    f = next(x for x in year("hindu", 2026)["festivals"]
+             if x["key"] == "pitru-paksha")
+    assert f["spanDays"] == 15 and f["end"] == "2026-10-11"
+    assert "kṣaya" in f["spanNote"]
+
+
+def test_the_end_date_is_never_before_the_start():
+    from shruti_astro.core.festival_registry import year
+
+    for y in (2026, 2027):
+        for f in year("hindu", y)["festivals"]:
+            assert f["end"] >= f["date"], f"{f['key']} {y}"
+
+
+# --- kṣaya tithis must not delete festivals ---------------------------------
+
+
+def test_a_ksaya_starting_tithi_does_not_delete_the_festival():
+    """
+    A kṣaya tithi begins after one sunrise and ends before the next, so no
+    civil day owns it and the ordinary search finds nothing. Nineteen entries
+    used to drop out of the calendar in those years — Śāradīya Navarātri
+    vanished outright in 2027. The rite is kept on the day the tithi was
+    current instead.
+    """
+    from shruti_astro.core.festival_registry import year
+
+    f = [x for x in year("hindu", 2027)["festivals"]
+         if x["key"] == "sharada-navaratri"]
+    assert len(f) == 1, "Navarātri cannot simply be absent from a year"
+    assert "kṣaya" in f[0]["note"]
+
+
+def test_nothing_is_lost_to_ksaya():
+    """The years measured to lose the most entries before the fix."""
+    from shruti_astro.core.festival_registry import year
+
+    lost = [
+        (y, u["key"])
+        for y in (2027, 2029, 2032, 2035)
+        for u in year("hindu", y)["undated"]
+        if "not current on any day" in (u.get("reason") or "")
+    ]
+    assert lost == []

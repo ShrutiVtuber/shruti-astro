@@ -80,6 +80,9 @@ class Resolved:
     skipped: bool = False
     skipped_reason: str = ""
     doubled: bool = False
+    end: date_cls | None = None
+    span_days: int | None = None
+    span_note: str = ""
 
 
 def _reckoning_moment(day: date_cls, lat: float, lon: float, rule: str) -> datetime | None:
@@ -125,6 +128,97 @@ def _tithi_at(day: date_cls, lat: float, lon: float,
     L = longitudes(moment)
     t = tithi_of(L.sun_tropical, L.moon_tropical)
     return t.index, ("Śukla" if t.index <= 15 else "Kṛṣṇa")
+
+
+def _ksaya_day(
+    gregorian_year: int, target: int, lat: float, lon: float,
+    month: str | None = None, reckoning: str = "amanta",
+) -> date_cls | None:
+    """
+    The day a **kṣaya tithi** was current, when no day owns it at sunrise.
+
+    A kṣaya tithi begins after one sunrise and ends before the next, so no
+    civil day carries it at any reckoning moment and the ordinary search finds
+    nothing. The observance does not stop happening: it is kept on the day the
+    tithi was current. Without this, nineteen entries drop out of the calendar
+    in the years their tithi is short — Śāradīya Navarātri vanishes outright in
+    2027, which is not a defensible thing for a festival calendar to do.
+    """
+    d = date_cls(gregorian_year, 1, 1)
+    end = date_cls(gregorian_year, 12, 31)
+    while d <= end:
+        a = _tithi_at(d, lat, lon, "sunrise")
+        b = _tithi_at(d + timedelta(days=1), lat, lon, "sunrise")
+        if a and b:
+            # The tithi began after this sunrise and ended before the next.
+            step = (b[0] - a[0]) % 30
+            offset = (target - a[0]) % 30
+            if 0 < offset < step:
+                if month is None:
+                    return d
+                # The month is judged at BOTH ends of the day, not just at
+                # sunrise. A kṣaya śukla pratipadā still shows the previous
+                # month's amāvāsyā at sunrise, so a sunrise-only check rejects
+                # the very day it is looking for — which is why every
+                # pratipadā entry stayed lost.
+                for edge in (d, d + timedelta(days=1)):
+                    moment = _reckoning_moment(edge, lat, lon, "sunrise")
+                    if moment is None:
+                        continue
+                    hd = hindu_date(moment, reckoning)
+                    if hd.month == month and not hd.is_adhika:
+                        return d
+        d += timedelta(days=1)
+    return None
+
+
+def span_end(
+    start: date_cls, tithis: int, lat: float, lon: float, rule: str = "sunrise",
+) -> tuple[date_cls, int, str]:
+    """
+    Where a run of `tithis` tithis beginning on `start` actually ends.
+
+    **A nine-day festival is not nine days.** Navarātri is nine *tithis*, and
+    the corpus notes have said so all along: a kṣaya tithi — one that begins
+    and ends between two sunrises, so no civil day owns it — compresses the run
+    to eight, and a vṛddhi tithi, which owns two sunrises, stretches it to ten.
+    Printing the declared count as though it were a span of days is wrong in
+    any year the moon does not cooperate, which is most of them.
+
+    Returns the last civil day, the number of civil days, and a note where the
+    two counts disagree.
+    """
+    if tithis <= 1:
+        return start, 1, ""
+
+    first = _tithi_at(start, lat, lon, rule)
+    if first is None:
+        return start, tithis, ""
+
+    prev = first[0]
+    advanced = 0
+    end = start
+    d = start
+    # A run cannot outlast its tithis by more than the vṛddhi allowance.
+    for _ in range(tithis + 4):
+        d += timedelta(days=1)
+        cur = _tithi_at(d, lat, lon, rule)
+        if cur is None:
+            break
+        step = (cur[0] - prev) % 30
+        advanced += step
+        prev = cur[0]
+        if advanced > tithis - 1:
+            break
+        end = d
+
+    days = (end - start).days + 1
+    note = ""
+    if days != tithis:
+        which = "a kṣaya tithi shortens" if days < tithis else "a vṛddhi tithi stretches"
+        note = (f"{tithis} tithis, but {which} the run to {days} civil days "
+                f"this year")
+    return end, days, note
 
 
 def resolve_lunar(
@@ -228,13 +322,26 @@ def resolve_lunar(
                 fallback.anchor = anchor
                 return fallback
 
+        # Nothing owns the tithi at sunrise either, so it is genuinely kṣaya:
+        # it began and ended between two sunrises. The rite is still kept, on
+        # the day the tithi was current.
+        short = _ksaya_day(gregorian_year, target, lat, lon, month, reckoning)
+        if short is not None:
+            return Resolved(
+                key=anchor.get("key", ""), name=anchor.get("name", ""),
+                date=short, anchor=anchor,
+                note=(f"{anchor['paksha']} {want_tithi} is kṣaya this year — it "
+                      f"began and ended between two sunrises, so no day owns it "
+                      f"at sunrise. Kept on the day it was current."),
+            )
+
         return Resolved(
             key=anchor.get("key", ""), name=anchor.get("name", ""), date=None,
             anchor=anchor, skipped=True,
             skipped_reason=(
                 f"no day in {gregorian_year} carried {anchor['paksha']} {want_tithi} "
-                f"of {month} at any reckoning moment — the tithi began and ended "
-                f"between two sunrises (kṣaya)"
+                f"of {month} at any reckoning moment, and the tithi was not "
+                f"current on any day of the month either"
             ),
         )
 

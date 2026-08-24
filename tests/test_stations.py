@@ -230,3 +230,42 @@ def test_phase_tracks_the_month():
         day = stations_for_day(date(2026, 8, 1) + timedelta(days=offset), 37.98, 23.73, body="moon")
         names.add(day.phase)
     assert len(names) >= 5, f"a month should pass through most phases, saw {names}"
+
+
+# ── the Thelemic date ───────────────────────────────────────────────────────
+
+
+def test_thelemic_year_turns_at_the_equinox_not_at_new_year():
+    """
+    The era is dated from the March equinox of 1904, so a date in February
+    belongs to the year that began the previous March. Counting from 1 January
+    would put every winter date one year out.
+    """
+    from datetime import datetime, timezone
+
+    from shruti_astro.core.thelemic import thelemic_date
+
+    before = thelemic_date(datetime(2026, 2, 1, 12, tzinfo=timezone.utc))
+    after = thelemic_date(datetime(2026, 8, 24, 12, tzinfo=timezone.utc))
+    assert before.year == 121 and after.year == 122
+    assert before.anno == "Vxi" and after.anno == "Vxii"
+
+
+def test_thelemic_cycles_are_twenty_two_years():
+    from datetime import datetime, timezone
+
+    from shruti_astro.core.thelemic import thelemic_date
+
+    assert thelemic_date(datetime(1926, 4, 1, tzinfo=timezone.utc)).anno == "I"
+    assert thelemic_date(datetime(1904, 4, 1, tzinfo=timezone.utc)).anno == "0"
+
+
+def test_the_march_equinox_is_tropical():
+    """
+    Sidereal zero is about 24 days later, which would drift the new year into
+    April. The equinox IS tropical zero, by definition.
+    """
+    from shruti_astro.core.thelemic import march_equinox
+
+    e = march_equinox(2026)
+    assert e.month == 3 and 19 <= e.day <= 21

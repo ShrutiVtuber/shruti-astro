@@ -945,6 +945,22 @@ async def today(
     moment = _moment(when)
     undefined: list[str] = []
 
+    def _thelemic_block(m) -> dict:
+        """
+        The Thelemic date — one of the four reckonings /today is designed to
+        carry. It is written as the luminaries rather than as a number, and its
+        year turns at the March equinox rather than at midnight on 1 January.
+        """
+        from shruti_astro.core.thelemic import thelemic_date
+
+        t = thelemic_date(m)
+        return {
+            "sun": {"sign": t.sun_sign, "degree": t.sun_degree},
+            "moon": {"sign": t.moon_sign, "degree": t.moon_degree},
+            "year": t.year, "cycle": t.cycle, "yearInCycle": t.year_in_cycle,
+            "anno": t.anno, "formatted": t.formatted,
+        }
+
     # ── the luminaries ──────────────────────────────────────────────────────
     pos = chart_positions(moment, lat, lon, sidereal=False)
     by_name = {b.name: b for b in pos.bodies}
@@ -1024,13 +1040,17 @@ async def today(
     except Exception:                              # noqa: BLE001
         undefined.append("the Hindu date could not be computed")
     try:
-        a = attic_day(moment.date())
+        a = attic_day(moment.date(), lat, lon)
         reckonings["attic"] = {
             "month": a.month, "greek": a.month_greek,
             "day": a.day_name_greek, "moonAgeDays": a.moon_age_days,
         }
     except (BeforeTheCycle, ValueError) as exc:
         undefined.append(f"the Attic date: {exc}")
+    try:
+        reckonings["thelemic"] = _thelemic_block(moment)
+    except Exception:                              # noqa: BLE001
+        undefined.append("the Thelemic date could not be computed")
 
     # ── transits, only with a nativity ──────────────────────────────────────
     transits: dict | None = None

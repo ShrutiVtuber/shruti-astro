@@ -66,6 +66,9 @@ Hellenistic and Vedic are first-class together, not one bolted onto the other:
 | `GET /sigil` | letter elimination, every step shown, SVG |
 | `GET /void-of-course` | kenodromia — `rule=thirtyDegrees\|signExit` |
 | `GET /doctrine` | the contested points and their options |
+| `GET /stations` | four daily stations, up to a month — `body=sun\|moon` |
+| `GET /stations/next` | the next station, with a countdown |
+| `GET /stations/ical` | the same as a **subscribable** calendar feed |
 | `GET /authorities` | Dṛk gaṇita vs Sūrya Siddhānta |
 | `GET /ayanamsas` | the six ayanāṁśas |
 

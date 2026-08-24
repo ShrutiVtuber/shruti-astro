@@ -5,7 +5,7 @@ from __future__ import annotations
 
 from datetime import datetime, timedelta, timezone
 
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException, Query, Response
 
 from shruti_astro.core import panchanga as pa
 from shruti_astro.core.ephemeris import (
@@ -721,3 +721,147 @@ async def list_reckonings() -> dict:
             "purnimanta": "month ends at the full moon — northern Indian practice",
         }
     }
+
+
+# ── stations ────────────────────────────────────────────────────────────────
+
+@router.get("/stations")
+async def stations_endpoint(
+    lat: float = Query(..., ge=-90, le=90),
+    lon: float = Query(..., ge=-180, le=180),
+    start: str | None = Query(None, description="ISO date; defaults to today"),
+    days: int = Query(1, ge=1, le=31),
+    body: str = Query("sun", description="sun | moon"),
+    preset: str = Query("none", description="hellenic | thelemic | none"),
+) -> dict:
+    """
+    The four daily stations, for up to a month.
+
+    Solar: sunrise · noon · sunset · midnight. Lunar: moonrise · culmination ·
+    moonset · nadir.
+
+    **Noon and midnight are meridian transits, not clock times.** They drift up
+    to a quarter of an hour either side of 12:00 across the year — the equation
+    of time — and further still where a place sits away from its zone meridian.
+    A rite kept by the clock is kept at the wrong moment.
+
+    A station that does not occur reports `occurred: false` with a reason. The
+    Moon skips a rise or a set regularly; that is the sky, not missing data.
+    """
+    from datetime import date as date_cls
+
+    from shruti_astro.core.stations import MAX_DAYS, PRESETS, stations_for_range
+
+    if body not in ("sun", "moon"):
+        raise HTTPException(400, "body must be 'sun' or 'moon'")
+    if preset not in PRESETS:
+        raise HTTPException(400, f"unknown preset; choose from {sorted(PRESETS)}")
+
+    begin = _moment(start).date() if start else date_cls.today()
+    try:
+        rows = stations_for_range(begin, days, lat, lon, body, preset)
+    except ValueError as exc:
+        raise HTTPException(400, str(exc))
+
+    return {
+        "body": body,
+        "preset": preset,
+        "location": {"lat": lat, "lon": lon},
+        "start": begin.isoformat(),
+        "days": days,
+        "maxDays": MAX_DAYS,
+        "table": [
+            {
+                "date": d.date.isoformat(),
+                "stations": [
+                    {"name": s.name, "at": s.at.isoformat() if s.at else None,
+                     "occurred": s.occurred, "absentReason": s.absent_reason,
+                     "dedication": s.dedication}
+                    for s in d.stations
+                ],
+            }
+            for d in rows
+        ],
+    }
+
+
+@router.get("/stations/next")
+async def next_station_endpoint(
+    lat: float = Query(..., ge=-90, le=90),
+    lon: float = Query(..., ge=-180, le=180),
+    body: str = Query("sun"),
+    preset: str = Query("none"),
+    when: str | None = Query(None),
+) -> dict:
+    """
+    The next station after now — what someone opening the page actually wants
+    before they want a table.
+    """
+    from shruti_astro.core.stations import next_station
+
+    if body not in ("sun", "moon"):
+        raise HTTPException(400, "body must be 'sun' or 'moon'")
+
+    moment = _moment(when)
+    found = next_station(moment, lat, lon, body, preset)
+    if found is None:
+        raise HTTPException(
+            422, "no station of that body occurs within the next three days here"
+        )
+    station, day = found
+    return {
+        "body": body,
+        "name": station.name,
+        "at": station.at.isoformat(),
+        "secondsAway": int((station.at - moment).total_seconds()),
+        "dedication": station.dedication,
+        "onDate": day.date.isoformat(),
+    }
+
+
+@router.get("/stations/ical")
+async def stations_ical(
+    lat: float = Query(..., ge=-90, le=90),
+    lon: float = Query(..., ge=-180, le=180),
+    start: str | None = Query(None),
+    days: int = Query(31, ge=1, le=31),
+    body: str = Query("sun"),
+    preset: str = Query("none"),
+    alarm: int | None = Query(10, ge=0, le=120, description="minutes before; 0 disables"),
+) -> Response:
+    """
+    The same stations as an iCalendar feed.
+
+    **Subscribe to this URL rather than downloading it.** A download is a
+    snapshot that goes stale and never gains next month's times; a subscription
+    is refetched and stays right. The subscription is what actually produces the
+    notification someone is trying to set.
+
+    Event UIDs are stable for a given station, instant and place, so a refetch
+    updates events instead of accumulating duplicates.
+    """
+    from datetime import date as date_cls
+
+    from shruti_astro.core.ical import to_ical
+    from shruti_astro.core.stations import PRESETS, stations_for_range
+
+    if body not in ("sun", "moon"):
+        raise HTTPException(400, "body must be 'sun' or 'moon'")
+    if preset not in PRESETS:
+        raise HTTPException(400, f"unknown preset; choose from {sorted(PRESETS)}")
+
+    begin = _moment(start).date() if start else date_cls.today()
+    try:
+        rows = stations_for_range(begin, days, lat, lon, body, preset)
+    except ValueError as exc:
+        raise HTTPException(400, str(exc))
+
+    ics = to_ical(rows, lat, lon, alarm_minutes_before=(alarm or None))
+    return Response(
+        content=ics,
+        media_type="text/calendar; charset=utf-8",
+        headers={
+            "Content-Disposition": f'inline; filename="{body}-stations.ics"',
+            "Cache-Control": "public, max-age=3600",
+        },
+    )

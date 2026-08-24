@@ -15,7 +15,7 @@ from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
 
-from shruti_astro.core.festivals import UJJAIN, Resolved, resolve, span_end
+from shruti_astro.core.festivals import UJJAIN, Resolved, resolve, span_bounds
 
 DATA = Path(__file__).resolve().parent.parent / "data"
 
@@ -206,13 +206,16 @@ def _place(entry, anchor, label, gregorian_year, kw, dated, undated) -> None:
         # A declared run is a count of TITHIS. Turn it into the civil days it
         # actually occupies this year — Navarātri is nine tithis and so eight,
         # nine or ten days depending on where the kṣaya and vṛddhi fall.
-        declared = (entry.get("lasts") or {}).get("days")
-        end, span_days, span_note = r.date, 1, ""
+        lasts = entry.get("lasts") or {}
+        declared = lasts.get("days")
+        start, end, span_days, span_note = r.date, r.date, 1, ""
         if isinstance(declared, int) and declared > 1:
-            end, span_days, span_note = span_end(
+            start, end, span_days, span_note = span_bounds(
                 r.date, declared,
                 kw.get("lat", UJJAIN[0]), kw.get("lon", UJJAIN[1]),
                 anchor.get("dayRule") or "sunrise",
+                anchor_is_day=lasts.get("anchorIsDay", 1),
+                counts=lasts.get("counts", "tithi"),
             )
 
         dated.append({
@@ -225,6 +228,7 @@ def _place(entry, anchor, label, gregorian_year, kw, dated, undated) -> None:
             "tags": entry.get("tags", []),
             "note": r.note,
             "doubled": r.doubled,
+            "start": start.isoformat() if start else None,
             "end": end.isoformat() if end else None,
             "spanDays": span_days,
             "spanNote": span_note,

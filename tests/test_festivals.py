@@ -354,7 +354,12 @@ def test_no_dated_festival_disappears_across_five_years():
         (Path(__file__).resolve().parent.parent
          / "shruti_astro" / "data" / "hindu-festivals.json").read_text()
     )
-    keep = ("kind", "month", "paksha", "tithi", "reckoning", "dayRule", "avoidBhadra")
+    # Every SEMANTIC key. This list predated kind:"nakshatra" and kind:"solar",
+    # so it was stripping the anchor down to nothing and asking why the Moon
+    # was never in None.
+    keep = ("kind", "month", "paksha", "tithi", "reckoning", "dayRule",
+            "avoidBhadra", "nakshatra", "solarMonth", "prefer", "degrees",
+            "recurrence", "frame")
     vanished = []
     for entry in data:
         a = entry.get("anchor") or {}
@@ -580,8 +585,123 @@ def test_recurrence_survives_the_anchor_cleaner():
     }
 
 
-def test_only_the_container_is_undated_now():
+def test_everything_undated_says_why_and_the_why_is_structural():
+    """
+    Two entries do not date in 2026 and both are correct. Dīpāvalī is a
+    container whose days are dated separately. Hanumān Jayantī's Tamil variant
+    is Mārgaśīrṣa amāvāsyā, which the Adhika Jyeṣṭha of 2026 pushes clean out
+    of the civil year — 384 days separate the two neighbouring occurrences.
+    Nothing is undated for want of an implementation any more.
+    """
     from shruti_astro.core.festival_registry import year
 
     undated = year("hindu", 2026)["undated"]
-    assert [u["key"] for u in undated] == ["dipavali"]
+    assert {u["key"] for u in undated} == {"dipavali", "hanuman-jayanti"}
+    assert all("unsupported anchor kind" not in u["reason"] for u in undated)
+
+
+# --- the nakṣatra anchor and the southern class -----------------------------
+
+
+def test_onam_resolves_on_thiruvonam():
+    """
+    Malayalam months are solar, so Onam cannot be stated with a lunar-month
+    anchor at all. Kerala's state festival was absent from the corpus for want
+    of a kind:"nakshatra".
+    """
+    from shruti_astro.core.festival_registry import year
+
+    f = [x for x in year("hindu", 2026)["festivals"] if x["key"] == "onam"]
+    assert len(f) == 1
+    assert f[0]["date"] == "2026-08-26"
+    assert f[0]["start"] == "2026-08-17" and f[0]["spanDays"] == 10
+
+
+def test_a_nakshatra_anchor_is_bounded_by_its_solar_month():
+    """Śravaṇa recurs every 27.3 days; only the one inside Chingam is Onam."""
+    from shruti_astro.core.festivals import resolve_nakshatra
+
+    r = resolve_nakshatra(
+        {"kind": "nakshatra", "nakshatra": "Śravaṇa", "solarMonth": "Siṃha"}, 2026)
+    assert not isinstance(r, list) and r.date.month == 8
+
+
+def test_an_unknown_solar_month_is_refused():
+    from shruti_astro.core.festivals import resolve_nakshatra
+
+    with pytest.raises(ValueError, match="unknown solar month"):
+        resolve_nakshatra(
+            {"kind": "nakshatra", "nakshatra": "Śravaṇa", "solarMonth": "Leo"}, 2026)
+
+
+# --- spans that do not begin on their anchored day --------------------------
+
+
+def test_chhath_is_four_days_with_the_anchor_third():
+    """The day everyone looks up is the Sandhyā Arghya, day three of four."""
+    from shruti_astro.core.festival_registry import year
+
+    f = next(x for x in year("hindu", 2026)["festivals"] if x["key"] == "chhath-puja")
+    assert f["date"] == "2026-11-15"
+    assert f["start"] == "2026-11-13" and f["end"] == "2026-11-16"
+
+
+def test_skanda_shashthi_ends_on_its_anchored_day():
+    from shruti_astro.core.festival_registry import year
+
+    f = next(x for x in year("hindu", 2026)["festivals"]
+             if x["key"] == "skanda-shashthi")
+    assert f["end"] == f["date"] == "2026-11-15"
+    assert f["spanDays"] == 6
+
+
+def test_the_annual_skanda_shashthi_is_not_the_monthly_one():
+    from shruti_astro.core.festival_registry import year
+
+    fs = year("hindu", 2026)["festivals"]
+    assert len([x for x in fs if x["key"] == "skanda-shashthi"]) == 1
+    assert len([x for x in fs if x["key"] == "masika-shashthi"]) >= 11
+
+
+# --- regional splits --------------------------------------------------------
+
+
+def test_vata_savitri_returns_both_schools():
+    from shruti_astro.core.festival_registry import year
+
+    got = {x["school"]: x["date"] for x in year("hindu", 2027)["festivals"]
+           if x["key"] == "vata-savitri"}
+    assert got == {"north": "2027-06-04", "deccan": "2027-06-18"}
+
+
+def test_vata_savitri_north_agrees_with_phalaharini_kali_puja():
+    """
+    Two entries, two independent anchors, the same day. A cross-check the
+    corpus can run on itself.
+    """
+    from shruti_astro.core.festival_registry import year
+
+    for y in (2026, 2027):
+        fs = year("hindu", y)["festivals"]
+        vs = [x["date"] for x in fs
+              if x["key"] == "vata-savitri" and x["school"] == "north"]
+        ph = [x["date"] for x in fs if "phalaharini" in x["key"]]
+        assert vs and vs == ph, y
+
+
+def test_a_month_that_straddles_the_civil_year_says_so():
+    """Not the same fact as a kṣaya tithi, and it used to claim it was."""
+    from shruti_astro.core.festival_registry import year
+
+    u = next(x for x in year("hindu", 2026)["undated"]
+             if x["key"] == "hanuman-jayanti")
+    assert "outside the Gregorian year" in u["reason"]
+    assert "kṣaya" not in u["reason"]
+
+
+def test_the_same_night_carries_the_same_restriction():
+    from shruti_astro.core.festival_registry import load
+
+    by_key = {e["key"]: e for e in load("hindu").entries}
+    assert (by_key["kali-chaudas"]["restriction"]
+            == by_key["naraka-chaturdashi"]["restriction"] == "detail-withheld")

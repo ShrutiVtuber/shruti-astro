@@ -18,6 +18,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import date as date_cls
 from datetime import datetime, timedelta, timezone
+from functools import lru_cache
 
 from shruti_astro.core.hindu_calendar import MONTHS, hindu_date
 from shruti_astro.core.panchanga import tithi as tithi_of
@@ -85,6 +86,12 @@ class Resolved:
     span_note: str = ""
 
 
+# Every entry walks all 365 days of the year and asks these two the same
+# questions. With 72 entries that is ~26,000 sunrise and longitude computations
+# a year, nearly all of them repeats. They are pure functions of their
+# arguments, so they cache. The corpus is small and bounded; the caches are
+# sized for a handful of years at a handful of places.
+@lru_cache(maxsize=65536)
 def _reckoning_moment(day: date_cls, lat: float, lon: float, rule: str) -> datetime | None:
     """The instant of `day` at which the observance's tithi is judged."""
     noon = datetime(day.year, day.month, day.day, 12, tzinfo=timezone.utc)
@@ -119,6 +126,7 @@ def _is_bhadra(moment: datetime) -> bool:
     return karana_of(L.sun_tropical, L.moon_tropical).name == "Viṣṭi"
 
 
+@lru_cache(maxsize=65536)
 def _tithi_at(day: date_cls, lat: float, lon: float,
               rule: str = "sunrise") -> tuple[int, str] | None:
     """(tithi index 1..30, pakṣa) at the moment this observance is judged by."""
@@ -128,6 +136,25 @@ def _tithi_at(day: date_cls, lat: float, lon: float,
     L = longitudes(moment)
     t = tithi_of(L.sun_tropical, L.moon_tropical)
     return t.index, ("Śukla" if t.index <= 15 else "Kṛṣṇa")
+
+
+def _find_days(
+    d0: date_cls, d1: date_cls, target: int, month: str | None,
+    reckoning: str, rule: str, lat: float, lon: float,
+) -> list[date_cls]:
+    """Every day in [d0, d1] carrying `target` in the named month."""
+    out: list[date_cls] = []
+    d = d0
+    while d <= d1:
+        got = _tithi_at(d, lat, lon, rule)
+        if got is not None and got[0] == target:
+            moment = _reckoning_moment(d, lat, lon, rule)
+            if moment is not None:
+                hd = hindu_date(moment, reckoning)
+                if (month is None or hd.month == month) and not hd.is_adhika:
+                    out.append(d)
+        d += timedelta(days=1)
+    return out
 
 
 def _ksaya_day(
@@ -172,53 +199,88 @@ def _ksaya_day(
     return None
 
 
-def span_end(
-    start: date_cls, tithis: int, lat: float, lon: float, rule: str = "sunrise",
-) -> tuple[date_cls, int, str]:
+def _walk_tithis(
+    start: date_cls, n: int, lat: float, lon: float, rule: str = "sunrise",
+) -> date_cls:
+    """Advance `n` tithis from `start` (negative walks back) and give the day."""
+    if n == 0:
+        return start
+    step = 1 if n > 0 else -1
+    first = _tithi_at(start, lat, lon, rule)
+    if first is None:
+        return start + timedelta(days=n)
+
+    prev = first[0]
+    advanced = 0
+    reached = start
+    d = start
+    # A run cannot outlast its tithis by more than the vṛddhi allowance.
+    for _ in range(abs(n) + 4):
+        d += timedelta(days=step)
+        cur = _tithi_at(d, lat, lon, rule)
+        if cur is None:
+            break
+        moved = ((cur[0] - prev) % 30) if step > 0 else ((prev - cur[0]) % 30)
+        advanced += moved
+        prev = cur[0]
+        if advanced > abs(n):
+            break
+        reached = d
+    return reached
+
+
+def span_bounds(
+    anchor_day: date_cls, days: int, lat: float, lon: float,
+    rule: str = "sunrise", anchor_is_day: int = 1, counts: str = "tithi",
+) -> tuple[date_cls, date_cls, int, str]:
     """
-    Where a run of `tithis` tithis beginning on `start` actually ends.
+    The civil days a multi-day observance actually occupies.
 
     **A nine-day festival is not nine days.** Navarātri is nine *tithis*, and
     the corpus notes have said so all along: a kṣaya tithi — one that begins
     and ends between two sunrises, so no civil day owns it — compresses the run
     to eight, and a vṛddhi tithi, which owns two sunrises, stretches it to ten.
-    Printing the declared count as though it were a span of days is wrong in
-    any year the moon does not cooperate, which is most of them.
+    Printing the declared count as a span of days is wrong in any year the moon
+    does not cooperate, which is most of them.
 
-    Returns the last civil day, the number of civil days, and a note where the
-    two counts disagree.
+    `anchor_is_day` says where in the run the anchored day sits. It is not
+    always the first: Chhaṭh is a four-day observance whose *third* day, the
+    Sandhya Arghya on ṣaṣṭhī, is the one everyone looks up, and Onam and Skanda
+    Ṣaṣṭhī both *end* on their anchored day.
+
+    `counts` is "tithi" or "civil" — the southern nakṣatra festivals count
+    plain days, not lunar ones.
+
+    Returns first day, last day, how many civil days, and a note where the
+    civil count differs from the declared one.
     """
-    if tithis <= 1:
-        return start, 1, ""
+    if days <= 1:
+        return anchor_day, anchor_day, 1, ""
 
-    first = _tithi_at(start, lat, lon, rule)
-    if first is None:
-        return start, tithis, ""
+    before = anchor_is_day - 1
+    after = days - anchor_is_day
 
-    prev = first[0]
-    advanced = 0
-    end = start
-    d = start
-    # A run cannot outlast its tithis by more than the vṛddhi allowance.
-    for _ in range(tithis + 4):
-        d += timedelta(days=1)
-        cur = _tithi_at(d, lat, lon, rule)
-        if cur is None:
-            break
-        step = (cur[0] - prev) % 30
-        advanced += step
-        prev = cur[0]
-        if advanced > tithis - 1:
-            break
-        end = d
+    if counts == "civil":
+        start = anchor_day - timedelta(days=before)
+        end = anchor_day + timedelta(days=after)
+    else:
+        start = _walk_tithis(anchor_day, -before, lat, lon, rule)
+        end = _walk_tithis(anchor_day, after, lat, lon, rule)
 
-    days = (end - start).days + 1
+    civil = (end - start).days + 1
     note = ""
-    if days != tithis:
-        which = "a kṣaya tithi shortens" if days < tithis else "a vṛddhi tithi stretches"
-        note = (f"{tithis} tithis, but {which} the run to {days} civil days "
-                f"this year")
-    return end, days, note
+    if counts != "civil" and civil != days:
+        which = "a kṣaya tithi shortens" if civil < days else "a vṛddhi tithi stretches"
+        note = f"{days} tithis, but {which} the run to {civil} civil days this year"
+    return start, end, civil, note
+
+
+def span_end(
+    start: date_cls, tithis: int, lat: float, lon: float, rule: str = "sunrise",
+) -> tuple[date_cls, int, str]:
+    """Back-compatible shim: a run that begins on its anchored day."""
+    _, end, civil, note = span_bounds(start, tithis, lat, lon, rule)
+    return end, civil, note
 
 
 def resolve_lunar(
@@ -333,6 +395,26 @@ def resolve_lunar(
                 note=(f"{anchor['paksha']} {want_tithi} is kṣaya this year — it "
                       f"began and ended between two sunrises, so no day owns it "
                       f"at sunrise. Kept on the day it was current."),
+            )
+
+        # A lunar month straddles the civil year, so the observance can simply
+        # land on the other side of 1 January. That is a different fact from a
+        # kṣaya tithi and saying "not current on any day" would be false.
+        near = _find_days(
+            date_cls(gregorian_year - 1, 12, 1), date_cls(gregorian_year + 1, 2, 15),
+            target, month, reckoning, rule, lat, lon,
+        )
+        outside = [x for x in near if x.year != gregorian_year]
+        if outside:
+            return Resolved(
+                key=anchor.get("key", ""), name=anchor.get("name", ""), date=None,
+                anchor=anchor, skipped=True,
+                skipped_reason=(
+                    f"{anchor['paksha']} {want_tithi} of {month} fell on "
+                    f"{' and '.join(x.isoformat() for x in outside)}, outside the "
+                    f"Gregorian year {gregorian_year} — the lunar month straddles "
+                    f"the civil year"
+                ),
             )
 
         return Resolved(
@@ -647,6 +729,80 @@ def resolve_solar(
     return out
 
 
+def resolve_nakshatra(
+    anchor: dict, gregorian_year: int, lat: float = UJJAIN[0], lon: float = UJJAIN[1]
+) -> Resolved | list[Resolved]:
+    """
+    A **nakṣatra anchor**: the day the Moon stands in a named asterism.
+
+    This is how the southern calendars date their largest festivals, and the
+    corpus had no way to express it — Onam, the state festival of Kerala, and
+    Kārtikai Dīpam could not be entered at all. The window is a *solar* month
+    (the Sun's sidereal sign), because Malayalam and Tamil months are solar
+    even where the day within them is lunar.
+
+    A nakṣatra recurs every 27.3 days and a solar month runs about 30, so the
+    named asterism can fall **twice** inside one month. `prefer` says which is
+    meant; without it both are returned and labelled, because picking one
+    silently would be a ruling.
+    """
+    from shruti_astro.core.panchanga import nakshatra as nakshatra_of
+    from shruti_astro.core.vedic import RASHIS
+
+    want = anchor.get("nakshatra")
+    solar_month = anchor.get("solarMonth")
+    rule = anchor.get("dayRule") or "sunrise"
+    prefer = anchor.get("prefer")
+
+    if solar_month and solar_month not in RASHIS:
+        raise ValueError(f"unknown solar month {solar_month!r}")
+
+    hits: list[tuple[date_cls, float]] = []
+    d = date_cls(gregorian_year, 1, 1)
+    end = date_cls(gregorian_year, 12, 31)
+    while d <= end:
+        moment = _reckoning_moment(d, lat, lon, rule)
+        if moment is not None:
+            L = longitudes(moment)
+            if nakshatra_of(L.moon_sidereal).name == want:
+                if solar_month is None or \
+                        RASHIS[int(L.sun_sidereal // 30) % 12] == solar_month:
+                    # How far from opposition the Moon is, for `prefer`.
+                    elong = (L.moon_tropical - L.sun_tropical) % 360.0
+                    hits.append((d, abs(180.0 - elong)))
+        d += timedelta(days=1)
+
+    if not hits:
+        return Resolved(
+            key=anchor.get("key", ""), name=anchor.get("name", ""), date=None,
+            anchor=anchor, skipped=True,
+            skipped_reason=(f"the Moon did not stand in {want} during "
+                            f"{solar_month or 'the year'} in {gregorian_year}"),
+        )
+
+    if len(hits) > 1 and prefer == "purnima":
+        best = min(hits, key=lambda h: h[1])
+        return Resolved(
+            key=anchor.get("key", ""), name=anchor.get("name", ""),
+            date=best[0], anchor=anchor,
+            note=(f"{want} fell twice in {solar_month} this year; the one "
+                  f"nearest the full moon is taken"),
+        )
+
+    note = ""
+    if len(hits) > 1:
+        note = (f"{want} falls {len(hits)} times in {solar_month} this year and "
+                f"the anchor does not say which is meant")
+    return [
+        Resolved(key=anchor.get("key", ""), name=anchor.get("name", ""),
+                 date=day, anchor=anchor, note=note)
+        for day, _ in hits
+    ] if len(hits) > 1 else Resolved(
+        key=anchor.get("key", ""), name=anchor.get("name", ""),
+        date=hits[0][0], anchor=anchor,
+    )
+
+
 def resolve(anchor: dict | None, gregorian_year: int, **kw):
     """
     An annual anchor yields one Resolved; a recurring one yields a list.
@@ -689,6 +845,9 @@ def resolve(anchor: dict | None, gregorian_year: int, **kw):
         if anchor.get("recurrence") == "monthly" or "month" not in anchor:
             return resolve_crescent_monthly(anchor, gregorian_year, **attic_kw)
         return resolve_crescent(anchor, gregorian_year, **attic_kw)
+    if kind == "nakshatra":
+        nak_kw = {k: v for k, v in kw.items() if k in ("lat", "lon")}
+        return resolve_nakshatra(anchor, gregorian_year, **nak_kw)
     if kind == "solar":
         solar_kw = {k: v for k, v in kw.items() if k in ("lat", "lon")}
         return resolve_solar(anchor, gregorian_year, **solar_kw)

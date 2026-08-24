@@ -169,6 +169,57 @@ def resolve_lunar(
     )
 
 
+def resolve_crescent_monthly(anchor: dict, gregorian_year: int) -> list[Resolved]:
+    """
+    An Attic observance kept every month — the noumenia, the days sacred to
+    Hermes, Artemis, Apollo, Poseidon, and Hekate's Deipnon.
+
+    These matter far more for daily practice than the annual festivals, and most
+    festival lists omit them entirely.
+
+    Two Attic peculiarities are handled here:
+
+    **`dayFromEnd`** counts backwards, because the last third of an Attic month
+    does. The Deipnon is the *last* day — ἕνη καὶ νέα — which is day 30 of a full
+    month and day 29 of a hollow one. Anchoring it to "30" would silently skip
+    every hollow month, which is about half of them.
+
+    **Hollow months are contested.** Pritchett and Meritt disagree about which
+    day a hollow month omits. Where the entry says so, the note carries it
+    forward rather than the code picking a side.
+    """
+    from shruti_astro.core.attic import attic_day
+
+    from_end = anchor.get("dayFromEnd")
+    fixed_day = anchor.get("day")
+    if from_end is None and fixed_day is None:
+        raise ValueError("a monthly crescent anchor needs day or dayFromEnd")
+
+    contested = anchor.get("hollowMonthRuleContested")
+    out: list[Resolved] = []
+    seen_months: set[tuple[str, int]] = set()
+
+    d = date_cls(gregorian_year, 1, 1)
+    end = date_cls(gregorian_year, 12, 31)
+    while d <= end:
+        a = attic_day(d)
+        want = (a.month_length - from_end + 1) if from_end is not None else fixed_day
+        if a.day == want:
+            marker = (a.month, a.day)
+            if marker not in seen_months:
+                seen_months.add(marker)
+                note = f"{a.month_greek} {a.day_name_greek}"
+                if from_end is not None and not a.is_full:
+                    note += f" (hollow month: day {a.month_length}, not {fixed_day or 30})"
+                    if contested:
+                        note += f"; contested — {contested}"
+                out.append(Resolved(key=anchor.get("key", ""),
+                                    name=anchor.get("name", ""),
+                                    date=d, anchor=anchor, note=note))
+        d += timedelta(days=1)
+    return out
+
+
 def resolve_crescent(anchor: dict, gregorian_year: int) -> Resolved:
     """
     An Attic anchor → the civil day.
@@ -179,6 +230,30 @@ def resolve_crescent(anchor: dict, gregorian_year: int) -> Resolved:
     from shruti_astro.core.attic import attic_day
 
     month = anchor["month"]
+
+    # A day the sources do not give. Returning the candidates rather than a
+    # guess is the whole point — several of these festivals are known to have
+    # happened and simply cannot be dated, and a confident wrong date is worse
+    # than an honest absent one.
+    if "day" not in anchor:
+        candidates = anchor.get("dayCandidates") or []
+        reconstructions = anchor.get("dayReconstructions") or []
+        detail = anchor.get("dayBasis") or "no day is given by any source"
+        if reconstructions:
+            named = "; ".join(
+                f"{r.get('author', 'unattributed')}: "
+                f"{'–'.join(str(x) for x in r.get('days', []))}"
+                for r in reconstructions
+            )
+            detail += f". Reconstructions differ — {named}"
+        elif candidates:
+            detail += f". Candidate days: {', '.join(str(c) for c in candidates)}"
+        return Resolved(
+            key=anchor.get("key", ""), name=anchor.get("name", ""), date=None,
+            anchor=anchor, skipped=True,
+            skipped_reason=f"{month}, day unknown — {detail}",
+        )
+
     want_day = int(anchor["day"])
 
     d = date_cls(gregorian_year, 1, 1)
@@ -262,7 +337,7 @@ def resolve_recurring(
     return out
 
 
-def resolve(anchor: dict, gregorian_year: int, **kw):
+def resolve(anchor: dict | None, gregorian_year: int, **kw):
     """
     An annual anchor yields one Resolved; a recurring one yields a list.
 
@@ -271,7 +346,24 @@ def resolve(anchor: dict, gregorian_year: int, **kw):
     twenty-four. Returning a one-element list for the first would make every
     caller unwrap it; returning only the first of the second would be wrong.
     """
+    anchor = anchor or {}
     kind = anchor.get("kind")
+    if kind is None:
+        # A CONTAINER: an entry that names a multi-day festival whose individual
+        # days are separate entries. Anthesteria is the case — Pithoigia, Choes
+        # and Chytroi each have their own anchor, so giving the container one too
+        # would put four events on three days.
+        #
+        # An empty anchor here is deliberate, not a defect. It took being caught
+        # mid-"repair" to see that.
+        return Resolved(
+            key=anchor.get("key", ""), name=anchor.get("name", ""), date=None,
+            anchor=anchor, skipped=True,
+            skipped_reason=(
+                "container entry — it has no date of its own because its "
+                "constituent days are dated separately"
+            ),
+        )
     if kind == "lunar":
         if anchor.get("month") in (RECURRING, ADHIKA_ONLY):
             # Both walk the year rather than seeking one month: "*" takes every
@@ -280,7 +372,24 @@ def resolve(anchor: dict, gregorian_year: int, **kw):
             return resolve_recurring(anchor, gregorian_year, **kw)
         return resolve_lunar(anchor, gregorian_year, **kw)
     if kind == "crescent":
+        if anchor.get("recurrence") == "monthly" or "month" not in anchor:
+            return resolve_crescent_monthly(anchor, gregorian_year)
         return resolve_crescent(anchor, gregorian_year)
+    if kind == "relative":
+        # Anchored to another festival rather than to the sky. Resolving it
+        # needs that festival's date, which the caller has and this function
+        # does not — so it says so rather than guessing a day from the range.
+        after = anchor.get("after", "another occasion")
+        rng = anchor.get("dayRange")
+        return Resolved(
+            key=anchor.get("key", ""), name=anchor.get("name", ""), date=None,
+            anchor=anchor, skipped=True,
+            skipped_reason=(
+                f"anchored relative to {after}"
+                + (f", within {rng[0]}–{rng[1]} of the month" if rng else "")
+                + " — resolve that occasion first and pass its date"
+            ),
+        )
     if kind == "fixed":
         return Resolved(
             key=anchor.get("key", ""), name=anchor.get("name", ""),

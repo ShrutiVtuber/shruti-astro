@@ -177,3 +177,92 @@ def test_a_recurring_anchor_honours_its_day_rule():
     pradosha = resolve({"kind": "lunar", "month": "*", "paksha": "krishna",
                         "tithi": 13, "dayRule": "pradosha"}, 2026)
     assert [x.date for x in sunrise] != [x.date for x in pradosha]
+
+
+# ── Attic anchors ───────────────────────────────────────────────────────────
+
+def test_a_monthly_attic_observance_recurs_every_month():
+    r = resolve({"kind": "crescent", "day": 1, "recurrence": "monthly"}, 2026)
+    assert isinstance(r, list)
+    assert 12 <= len(r) <= 13          # thirteen in an intercalary Attic year
+
+
+def test_the_deipnon_follows_the_month_length_not_a_fixed_number():
+    """
+    Hekate's Deipnon is the LAST day — ἕνη καὶ νέα — which is day 30 of a full
+    month and day 29 of a hollow one. Anchoring it to 30 would silently skip
+    every hollow month, and about half of them are.
+    """
+    from shruti_astro.core.attic import attic_day
+
+    r = resolve({"kind": "crescent", "dayFromEnd": 1, "recurrence": "monthly"}, 2026)
+    assert len(r) >= 12
+    for occurrence in r:
+        a = attic_day(occurrence.date)
+        assert a.day == a.month_length          # always the last day
+        assert a.day_name_greek == "ἕνη καὶ νέα"
+    # Both month lengths must actually appear, or the test proves nothing.
+    lengths = {attic_day(o.date).month_length for o in r}
+    assert lengths == {29, 30}
+
+
+def test_the_contested_hollow_rule_is_carried_forward_not_decided():
+    r = resolve({"kind": "crescent", "dayFromEnd": 1, "recurrence": "monthly",
+                 "hollowMonthRuleContested": "Pritchett vs Meritt"}, 2026)
+    hollow = [o for o in r if "hollow" in o.note]
+    assert hollow, "expected some hollow months in a year"
+    assert all("Pritchett vs Meritt" in o.note for o in hollow)
+
+
+def test_an_undatable_festival_returns_its_reconstructions_not_a_guess():
+    """
+    Several Attic festivals are known to have happened and cannot be dated. A
+    confident wrong date is worse than an honest absent one.
+    """
+    r = resolve({
+        "kind": "crescent", "month": "Gamelion",
+        "dayCertainty": "unknown",
+        "dayReconstructions": [
+            {"days": [12, 15], "author": "Deubner"},
+            {"days": [8, 11], "author": "A. Mommsen"},
+        ],
+    }, 2026)
+    assert r.date is None and r.skipped
+    assert "Deubner" in r.skipped_reason and "Mommsen" in r.skipped_reason
+
+
+def test_a_relative_anchor_asks_for_the_occasion_it_follows():
+    r = resolve({"kind": "relative", "month": "Elaphebolion",
+                 "after": "occasions:city-dionysia", "dayRange": [14, 17]}, 2026)
+    assert r.date is None
+    assert "city-dionysia" in r.skipped_reason
+
+
+def test_a_container_entry_has_no_date_of_its_own():
+    """
+    Anthesteria names a three-day festival whose days are separate entries.
+    Giving the container an anchor too would put four events on three days —
+    the empty anchor is deliberate, not a defect.
+    """
+    for empty in (None, {}):
+        r = resolve(empty, 2026)
+        assert r.date is None and r.skipped
+        assert "container" in r.skipped_reason
+
+
+def test_the_deipnon_and_amavasya_are_the_same_dark_moon():
+    """
+    A cross-calendar check worth more than either alone: ἕνη καὶ νέα ends the
+    Attic month and amāvāsyā ends the amānta Hindu month, and both are the dark
+    of the Moon. Two calendars, two code paths, one sky — if these ever diverge,
+    one of the calendars has drifted.
+    """
+    deipnon = {o.date for o in resolve(
+        {"kind": "crescent", "dayFromEnd": 1, "recurrence": "monthly"}, 2026)}
+    amavasya = {o.date for o in resolve(
+        {"kind": "lunar", "month": "*", "paksha": "krishna", "tithi": 15}, 2026)}
+    overlap = deipnon & amavasya
+    assert len(overlap) >= 10, (
+        f"expected the two calendars to agree on most new moons, "
+        f"got {len(overlap)} of {len(amavasya)}"
+    )

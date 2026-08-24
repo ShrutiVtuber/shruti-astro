@@ -53,7 +53,8 @@ Hellenistic and Vedic are first-class together, not one bolted onto the other:
 | `GET /version` | build SHA — what §13 source links must point at |
 | `GET /planetary-hours` | current hour and its ruler, for a location |
 | `GET /panchanga` | tithi, nakṣatra, yoga, karaṇa for a date and place |
-| `GET /chart` | positions, houses, aspects — tropical and sidereal |
+| `GET /chart` | full natal chart — `tradition=hellenistic\|vedic` |
+| `GET /house-systems` | whole sign, equal, Placidus, Porphyry, Regiomontanus, Koch |
 | `GET /rise-conventions` | the sunrise toggle — both traditions, described |
 | `GET /ayanamsas` | the six ayanāṁśas |
 
@@ -74,6 +75,24 @@ quietly corrupt the other.
 `GET /panchanga?at_sunrise=true&lat=&lon=` is the mode that reproduces a printed
 Indian almanac: almanacs name the day by the tithi prevailing *at sunrise* under
 the Hindu convention, so asking at noon can legitimately disagree by a day.
+
+## One chart, two readings
+
+`/chart?tradition=hellenistic` and `?tradition=vedic` run the same computation
+and differ only in zodiac and judgment layer — so the two can never disagree
+about *where* a planet is, only about which frame names it.
+
+| | Hellenistic | Vedic |
+|---|---|---|
+| Zodiac | tropical | sidereal (six ayanāṁśas) |
+| Reading | sect by the true degree rule, whole-sign places, essential dignities, the seven Hermetic lots | rāśi, nakṣatra with pāda and lord, navāṁśa (D9), bhāva from the lagna |
+| Nodes | present, no essential dignity | Rāhu and Ketu as full participants |
+
+**The arithmetic reconciles.** The reported ayanāṁśa is the one the sidereal
+positions actually use, so `tropical − ayanāṁśa` equals the sidereal longitude
+printed, to well under an arcsecond. That sounds obvious and is the thing most
+implementations get wrong: `swe.get_ayanamsa_ut` ignores the calculation flags
+and lands ~14″ adrift. A test enforces it across all seven planets.
 
 ## Running
 

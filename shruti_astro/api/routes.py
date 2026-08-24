@@ -164,3 +164,117 @@ async def list_rise_conventions() -> dict:
 async def list_ayanamsas() -> dict:
     """Practitioners genuinely disagree here; the choice is theirs, not ours."""
     return {"ayanamsas": sorted(AYANAMSAS)}
+
+
+@router.get("/house-systems")
+async def list_house_systems() -> dict:
+    from shruti_astro.core.ephemeris import HOUSE_SYSTEMS
+
+    return {"houseSystems": sorted(HOUSE_SYSTEMS)}
+
+
+@router.get("/chart")
+async def chart(
+    when: str = Query(..., description="Birth moment, ISO-8601. Include the offset."),
+    lat: float = Query(..., ge=-90, le=90),
+    lon: float = Query(..., ge=-180, le=180),
+    tradition: str = Query("hellenistic", description="hellenistic | vedic"),
+    ayanamsa: str = Query("lahiri", description="Vedic only"),
+    house_system: str = Query("whole_sign"),
+    include_modern: bool = Query(False, description="Uranus, Neptune, Pluto"),
+    true_node: bool = Query(False, description="True node instead of mean"),
+) -> dict:
+    """
+    A full natal chart, in whichever tradition the visitor chooses.
+
+    One computation underlies both. `tradition` selects the zodiac and the
+    judgment layer laid over it:
+
+      hellenistic — tropical; sect by the true degree rule, whole-sign places,
+                    essential dignities, the seven Hermetic lots
+      vedic       — sidereal; rāśi, nakṣatra with pāda and lord, navāṁśa (D9),
+                    Rāhu and Ketu as full participants
+
+    The positions are identical in both; only the frame and the reading differ.
+    """
+    from shruti_astro.core import hellenistic as he
+    from shruti_astro.core import vedic as ve
+    from shruti_astro.core.doctrine import DEFAULT, Doctrine, DoctrineError
+    from shruti_astro.core.ephemeris import HOUSE_SYSTEMS, chart_positions
+
+    if tradition not in ("hellenistic", "vedic"):
+        raise HTTPException(400, "tradition must be 'hellenistic' or 'vedic'")
+    if house_system not in HOUSE_SYSTEMS:
+        raise HTTPException(400, f"unknown house system; choose from {sorted(HOUSE_SYSTEMS)}")
+    if ayanamsa not in AYANAMSAS:
+        raise HTTPException(400, f"unknown ayanamsa; choose from {sorted(AYANAMSAS)}")
+
+    moment = _moment(when)
+    sidereal = tradition == "vedic"
+
+    try:
+        pos = chart_positions(
+            moment, lat, lon, sidereal=sidereal, ayanamsa=ayanamsa,
+            house_system=house_system, include_modern=include_modern,
+            true_node=true_node,
+        )
+    except ValueError as exc:
+        raise HTTPException(400, str(exc))
+
+    by_name = {b.name: b.longitude for b in pos.bodies}
+
+    out: dict = {
+        "tradition": tradition,
+        "zodiac": "sidereal" if sidereal else "tropical",
+        "when": moment.isoformat(),
+        "location": {"lat": lat, "lon": lon},
+        "houseSystem": house_system,
+        "ayanamsa": (
+            {"name": ayanamsa, "degrees": round(pos.ayanamsa, 6)} if pos.ayanamsa else None
+        ),
+        "angles": {
+            "ascendant": round(pos.ascendant, 6),
+            "midheaven": round(pos.midheaven, 6),
+            "descendant": round((pos.ascendant + 180) % 360, 6),
+            "imumCoeli": round((pos.midheaven + 180) % 360, 6),
+        },
+        "cusps": [round(c, 6) for c in pos.cusps],
+        "bodies": [],
+    }
+
+    if tradition == "hellenistic":
+        s = he.sect(by_name["Sun"], pos.ascendant)
+        out["sect"] = {
+            "isDay": s.is_day, "luminary": s.luminary,
+            "benefic": s.benefic, "malefic": s.malefic,
+        }
+        out["places"] = he.whole_sign_places(pos.ascendant)
+        out["lots"] = {
+            name: round(value, 6)
+            for name, value in he.lots(pos.ascendant, by_name, s.is_day).items()
+        }
+        for b in pos.bodies:
+            entry = {
+                "name": b.name, "longitude": round(b.longitude, 6),
+                "retrograde": b.retrograde, "speed": round(b.speed, 6),
+            }
+            # Nodes have no essential dignity in the tradition.
+            if b.name not in ("Rahu", "Ketu"):
+                entry["dignities"] = he.dignities(b.name, b.longitude, s.is_day, DEFAULT)
+            out["bodies"].append(entry)
+    else:
+        asc_sign = int(pos.ascendant // 30)
+        out["lagna"] = ve.rashi(pos.ascendant)
+        out["nakshatraOfMoon"] = ve.nakshatra_of(by_name["Moon"])
+        for b in pos.bodies:
+            out["bodies"].append({
+                "name": b.name, "longitude": round(b.longitude, 6),
+                "retrograde": b.retrograde, "speed": round(b.speed, 6),
+                "rashi": ve.rashi(b.longitude),
+                "nakshatra": ve.nakshatra_of(b.longitude),
+                "navamsa": ve.navamsa(b.longitude),
+                # Bhāva counted from the lagna, whole-sign.
+                "house": ((int(b.longitude // 30) - asc_sign) % 12) + 1,
+            })
+
+    return out

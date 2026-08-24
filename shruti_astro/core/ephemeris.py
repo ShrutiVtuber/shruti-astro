@@ -94,6 +94,20 @@ def _from_julday(jd: float) -> datetime:
     return datetime(y, mo, d, tzinfo=timezone.utc) + timedelta(hours=ut)
 
 
+def _ayanamsa_for(jd: float, flags: int) -> float:
+    """
+    The ayanāṁśa **actually used** by the sidereal positions, not a nearby one.
+
+    `get_ayanamsa_ut` ignores the calculation flags and comes out ~14 arcseconds
+    adrift from what `calc_ut(..., FLG_SIDEREAL)` applies. Reporting that number
+    means a user who subtracts it from the tropical longitude does not get the
+    sidereal longitude we printed — and this project trades on being the one
+    whose arithmetic checks out. `get_ayanamsa_ex_ut` takes the same flags and
+    reconciles exactly.
+    """
+    return swe.get_ayanamsa_ex_ut(jd, flags)[1]
+
+
 @dataclass
 class Longitudes:
     sun_tropical: float
@@ -117,7 +131,7 @@ def longitudes(moment: datetime, ayanamsa: str = "lahiri") -> Longitudes:
         moon_t = swe.calc_ut(jd, swe.MOON, _flags())[0][0]
         sun_s = swe.calc_ut(jd, swe.SUN, _flags(sidereal=True))[0][0]
         moon_s = swe.calc_ut(jd, swe.MOON, _flags(sidereal=True))[0][0]
-        ayan = swe.get_ayanamsa_ut(jd)
+        ayan = _ayanamsa_for(jd, _flags(sidereal=True))
 
     return Longitudes(
         sun_tropical=sun_t % 360, moon_tropical=moon_t % 360,
@@ -178,3 +192,110 @@ def sun_events(
         raise SunNeverRose("the Sun did not rise again after this sunset")
 
     return sunrise, sunset, next_sunrise
+
+
+# ── full chart positions ────────────────────────────────────────────────────
+
+# The seven traditional planets, then the lunar nodes. Vedic charts are not
+# usable without Rāhu/Ketu; Hellenistic ones simply ignore them.
+TRADITIONAL = [
+    ("Sun", swe.SUN), ("Moon", swe.MOON), ("Mercury", swe.MERCURY),
+    ("Venus", swe.VENUS), ("Mars", swe.MARS), ("Jupiter", swe.JUPITER),
+    ("Saturn", swe.SATURN),
+]
+MODERN = [("Uranus", swe.URANUS), ("Neptune", swe.NEPTUNE), ("Pluto", swe.PLUTO)]
+
+HOUSE_SYSTEMS = {
+    "whole_sign": b"W",
+    "equal": b"A",
+    "placidus": b"P",
+    "porphyry": b"O",
+    "regiomontanus": b"R",
+    "koch": b"K",
+}
+
+
+@dataclass
+class Body:
+    name: str
+    longitude: float          # in the requested zodiac
+    latitude: float
+    speed: float              # °/day; negative means retrograde
+    retrograde: bool
+
+
+@dataclass
+class ChartPositions:
+    bodies: list[Body]
+    ascendant: float
+    midheaven: float
+    cusps: list[float]
+    ayanamsa: float | None
+    sidereal: bool
+
+
+def chart_positions(
+    moment: datetime,
+    lat: float,
+    lon: float,
+    sidereal: bool = False,
+    ayanamsa: str = "lahiri",
+    house_system: str = "whole_sign",
+    include_modern: bool = False,
+    true_node: bool = False,
+) -> ChartPositions:
+    """
+    One computation, serving both traditions.
+
+    `sidereal` selects the zodiac: tropical for Hellenistic, sidereal for Vedic.
+    Everything downstream — dignities, lots, nakṣatras, navāṁśa — reads from the
+    same numbers, so the two readings can never disagree about where a planet is,
+    only about which frame to name it in.
+    """
+    _ensure_init()
+    if house_system not in HOUSE_SYSTEMS:
+        raise ValueError(f"unknown house system: {house_system}")
+    if sidereal and ayanamsa not in AYANAMSAS:
+        raise ValueError(f"unknown ayanamsa: {ayanamsa}")
+
+    jd = _julday(moment)
+    flags = _flags(sidereal=sidereal)
+
+    wanted = list(TRADITIONAL) + (MODERN if include_modern else [])
+    # Vedic convention is the mean node; the true node is offered because some
+    # schools use it and the difference is real (up to ~1.5°).
+    wanted.append(("Rahu", swe.TRUE_NODE if true_node else swe.MEAN_NODE))
+
+    with _lock:
+        if sidereal:
+            swe.set_sid_mode(AYANAMSAS[ayanamsa], 0, 0)
+
+        bodies: list[Body] = []
+        for name, ident in wanted:
+            (lg, lt, _dist, speed, *_), _ = swe.calc_ut(jd, ident, flags)
+            bodies.append(
+                Body(name=name, longitude=lg % 360, latitude=lt,
+                     speed=speed, retrograde=speed < 0)
+            )
+
+        cusps, ascmc = swe.houses_ex(
+            jd, lat, lon, HOUSE_SYSTEMS[house_system],
+            swe.FLG_SIDEREAL if sidereal else 0,
+        )
+        ayan = _ayanamsa_for(jd, flags) if sidereal else None
+
+    # Ketu is definitionally opposite Rāhu; deriving it keeps them consistent.
+    rahu = next(b for b in bodies if b.name == "Rahu")
+    bodies.append(
+        Body(name="Ketu", longitude=(rahu.longitude + 180.0) % 360.0,
+             latitude=-rahu.latitude, speed=rahu.speed, retrograde=rahu.retrograde)
+    )
+
+    return ChartPositions(
+        bodies=bodies,
+        ascendant=ascmc[0] % 360,
+        midheaven=ascmc[1] % 360,
+        cusps=[c % 360 for c in cusps],
+        ayanamsa=ayan,
+        sidereal=sidereal,
+    )

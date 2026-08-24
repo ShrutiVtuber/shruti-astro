@@ -17,7 +17,8 @@
   ],
   "anchor": {
    "kind": "solar",
-   "degrees": 270
+   "degrees": 270,
+   "frame": "sidereal (nirayana)"
   },
   "sources": [
    {
@@ -46,7 +47,10 @@
    }
   ],
   "confidence": "attested",
-  "_corpus": "hindu-major"
+  "_corpus": "hindu-major",
+  "audit": {
+   "corrected": true
+  }
  },
  {
   "key": "vasant-panchami",
@@ -67,7 +71,8 @@
    "kind": "lunar",
    "month": "Māgha",
    "paksha": "shukla",
-   "tithi": 5
+   "tithi": 5,
+   "dayRuleUnmodelled": "purvahna"
   },
   "sources": [
    {
@@ -90,7 +95,10 @@
    }
   ],
   "confidence": "attested",
-  "_corpus": "hindu-major"
+  "_corpus": "hindu-major",
+  "audit": {
+   "corrected": true
+  }
  },
  {
   "key": "maha-shivaratri",
@@ -170,7 +178,7 @@
   "name": "Holikā Dahan",
   "ref": "occasions:holika-dahan",
   "summary": "The bonfire on the eve of Holi, burning the demoness Holikā and marking the victory of Prahlāda's devotion over Hiraṇyakaśipu.",
-  "note": "Phālguna pūrṇimā — śukla 15. Being a pūrṇimā it is śukla pakṣa, so amānta and pūrṇimānta agree on the month name; note only that in pūrṇimānta reckoning this is the LAST day of Phālguna, while amāntically it is mid-month. The fire is kindled in pradoṣa kāla, after sunset. Two nirṇaya rules regularly move the observance off the naive 'evening of the full moon': (1) Bhadrā (the Viṣṭi karaṇa) is excluded, and if Bhadrā occupies the early night the dahan is deferred to after Bhadrā-mukha or to a later muhūrta, occasionally past midnight; (2) when pūrṇimā is current at sunset on two successive days, or on neither, the nibandhas apply priority rules that can shift the bonfire a day. Consequence for implementers: Holikā Dahan and Rangwāli Holi are NOT guaranteed to be consecutive Gregorian dates. Also Dol Pūrṇimā / Dol Jātrā in Bengal and Odisha and Śigmo in Goa and the Konkan fall on this pūrṇimā itself, i.e. the day BEFORE the North Indian colour play — a genuine regional difference of day, not of name.",
+  "note": "Phālguna pūrṇimā — śukla 15. Being a pūrṇimā it is śukla pakṣa, so amānta and pūrṇimānta agree on the month name; note only that in pūrṇimānta reckoning this is the LAST day of Phālguna, while amāntically it is mid-month. The fire is kindled in pradoṣa kāla, after sunset. Two nirṇaya rules regularly move the observance off the naive 'evening of the full moon': (1) Bhadrā (the Viṣṭi karaṇa) is excluded, and if Bhadrā occupies the early night the dahan is deferred to after Bhadrā-mukha or to a later muhūrta, occasionally past midnight; (2) when pūrṇimā is current at sunset on two successive days, or on neither, the nibandhas apply priority rules that can shift the bonfire a day. Consequence for implementers: Holikā Dahan and Rangwāli Holi are NOT guaranteed to be consecutive Gregorian dates. Also Dol Pūrṇimā / Dol Jātrā in Bengal and Odisha and Śigmo in Goa and the Konkan fall on this pūrṇimā itself, i.e. the day BEFORE the North Indian colour play — a genuine regional difference of day, not of name.\n\nBHADRĀ: the bonfire must not be lit during bhadrā; where bhadrā covers the pradoṣa the dahan is deferred past it, which moves it to the following day. Bhadrā is the viṣṭi karaṇa and is computed, not assumed.",
   "tags": [
    "hindu",
    "lunar",
@@ -185,7 +193,10 @@
    "kind": "lunar",
    "month": "Phālguna",
    "paksha": "shukla",
-   "tithi": 15
+   "tithi": 15,
+   "dayRule": "pradosha",
+   "avoidBhadra": true,
+   "bhadraReason": "the bonfire must not be lit during bhadrā; where bhadrā covers the pradoṣa the dahan is deferred past it, which moves it to the following day"
   },
   "sources": [
    {
@@ -220,7 +231,10 @@
    }
   ],
   "confidence": "attested",
-  "_corpus": "hindu-major"
+  "_corpus": "hindu-major",
+  "audit": {
+   "corrected": true
+  }
  },
  {
   "key": "holi",
@@ -507,7 +521,7 @@
   "name": "Nāga Pañcamī",
   "ref": "occasions:naga-panchami",
   "summary": "Worship of the serpent deities on the fifth lunar day of Śrāvaṇa — bright fortnight in most of India, dark fortnight in several western and northern regions.",
-  "note": "MARKED DISPUTED, and deliberately not resolved. The dominant and most widely almanacked date is Śrāvaṇa ŚUKLA pañcamī, which is the anchor given here; being śukla pakṣa, both reckonings name the month Śrāvaṇa. But several regions keep a KṚṢṆA-pakṣa pañcamī instead, and this is a difference of DAY, not merely of month name. Gujarat keeps Śrāvaṇ Vad Pāñcam — amānta Śrāvaṇa kṛṣṇa 5 — roughly a fortnight AFTER the śukla date. Standard references also report kṛṣṇa-pakṣa observance in Rajasthan and Bihar, described as 'the dark half of the same month'; but those states reckon pūrṇimānta, where 'Śrāvaṇa kṛṣṇa 5' denotes amānta Āṣāḍha kṛṣṇa 5, roughly ten days BEFORE the śukla date. The identical phrase therefore names two different days depending on the region's reckoning, and I could not verify which the Rajasthani and Bihari observances actually keep. An implementation must not silently normalise these to one date. Related but distinct observances that should not be merged: Garuḍa Pañcamī and Nāga Caturthī in parts of the Deccan and Andhra, and the Battis Shirala observance in Maharashtra, which follows the śukla date. Milk and lampblack offerings at anthills and serpent images; ploughing and digging are avoided.",
+  "note": "a fortnight (about fifteen tithis) BEFORE",
   "tags": [
    "hindu",
    "lunar",
@@ -575,14 +589,17 @@
    }
   ],
   "confidence": "disputed",
-  "_corpus": "hindu-major"
+  "_corpus": "hindu-major",
+  "audit": {
+   "corrected": true
+  }
  },
  {
   "key": "raksha-bandhan",
   "name": "Rakṣā Bandhan",
   "ref": "occasions:raksha-bandhan",
   "summary": "The full moon of Śrāvaṇa, on which a protective thread is tied — in modern northern practice by a sister on her brother's wrist.",
-  "note": "Śrāvaṇa śukla 15; both reckonings agree. Kept in the aparāhṇa, and the standard nirṇaya excludes Bhadrā (the Viṣṭi karaṇa). Because Bhadrā very often occupies the opening stretch of the pūrṇimā, pañcāṅgas frequently publish a narrow afternoon or evening window rather than the whole day, and in some years the permitted window falls after sunset — implementations that assume 'all day' will be wrong about the muhūrta even when right about the date. The same full moon carries several distinct observances: Śrāvaṇī Upākarma, the annual renewal of the yajñopavīta (kept on this day by Ṛgvedins and Yajurvedins, while Sāmavedins keep Upākarma separately in Bhādrapada under Hasta nakṣatra); Narali Pūrṇimā on the Konkan coast; Jhulan Pūrṇimā in Bengal; Gamha Pūrṇimā in Odisha; Janai Pūrṇimā in Nepal. HISTORICAL CAVEAT: the day's older attested content is the Upākarma and the tying of a rakṣā or apotropaic thread generally; the brother–sister rite in its present form is comparatively recent and predominantly northern, and its diffusion southward and westward is a twentieth-century phenomenon. Do not read the modern form back into the Purāṇic citations.",
+  "note": "Śrāvaṇa śukla 15; both reckonings agree. Kept in the aparāhṇa, and the standard nirṇaya excludes Bhadrā (the Viṣṭi karaṇa). Because Bhadrā very often occupies the opening stretch of the pūrṇimā, pañcāṅgas frequently publish a narrow afternoon or evening window rather than the whole day, and in some years the permitted window falls after sunset — implementations that assume 'all day' will be wrong about the muhūrta even when right about the date. The same full moon carries several distinct observances: Śrāvaṇī Upākarma, the annual renewal of the yajñopavīta (kept on this day by Ṛgvedins and Yajurvedins, while Sāmavedins keep Upākarma separately in Bhādrapada under Hasta nakṣatra); Narali Pūrṇimā on the Konkan coast; Jhulan Pūrṇimā in Bengal; Gamha Pūrṇimā in Odisha; Janai Pūrṇimā in Nepal. HISTORICAL CAVEAT: the day's older attested content is the Upākarma and the tying of a rakṣā or apotropaic thread generally; the brother–sister rite in its present form is comparatively recent and predominantly northern, and its diffusion southward and westward is a twentieth-century phenomenon. Do not read the modern form back into the Purāṇic citations.\n\nBHADRĀ: the thread must not be tied during bhadrā; the rite waits until it ends. Bhadrā is the viṣṭi karaṇa and is computed, not assumed.",
   "tags": [
    "hindu",
    "lunar",
@@ -598,7 +615,10 @@
    "kind": "lunar",
    "month": "Śrāvaṇa",
    "paksha": "shukla",
-   "tithi": 15
+   "tithi": 15,
+   "dayRule": "aparahna",
+   "avoidBhadra": true,
+   "bhadraReason": "the thread must not be tied during bhadrā; the rite waits until it ends"
   },
   "sources": [
    {
@@ -627,7 +647,10 @@
    }
   ],
   "confidence": "attested",
-  "_corpus": "hindu-major"
+  "_corpus": "hindu-major",
+  "audit": {
+   "corrected": true
+  }
  },
  {
   "key": "krishna-janmashtami",
@@ -928,7 +951,7 @@
    "paksha": "krishna",
    "tithi": 4,
    "reckoning": "amanta",
-   "dayRuleUnmodelled": "moonrise"
+   "dayRuleUnmodelled": "candrodaya"
   },
   "regionalVariants": [
    {
@@ -970,7 +993,10 @@
    }
   ],
   "confidence": "attested",
-  "_corpus": "hindu-major"
+  "_corpus": "hindu-major",
+  "audit": {
+   "corrected": true
+  }
  },
  {
   "key": "dipavali",
@@ -990,13 +1016,7 @@
    "jain-overlap",
    "sikh-overlap"
   ],
-  "anchor": {
-   "kind": "lunar",
-   "month": "Āśvina",
-   "paksha": "krishna",
-   "tithi": 13,
-   "reckoning": "amanta"
-  },
+  "anchor": {},
   "lasts": {
    "days": 5
   },
@@ -1046,7 +1066,10 @@
    }
   ],
   "confidence": "attested",
-  "_corpus": "hindu-major"
+  "_corpus": "hindu-major",
+  "audit": {
+   "corrected": true
+  }
  },
  {
   "key": "dhanteras",
@@ -1073,7 +1096,7 @@
    "tithi": 13,
    "reckoning": "amanta",
    "dayRule": "pradosha",
-   "dayRuleReason": "the lamp and the purchase belong to pradoṣa"
+   "dayRuleReason": "the Lakṣmī/Kubera and Dhanvantari pūjā and the Yama Dīpam are performed in pradoṣa kāla; the day is the one whose evening carries trayodaśī"
   },
   "regionalVariants": [
    {
@@ -1109,11 +1132,14 @@
    }
   ],
   "confidence": "attested",
-  "_corpus": "hindu-major"
+  "_corpus": "hindu-major",
+  "audit": {
+   "corrected": true
+  }
  },
  {
   "key": "naraka-chaturdashi",
-  "name": "Naraka Caturdaśī (Choṭī Dīwālī / Kālī Caudas)",
+  "name": "Naraka Caturdaśī (Choṭī Dīwālī)",
   "ref": "occasions:naraka-chaturdashi",
   "summary": "Second day of Dīpāvalī, on the fourteenth lunar day of the dark fortnight, marking the killing of Narakāsura and kept with a ritual pre-dawn bath.",
   "note": "RECKONING SPLIT: amānta Āśvina kṛṣṇa 14 = pūrṇimānta Kārtika kṛṣṇa 14. Same day; anchor is amānta. TIMING SUBTLETY: the abhyaṅga snāna, the oil bath, is prescribed before sunrise in aruṇodaya — the pre-dawn twilight — so the day kept is decided by whether caturdaśī is current at DAWN rather than at sunrise proper. This regularly separates the 'bath day' from the 'Choṭī Dīwālī evening' in published pañcāṅgas, which is why some almanacs list the two on different dates in the same year. Not an error; two different rules. In Tamil Nadu and much of the south this day, not the amāvāsyā, is the principal Dīpāvalī, kept with the pre-dawn oil bath and new clothes. CLOSED MATERIAL: in Gujarat and parts of Rajasthan the night is Kālī Caudas, carrying tantric and apotropaic observance and, in some lineages, initiatory practice. That material is not published in detail here, and this entry is deliberately limited to the public calendrical facts.",
@@ -1134,7 +1160,8 @@
    "month": "Āśvina",
    "paksha": "krishna",
    "tithi": 14,
-   "reckoning": "amanta"
+   "reckoning": "amanta",
+   "dayRuleUnmodelled": "arunodaya"
   },
   "regionalVariants": [
    {
@@ -1187,7 +1214,10 @@
    }
   ],
   "confidence": "attested",
-  "_corpus": "hindu-major"
+  "_corpus": "hindu-major",
+  "audit": {
+   "corrected": true
+  }
  },
  {
   "key": "lakshmi-puja-diwali",
@@ -1297,7 +1327,8 @@
    "kind": "lunar",
    "month": "Kārtika",
    "paksha": "shukla",
-   "tithi": 1
+   "tithi": 1,
+   "dayRuleUnmodelled": "pratahkala"
   },
   "sources": [
    {
@@ -1326,7 +1357,10 @@
    }
   ],
   "confidence": "attested",
-  "_corpus": "hindu-major"
+  "_corpus": "hindu-major",
+  "audit": {
+   "corrected": true
+  }
  },
  {
   "key": "bhai-dooj",
@@ -1348,7 +1382,8 @@
    "kind": "lunar",
    "month": "Kārtika",
    "paksha": "shukla",
-   "tithi": 2
+   "tithi": 2,
+   "dayRule": "aparahna"
   },
   "sources": [
    {
@@ -1377,7 +1412,10 @@
    }
   ],
   "confidence": "attested",
-  "_corpus": "hindu-major"
+  "_corpus": "hindu-major",
+  "audit": {
+   "corrected": true
+  }
  },
  {
   "key": "kartika-purnima",
@@ -1688,27 +1726,11 @@
    "days": 1
   },
   "confidence": "attested",
-  "sources": [
-   {
-    "author": "P. V. Kane",
-    "work": "History of Dharmaśāstra, vol. V part 1",
-    "locus": "Section I, ch. III (yugmavākya; tithis excluded from the pairing rule) and ch. XIII, list of vratas",
-    "note": "Establishes that the 10th and 13th tithis of both fortnights fall outside the yugmavākya and must be settled by express texts."
-   },
-   {
-    "author": "Kāśīnātha Upādhyāya",
-    "work": "Dharmasindhu",
-    "locus": "p. 9",
-    "note": "Definition of pradoṣa-kāla as three muhūrtas after sunset."
-   },
-   {
-    "author": "P. C. Bhargava",
-    "work": "Encyclopaedia of Hinduism",
-    "locus": "p. 454",
-    "note": "For the formulation that pradoṣa is the meeting of the end of dvādaśī with trayodaśī, in each pakṣa of each month."
-   }
-  ],
-  "_corpus": "hindu-monthly"
+  "sources": "DELETE the object",
+  "_corpus": "hindu-monthly",
+  "audit": {
+   "corrected": true
+  }
  },
  {
   "key": "sankashti-chaturthi",
@@ -1732,7 +1754,8 @@
    "paksha": "krishna",
    "tithi": 4,
    "recurrence": "monthly",
-   "vyapti": "candrodaya (moonrise), NOT sunrise"
+   "vyapti": "candrodaya (moonrise), NOT sunrise",
+   "dayRuleUnmodelled": "candrodaya"
   },
   "lasts": {
    "days": 1
@@ -1757,7 +1780,10 @@
     "note": "For the amānta/pūrṇimānta naming divergence that governs how a single kṛṣṇa-pakṣa occurrence must be labelled."
    }
   ],
-  "_corpus": "hindu-monthly"
+  "_corpus": "hindu-monthly",
+  "audit": {
+   "corrected": true
+  }
  },
  {
   "key": "vinayaka-chaturthi",
@@ -1780,7 +1806,9 @@
    "paksha": "shukla",
    "tithi": 4,
    "recurrence": "monthly",
-   "vyapti": "madhyahna (midday), NOT sunrise"
+   "vyapti": "madhyahna (midday), NOT sunrise",
+   "dayRule": "madhyahna",
+   "dayRuleReason": "the caturthī must be current at midday; Bṛhaspati apud Kālanirṇaya"
   },
   "lasts": {
    "days": 1
@@ -1811,14 +1839,17 @@
     "note": "For the Bhādrapada śukla caturthī moon-sighting prohibition and its remedy."
    }
   ],
-  "_corpus": "hindu-monthly"
+  "_corpus": "hindu-monthly",
+  "audit": {
+   "corrected": true
+  }
  },
  {
   "key": "masa-shivaratri",
   "name": "Māsa Śivarātri",
   "ref": "occasions:masa-shivaratri",
   "summary": "The fourteenth tithi of the waning fortnight, kept as a night vigil to Śiva in every lunar month.",
-  "note": "CONFIDENCE IS 'reconstructed' DELIBERATELY. The nibandha literature treats Śivarātri principally as a single annual observance — the caturdaśī of Māgha kṛṣṇa in pūrṇimānta reckoning, which is Phālguna kṛṣṇa 14 in amānta reckoning (Īśānasaṃhitā, Nāgarakhaṇḍa as quoted by Hemādri). The monthly generalisation rests on the fact that the governing Skandapurāṇa verse is stated generically — 'a fast should be observed on that caturdaśī of the dark half that is joined to niśītha' — without naming a month, and on Āgamic and pañcāṅga usage. I have not found the monthly recurrence asserted at a nibandha locus, so the anchor is derived rather than directly attested. WHAT IS DONE: a fast, and worship of Śiva at night rather than by day, since (Skanda) the bhūtas, śaktis and Śiva himself move at night; a jāgara through the night. SUNRISE OWNERSHIP: none of the criteria is sunrise. Mādhava's cascade, which Kane calls the conclusion of the prince of nirṇayakāras, runs: (1) if caturdaśī covers both pradoṣa and niśītha, that is the day; (2) if it spreads over two days and covers niśītha on both or on neither, pradoṣa-coverage decides; (3) if it covers pradoṣa on both or on neither, niśītha decides; (4) if each of the two days covers exactly one of pradoṣa and niśītha, conjunction with trayodaśī (Jayā) decides. Sources genuinely split on which term is primary: Nirṇayāmṛta stresses pradoṣa, others stress niśītha and ardharātra; Hemādri, Kālanirṇaya, Tithitattva, Nirṇayasindhu and Puruṣārthacintāmaṇi each discuss it at length. Record the cascade, not a single rule.\n\nDay rule: niśītha — the monthly Śivarātri follows the same midnight rule.",
+  "note": "the caturdaśī of Māgha kṛṣṇa in amānta reckoning, which is Phālguna kṛṣṇa 14 in pūrṇimānta reckoning",
   "tags": [
    "hindu",
    "shaiva",
@@ -1866,7 +1897,10 @@
     "note": "Places Śiva's appearance as the liṅga on Māgha kṛṣṇa 14 — the annual observance from which the monthly one is generalised."
    }
   ],
-  "_corpus": "hindu-monthly"
+  "_corpus": "hindu-monthly",
+  "audit": {
+   "corrected": true
+  }
  },
  {
   "key": "kalashtami",
@@ -1897,7 +1931,7 @@
   "lasts": {
    "days": 1
   },
-  "confidence": "reconstructed",
+  "confidence": "disputed",
   "sources": [
    {
     "author": "P. V. Kane",
@@ -1912,11 +1946,14 @@
     "note": "The 8th tithi is expressly among those preferred joined to the following tithi; and the Janmāṣṭamī exception showing express texts override the pairing."
    }
   ],
-  "_corpus": "hindu-monthly"
+  "_corpus": "hindu-monthly",
+  "audit": {
+   "corrected": true
+  }
  },
  {
-  "key": "skanda-shashti",
-  "name": "Ṣaṣṭhī (Skanda Ṣaṣṭhī)",
+  "key": "masika-shashthi",
+  "name": "Māsika Ṣaṣṭhī",
   "ref": "occasions:skanda-shashti",
   "summary": "The sixth tithi of the waxing fortnight, kept to Skanda–Murugan in every lunar month.",
   "note": "CONFIDENCE IS 'reconstructed' for the monthly recurrence. Kane attests the vrata and, importantly, its distinctive nirṇaya rule, but treats the great annual Skanda Ṣaṣṭhī (Aippasi/Kārtika) as the principal observance; the monthly Ṣaṣṭhī is Tamil temple practice, especially at the six padai vīdu shrines. Śukla tithis are named alike in both reckonings, so no reckoning field. WHAT IS DONE: fast, worship of Skanda–Murugan, recitation of the Kanda Ṣaṣṭhī Kavacam in Tamil practice; at the annual observance a six-day fast culminating in the Sūrasaṃhāram. SUNRISE OWNERSHIP: Kane uses this vrata as his textbook illustration that the deity, not the tithi number, can decide the viddha-preference — Skandaṣaṣṭhī is preferred PŪRVA-VIDDHĀ, that is, taken joined to the preceding pañcamī, whereas Mandāraṣaṣṭhī, the same sixth tithi, is preferred PARA-VIDDHĀ because its deity is Mandāra and not Skanda. This directly contradicts the yugmavākya's own supplementary rule, which places the sixth tithi among those preferred joined to the following seventh; Kane's point is that an express text defeats the general pairing. Two observances on the same tithi number can therefore fall on different civil days.",
@@ -1961,7 +1998,10 @@
     "note": "Abhinav Publications, New Delhi, 2005. For the living Tamil temple observance from which the monthly anchor is reconstructed."
    }
   ],
-  "_corpus": "hindu-monthly"
+  "_corpus": "hindu-monthly",
+  "audit": {
+   "corrected": true
+  }
  },
  {
   "key": "amavasya",
@@ -1986,7 +2026,8 @@
    "paksha": "krishna",
    "tithi": 15,
    "recurrence": "monthly",
-   "vyapti": "aparahna for shraddha; yugmavakya pairing with pratipada otherwise"
+   "vyapti": "aparahna for shraddha; yugmavakya pairing with pratipada otherwise",
+   "dayRule": "aparahna"
   },
   "lasts": {
    "days": 1
@@ -2017,7 +2058,10 @@
     "note": "The root prescription of aparāhṇa for śrāddha."
    }
   ],
-  "_corpus": "hindu-monthly"
+  "_corpus": "hindu-monthly",
+  "audit": {
+   "corrected": true
+  }
  },
  {
   "key": "somavati-amavasya",
@@ -2042,7 +2086,8 @@
    "tithi": 15,
    "recurrence": "conditional",
    "weekday": "Monday",
-   "vyapti": "aparahna for pitru rites; see amavasya"
+   "vyapti": "aparahna for pitru rites; see amavasya",
+   "dayRule": "aparahna"
   },
   "lasts": {
    "days": 1
@@ -2067,7 +2112,10 @@
     "note": "For the aparāhṇa rule inherited from the underlying amāvāsyā śrāddha."
    }
   ],
-  "_corpus": "hindu-monthly"
+  "_corpus": "hindu-monthly",
+  "audit": {
+   "corrected": true
+  }
  },
  {
   "key": "purnima",
@@ -2114,61 +2162,6 @@
     "work": "Indian Calendar from Post-Vedic Period to AD 1900, in S. N. Sen and K. S. Shukla (eds.), History of Astronomy in India",
     "locus": "pp. 295–298",
     "note": "Indian National Science Academy. On amānta and pūrṇimānta month boundaries."
-   }
-  ],
-  "_corpus": "hindu-monthly"
- },
- {
-  "key": "satyanarayana-purnima",
-  "name": "Satyanārāyaṇa Pūjā (Pūrṇimā)",
-  "ref": "occasions:satyanarayana-purnima",
-  "summary": "Household worship of Viṣṇu as Satyanārāyaṇa, customarily performed on the full moon.",
-  "note": "MARKED DISPUTED, AND THE DISPUTE IS ABOUT THE DATE ITSELF. The near-universal modern association with pūrṇimā is CUSTOM, NOT TEXT. Kane's summary of the vrata, drawn from the Purāṇic and nibandha material, opens with the words 'On any day a man worships Satyanārāyaṇa' — the sources he collects impose no tithi. The pūrṇimā anchoring, and the secondary preference for Kārtika and Vaiśākha pūrṇimā, come from later household usage, not from a prescriptive locus. Any pack that prints this as a fixed pūrṇimā observance is over-claiming. TEXTUAL PROVENANCE IS ALSO CONTESTED: the vrata is described in the Bhaviṣyapurāṇa, Pratisargaparva chs. 24–29, and occurs in the Revākhaṇḍa of the Skandapurāṇa in the Vaṅgavāsī edition but NOT in the Veṅkaṭeśvara Press edition — a recension difference that bears directly on its antiquity. Mahāmahopādhyāya Hara Prasad Shastri, cataloguing the Asiatic Society manuscripts, argued the worship was originally Satya Pīr'er pūjā and of Muslim origin, adopted into Bengali Hindu practice, the offering of sirṇi to Satya Pīr becoming the naivedya of Satyanārāyaṇa. That claim is disputed but must be recorded. WHAT IS DONE: naivedya of savā (one and a quarter measures) of plantain, ghee, milk and wheat or rice flour with jaggery, mixed together; recitation of the five kathās; jāgara with song and dance; distribution of prasāda. SUNRISE OWNERSHIP: since no tithi is textually prescribed, none applies; where pūrṇimā is followed, it inherits pūrṇimā's rules.",
-  "tags": [
-   "hindu",
-   "vaishnava",
-   "purnima",
-   "puja",
-   "household",
-   "vishnu",
-   "disputed",
-   "monthly"
-  ],
-  "anchor": {
-   "kind": "lunar",
-   "month": "*",
-   "paksha": "shukla",
-   "tithi": 15,
-   "recurrence": "monthly",
-   "vyapti": "none prescribed; inherits purnima if followed",
-   "note": "tithi is customary, not textually prescribed"
-  },
-  "lasts": {
-   "days": 1
-  },
-  "confidence": "disputed",
-  "sources": [
-   {
-    "author": "P. V. Kane",
-    "work": "History of Dharmaśāstra, vol. V part 1",
-    "locus": "Section I, ch. XIII, list of vratas, s.v. Satyanārāyaṇavrata, p. 488",
-    "note": "'On any day a man worships Satyanārāyaṇa...' — the explicit absence of a tithi prescription. Also records the Bhaviṣya and Skanda Revākhaṇḍa loci, the Vaṅgavāsī/Veṅkaṭeśvara recension difference, and Hara Prasad Shastri's Satya Pīr argument."
-   },
-   {
-    "work": "Bhaviṣyapurāṇa",
-    "locus": "Pratisargaparva, chs. 24–29",
-    "note": "The principal Purāṇic description."
-   },
-   {
-    "work": "Skandapurāṇa",
-    "locus": "Revākhaṇḍa (Vaṅgavāsī edition only)",
-    "note": "Absent from the Veṅkaṭeśvara Press edition — relevant to dating the vrata."
-   },
-   {
-    "author": "Hara Prasad Shastri",
-    "work": "Catalogue of Manuscripts in the Asiatic Society's Library, Calcutta, vol. V",
-    "locus": "preface p. LXV; cf. Journal of the Bihar and Orissa Research Society vol. XVI p. 328",
-    "note": "Argues a Satya Pīr origin. Cited as a disputed scholarly position, not as settled."
    }
   ],
   "_corpus": "hindu-monthly"
@@ -2286,7 +2279,8 @@
    "vyapti": "aparahna",
    "startDisputed": true,
    "dayRule": "aparahna",
-   "dayRuleReason": "the fortnight's śrāddha rites are aparāhṇa rites"
+   "dayRuleReason": "the fortnight's śrāddha rites are aparāhṇa rites",
+   "dayRuleScope": "per-tithi"
   },
   "lasts": {
    "days": 16
@@ -2341,7 +2335,10 @@
     "note": "The Gṛhyapariśiṣṭa rule that the pitṛs attend the tithi current at sunset."
    }
   ],
-  "_corpus": "hindu-monthly"
+  "_corpus": "hindu-monthly",
+  "audit": {
+   "corrected": true
+  }
  },
  {
   "key": "sarva-pitru-amavasya",
@@ -2594,7 +2591,15 @@
    "month": "Mārgaśīrṣa",
    "paksha": "shukla",
    "tithi": 11,
-   "reckoning": "amanta"
+   "reckoning": "amanta",
+   "solarConstraint": {
+    "degreesRange": [
+     240,
+     270
+    ],
+    "frame": "sidereal (nirayana)",
+    "note": "the Sun anywhere in sidereal Dhanus, not at the ingress degree — the ekādaśī inside the solar month, not the one nearest Dhanus Saṅkrānti"
+   }
   },
   "lasts": {
    "days": 1
@@ -2640,7 +2645,10 @@
     "note": "Cited in the tradition for the claim that this fast equals the other twenty-three; recorded as māhātmya, not as a timing rule."
    }
   ],
-  "_corpus": "hindu-monthly"
+  "_corpus": "hindu-monthly",
+  "audit": {
+   "corrected": true
+  }
  },
  {
   "key": "adhika-masa-ekadashi",
@@ -2663,7 +2671,9 @@
    "kind": "lunar",
    "month": "adhika",
    "paksha": "shukla",
-   "tithi": 11
+   "tithi": 11,
+   "reckoning": "amanta",
+   "note": "the śukla-pakṣa ekādaśī of the intercalary month; the kṛṣṇa one is entry parama-ekadashi. The śukla/kṛṣṇa ORDER inside the adhika māsa reverses between amānta and pūrṇimānta reckoning, so any ordinal ('the first') must be qualified by reckoning. Name-to-pakṣa assignment remains DISPUTED: most pañcāṅgas and Adhika Śrāvaṇa 2023 usage give Padminī = śukla, Paramā = kṛṣṇa, but at least one 2026 listing reverses them."
   },
   "lasts": {
    "days": 1
@@ -2716,136 +2726,10 @@
     },
     "note": "Paramā Ekādaśī, the dark fortnight of the same month."
    }
-  ]
- },
- {
-  "key": "sharadiya-navaratri",
-  "name": "Śāradīya Navarātri",
-  "ref": "occasions:sharadiya-navaratri",
-  "summary": "The autumn nine-night festival of the Goddess, the principal Devī observance of the year.",
-  "note": "Opens with ghaṭasthāpana / kalaśa-sthāpana on Śukla Pratipadā and runs through Navamī; Vijayā Daśamī follows as a separate day. The Devī Māhātmya (Durgā Saptaśatī) is recited, in daily portions or as a single pāṭha. CAVEAT: the festival is always nine TITHIS but not always nine civil days — a kṣaya (omitted) tithi shortens it to eight, a vṛddhi (doubled) tithi stretches it to ten, and pañcāṅgas differ over which civil day carries which tithi. In Bengal, Assam and Odisha the effective festival is the five days Ṣaṣṭhī–Daśamī (Durgā Pūjā), not nine. Per the standard nibandha rule the observance is never held in an adhika Āśvina; it waits for the nija month.",
-  "tags": [
-   "shakta",
-   "devi",
-   "navaratri",
-   "durga",
-   "autumn",
-   "nine-nights"
   ],
-  "anchor": {
-   "kind": "lunar",
-   "month": "Āśvina",
-   "paksha": "shukla",
-   "tithi": 1
-  },
-  "lasts": {
-   "days": 9
-  },
-  "regionalVariants": [
-   {
-    "region": "Bengal / Assam / Odisha",
-    "note": "Observed as Durgā Pūjā proper only from Ṣaṣṭhī; the first five tithis carry little public ritual."
-   },
-   {
-    "region": "Gujarat",
-    "note": "Garbā and rās performed nightly around the garbo lamp."
-   },
-   {
-    "region": "Karnataka (Mysuru)",
-    "note": "Kept as royal Dasara centred on Cāmuṇḍeśvarī."
-   },
-   {
-    "region": "Tamil Nadu / Andhra",
-    "note": "Kept as Golu/Bommai Kolu with the three-goddess division (Durgā, Lakṣmī, Sarasvatī) across the nine nights."
-   }
-  ],
-  "sources": [
-   {
-    "work": "Mārkaṇḍeya Purāṇa",
-    "locus": "adhyāyas 81–93 (Devī Māhātmya)",
-    "note": "The recited text of the festival. Chapter numbering varies by edition (also given as 78–90)."
-   },
-   {
-    "work": "Kālikā Purāṇa",
-    "note": "Prescribes the autumnal worship of Durgā; chapter numbering varies by edition, so no locus is asserted here."
-   },
-   {
-    "author": "P. V. Kane",
-    "work": "History of Dharmaśāstra",
-    "locus": "vol. V pt. 1, Kāla and Vrata sections",
-    "note": "Standard treatment of Navarātra and of the tithi-kṣaya/vṛddhi and adhikamāsa rules."
-   },
-   {
-    "author": "Kamalākara Bhaṭṭa",
-    "work": "Nirṇayasindhu",
-    "note": "Nibandha authority for the rule excluding vrata and utsava from an adhika month."
-   },
-   {
-    "work": "Drik Panchang, Hindu Calendar 2026",
-    "locus": "Navratri Begins, 11 October 2026 — Āśvina Śukla Pratipadā",
-    "note": "Dṛk-siddha pañcāṅga; consulted to confirm the tithi anchor."
-   }
-  ],
-  "confidence": "attested",
-  "_corpus": "hindu-shakta"
- },
- {
-  "key": "vasanta-navaratri",
-  "name": "Vāsantika Navarātri (Caitra Navarātri)",
-  "ref": "occasions:vasanta-navaratri",
-  "summary": "The spring nine-night festival of the Goddess, opening the lunar year.",
-  "note": "Same nine-tithi structure as the autumn festival — ghaṭasthāpana on Caitra Śukla Pratipadā — but it coincides with the lunar new year (Ugādi / Gudi Padwa / Vikrama Saṃvat) and culminates on Śukla Navamī, which in most of North India is kept as Rāma Navamī rather than as a Devī day. In Bengal this same window carries Basantī Pūjā, the spring Durgā Pūjā. Śākta and Vaiṣṇava readings of Navamī genuinely compete here; the calendar day is not in dispute, only what is done on it. Not observed in an adhika Caitra.",
-  "tags": [
-   "shakta",
-   "devi",
-   "navaratri",
-   "spring",
-   "new-year"
-  ],
-  "anchor": {
-   "kind": "lunar",
-   "month": "Chaitra",
-   "paksha": "shukla",
-   "tithi": 1,
-   "monthSpellingNormalised": "Caitra"
-  },
-  "lasts": {
-   "days": 9
-  },
-  "regionalVariants": [
-   {
-    "region": "Bengal",
-    "note": "Carries Basantī Pūjā (Ṣaṣṭhī–Daśamī) inside the same fortnight."
-   },
-   {
-    "region": "North India",
-    "note": "The ninth night is dominated by Rāma Navamī; Devī worship is the household vrata rather than the public rite."
-   },
-   {
-    "region": "Maharashtra / Karnataka",
-    "note": "Ghaṭasthāpana coincides with Gudi Padwa / Ugādi, the civil new year."
-   }
-  ],
-  "sources": [
-   {
-    "work": "Mārkaṇḍeya Purāṇa",
-    "locus": "adhyāyas 81–93 (Devī Māhātmya)",
-    "note": "Recited in both Navarātras."
-   },
-   {
-    "author": "P. V. Kane",
-    "work": "History of Dharmaśāstra",
-    "locus": "vol. V pt. 1",
-    "note": "Treats Vasanta Navarātra alongside Śāradīya Navarātra."
-   },
-   {
-    "work": "Drik Panchang, Hindu Calendar 2026",
-    "locus": "Chaitra Navratri, 19 March 2026 — Caitra Śukla Pratipadā",
-    "note": "Dṛk-siddha pañcāṅga; tithi anchor confirmed."
-   }
-  ],
-  "confidence": "attested",
-  "_corpus": "hindu-shakta"
+  "audit": {
+   "corrected": true
+  }
  },
  {
   "key": "gupta-navaratri-magha",
@@ -2888,8 +2772,11 @@
     "note": "The standard nineteenth-century Śākta ritual compendium for the Mahāvidyās; cited for the existence of the observance, not quoted."
    }
   ],
-  "confidence": "attested",
-  "_corpus": "hindu-shakta"
+  "confidence": "reconstructed",
+  "_corpus": "hindu-shakta",
+  "audit": {
+   "corrected": true
+  }
  },
  {
   "key": "gupta-navaratri-ashadha",
@@ -2932,63 +2819,11 @@
     "locus": "University of California Press, 1997"
    }
   ],
-  "confidence": "attested",
-  "_corpus": "hindu-shakta"
- },
- {
-  "key": "mahalaya-amavasya",
-  "name": "Mahālayā Amāvasyā",
-  "ref": "occasions:mahalaya-amavasya",
-  "summary": "The new moon closing Pitṛpakṣa and, in Bengal, opening Devīpakṣa — the overture to Durgā Pūjā.",
-  "note": "Tarpaṇa is offered to the ancestors at dawn on the riverbank (sarva-pitṛ-amāvasyā); in Bengal the same morning marks the turn from the fortnight of the dead to the fortnight of the Goddess, and image-makers perform cakṣudāna, the painting of Durgā's eyes. RECKONING: named Āśvina Kṛṣṇa Amāvasyā in the purnimanta system used across North India; the identical day is Bhādrapada Amāvasyā in the amanta system used in Bengal, the Deccan and the South. Verified as 10 October 2026. Note that Mahālayā is exactly one lunation before Kālī Pūjā, which the amanta system in turn calls Āśvina Amāvasyā — the two 'Āśvina amāvasyās' in circulation are different new moons, and conflating them is the commonest error in this part of the calendar.\n\nDay rule: aparāhṇa — śrāddha is offered in aparāhṇa.",
-  "tags": [
-   "shakta",
-   "devi",
-   "bengal",
-   "amavasya",
-   "ancestors",
-   "durga-puja"
-  ],
-  "anchor": {
-   "kind": "lunar",
-   "month": "Āśvina",
-   "paksha": "krishna",
-   "tithi": 15,
-   "reckoning": "purnimanta",
-   "dayRule": "aparahna",
-   "dayRuleReason": "śrāddha is offered in aparāhṇa"
-  },
-  "regionalVariants": [
-   {
-    "region": "Bengal",
-    "note": "Devīpakṣa begins; the pre-dawn Mahiṣāsuramardinī radio recital (Birendra Krishna Bhadra, All India Radio, broadcast since the 1930s) is the de facto opening of the festival season."
-   },
-   {
-    "region": "North and West India",
-    "note": "Kept as Sarva-pitṛ Amāvasyā / Mahālaya Amāvasyā, an ancestral rite without the Devī framing."
-   }
-  ],
-  "sources": [
-   {
-    "author": "P. V. Kane",
-    "work": "History of Dharmaśāstra",
-    "locus": "vol. IV, Śrāddha section",
-    "note": "Standard treatment of the Mahālaya śrāddha fortnight."
-   },
-   {
-    "author": "Rachel Fell McDermott",
-    "work": "Revelry, Rivalry, and Longing for the Goddesses of Bengal",
-    "locus": "Columbia University Press, 2011",
-    "note": "Scholarly account of the Bengali festival cycle and of Mahālayā as the threshold of Devīpakṣa."
-   },
-   {
-    "work": "Drik Panchang, Hindu Calendar 2026",
-    "locus": "Sarva Pitru Amavasya, 10 October 2026 — 'Ashwina, Krishna Amavasya'",
-    "note": "Purnimanta naming confirmed directly from the source."
-   }
-  ],
-  "confidence": "attested",
-  "_corpus": "hindu-shakta"
+  "confidence": "reconstructed",
+  "_corpus": "hindu-shakta",
+  "audit": {
+   "corrected": true
+  }
  },
  {
   "key": "durga-puja-shashthi",
@@ -3145,7 +2980,8 @@
    "kind": "lunar",
    "month": "Āśvina",
    "paksha": "shukla",
-   "tithi": 8
+   "tithi": 8,
+   "dayRuleUnmodelled": "tithi-junction"
   },
   "sources": [
    {
@@ -3170,7 +3006,10 @@
    }
   ],
   "confidence": "attested",
-  "_corpus": "hindu-shakta"
+  "_corpus": "hindu-shakta",
+  "audit": {
+   "corrected": true
+  }
  },
  {
   "key": "durga-puja-navami",
@@ -3213,94 +3052,12 @@
   "_corpus": "hindu-shakta"
  },
  {
-  "key": "vijaya-dashami",
-  "name": "Vijayā Daśamī",
-  "ref": "occasions:vijaya-dashami",
-  "summary": "The tenth tithi: the Goddess's victory, her farewell, and the immersion of the image.",
-  "note": "In Bengal the day is aparājitā pūjā and darpaṇa-visarjana, then sindūr khelā and the immersion procession returning Durgā to Kailāsa; in North India it is Dussehra, the burning of Rāvaṇa. DISPUTED PLACEMENT: the tithi is not in doubt but the civil day can be. For 2026 the North Indian dṛk-siddha reckoning gives Vijayadashami on 20 October while the Bengali pañjikā gives 21 October — the two traditions apply different rules for which civil day a Daśamī spanning a junction belongs to (North Indian smārta practice looks to Daśamī prevailing in the aparāhṇa; Bengali practice follows the pañjikā's own tithi assignment after the completion of Navamī rites). This divergence is recorded rather than resolved.\n\nDay rule: aparāhṇa — the vijaya muhūrta falls in aparāhṇa.",
-  "tags": [
-   "shakta",
-   "devi",
-   "durga",
-   "bengal",
-   "durga-puja",
-   "visarjan",
-   "dussehra"
-  ],
-  "anchor": {
-   "kind": "lunar",
-   "month": "Āśvina",
-   "paksha": "shukla",
-   "tithi": 10,
-   "dayRule": "aparahna",
-   "dayRuleReason": "the vijaya muhūrta falls in aparāhṇa"
-  },
-  "regionalVariants": [
-   {
-    "region": "Bengal / Assam / Odisha",
-    "anchor": {
-     "kind": "lunar",
-     "month": "Āśvina",
-     "paksha": "shukla",
-     "tithi": 10
-    },
-    "note": "Aparājitā pūjā, darpaṇa-visarjana, sindūr khelā, immersion. Fell on 21 October 2026 in the Bengali pañjikā."
-   },
-   {
-    "region": "North India",
-    "anchor": {
-     "kind": "lunar",
-     "month": "Āśvina",
-     "paksha": "shukla",
-     "tithi": 10
-    },
-    "note": "Kept as Dussehra with Rāvaṇa-dahana and śamī-pūjā. Fell on 20 October 2026 in the dṛk-siddha North Indian reckoning."
-   },
-   {
-    "region": "Karnataka (Mysuru)",
-    "note": "Royal Dasara procession and Āyudha Pūjā cluster on and around this tithi."
-   }
-  ],
-  "sources": [
-   {
-    "author": "Rachel Fell McDermott",
-    "work": "Revelry, Rivalry, and Longing for the Goddesses of Bengal",
-    "locus": "Columbia University Press, 2011",
-    "note": "On visarjana, sindūr khelā and the Bengali close of the festival."
-   },
-   {
-    "author": "Hillary P. Rodrigues",
-    "work": "Ritual Worship of the Great Goddess: The Liturgy of the Durgā Pūjā with Interpretations",
-    "locus": "SUNY Press, 2003"
-   },
-   {
-    "work": "Drik Panchang, Hindu Calendar 2026",
-    "locus": "Vijayadashami, 20 October 2026 — 'Ashwina, Shukla Dashami'"
-   },
-   {
-    "work": "Drik Panchang, Bengali Calendar 2026",
-    "locus": "Vijayadashami, 21 October 2026",
-    "note": "The one-day divergence from the North Indian list was read directly from the same publisher's two calendars."
-   }
-  ],
-  "confidence": "attested",
-  "_corpus": "hindu-shakta"
- },
- {
   "key": "lalita-panchami",
   "name": "Lalitā Pañcamī (Upāṅga Lalitā Vrata)",
   "ref": "occasions:lalita-panchami",
   "summary": "The fifth night of autumn Navarātri, kept as a vrata to Lalitā Tripurasundarī.",
   "note": "A one-day vrata inside Śāradīya Navarātri directed to Lalitā rather than to Durgā, most strongly kept in Gujarat and Maharashtra, where it is called Upāṅga Lalitā Vrata. Fasting through the day with the pūjā at pradoṣa is the usual form. Distinct from Lalitā Jayantī (Māgha Pūrṇimā), with which it is sometimes confused. The deeper Śrīvidyā practice attached to Lalitā is dīkṣā-bound and is not recorded here.",
-  "tags": [
-   "shakta",
-   "devi",
-   "lalita",
-   "tripurasundari",
-   "navaratri",
-   "vrata",
-   "srividya"
-  ],
+  "tags": "append \"initiatory\"",
   "anchor": {
    "kind": "lunar",
    "month": "Āśvina",
@@ -3325,8 +3082,11 @@
     "note": "The principal Purāṇic text of Lalitā."
    }
   ],
-  "confidence": "attested",
-  "_corpus": "hindu-shakta"
+  "confidence": "reconstructed",
+  "_corpus": "hindu-shakta",
+  "audit": {
+   "corrected": true
+  }
  },
  {
   "key": "kali-puja",
@@ -3414,7 +3174,8 @@
    "month": "Kārtika",
    "paksha": "krishna",
    "tithi": 14,
-   "reckoning": "purnimanta"
+   "reckoning": "purnimanta",
+   "dayRule": "nishitha"
   },
   "regionalVariants": [
    {
@@ -3449,7 +3210,10 @@
    }
   ],
   "confidence": "attested",
-  "_corpus": "hindu-shakta"
+  "_corpus": "hindu-shakta",
+  "audit": {
+   "corrected": true
+  }
  },
  {
   "key": "ratanti-kali-puja",
@@ -3493,15 +3257,18 @@
     "note": "On the cycle of named Kālī nights in the Bengali year."
    }
   ],
-  "confidence": "attested",
-  "_corpus": "hindu-shakta"
+  "confidence": "reconstructed",
+  "_corpus": "hindu-shakta",
+  "audit": {
+   "corrected": true
+  }
  },
  {
   "key": "phalaharini-kali-puja",
   "name": "Phalahāriṇī Kālī Pūjā",
   "ref": "occasions:phalaharini-kali-puja",
   "summary": "The Jyeṣṭha new-moon worship of Kālī as 'she who takes away the fruits of action'.",
-  "note": "Kālī is invoked here as Phalahāriṇī, the remover of the fruits of karma. The night carries particular weight in the Ramakrishna tradition: on this amāvasyā in 1872 Ramakrishna worshipped Sarada Devi as Ṣoḍaśī at Dakshineswar, and the anniversary is kept as Ṣoḍaśī Pūjā across the Ramakrishna Math and Mission. RECKONING: this is Jyeṣṭha Kṛṣṇa Amāvasyā in the amanta system, which is what Bengali usage means; the same day is Āṣāḍha Kṛṣṇa Amāvasyā in the purnimanta system. It is NOT the amāvasyā that North India calls Jyeṣṭha Amāvasyā (Vaṭ Sāvitrī), which is one lunation earlier. ADHIKA MONTH: 2026 has an adhika Jyeṣṭha; the observance belongs to the nija month, so it falls at the close of nija Jyeṣṭha in mid-July 2026, not in the intercalary month of May–June.\n\nDay rule: niśītha — a niśītha Kālī observance.",
+  "note": "ADHIKA MONTH: 2026's adhika Jyeṣṭha opens 17 May, the day AFTER this amāvasyā, so intercalation does not touch this observance. 2026 = 16 May.",
   "tags": [
    "shakta",
    "devi",
@@ -3516,7 +3283,7 @@
    "month": "Jyeṣṭha",
    "paksha": "krishna",
    "tithi": 15,
-   "reckoning": "amanta",
+   "reckoning": "purnimanta",
    "dayRule": "nishitha",
    "dayRuleReason": "a niśītha Kālī observance"
   },
@@ -3542,8 +3309,11 @@
     "note": "Authority for excluding vrata and utsava from an adhika month."
    }
   ],
-  "confidence": "attested",
-  "_corpus": "hindu-shakta"
+  "confidence": "reconstructed",
+  "_corpus": "hindu-shakta",
+  "audit": {
+   "corrected": true
+  }
  },
  {
   "key": "kaushiki-amavasya",
@@ -3569,25 +3339,12 @@
    "tithi": 15,
    "reckoning": "amanta"
   },
-  "sources": [
-   {
-    "work": "Wikipedia, 'Kali Puja'",
-    "locus": "section on other Kālī Pūjās",
-    "note": "States 'Kaushiki Amavasya Kali Puja — associated with goddess Tara and saint Bamakhepa'."
-   },
-   {
-    "work": "Drik Panchang, Bengali Calendar 2026",
-    "locus": "September 2026 entries — 'Srabon, Krishna Panchami' (1 Sept), 'Srabon, Krishna Ashtami' (3 Sept)",
-    "note": "Amanta month-naming of the Bengali calendar confirmed directly; the terminal amāvasyā of that fortnight is the one meant."
-   },
-   {
-    "author": "Jeanne Openshaw / Hugh B. Urban",
-    "work": "Scholarship on Bengali Tantric sites and figures",
-    "note": "General scholarly context for Tārāpīṭh and Bāmākhepā; no page locus asserted."
-   }
-  ],
-  "confidence": "attested",
-  "_corpus": "hindu-shakta"
+  "sources": "DELETE the object; if the scholarship is wanted, cite Urban, The Power of Tantra (I. B. Tauris, 2010) with a page range, as ambubachi-mela already does correctly",
+  "confidence": "reconstructed",
+  "_corpus": "hindu-shakta",
+  "audit": {
+   "corrected": true
+  }
  },
  {
   "key": "lalita-jayanti",
@@ -3642,7 +3399,7 @@
   "name": "Dhūmāvatī Jayantī",
   "ref": "occasions:dhumavati-jayanti",
   "summary": "The appearance day of Dhūmāvatī, the widow-goddess and seventh Mahāvidyā, on Jyeṣṭha Śukla Aṣṭamī.",
-  "note": "The public observance is centred on the Dhūmāvatī temple at Varanasi, which is one of very few temples anywhere where she is the principal deity. Śākta sources are explicit that hers is not a householder cult: married people are advised against her worship, which is held to suit renunciants, lone wanderers and widows. CAVEAT: her ordinary (non-jayantī) worship day is given in the same sources as a kṛṣṇa-pakṣa caturdaśī, so 'the day of Dhūmāvatī' means different things depending on whether the jayantī or the recurring rite is meant; do not merge them. ADHIKA MONTH: 2026 has an adhika Jyeṣṭha, so the jayantī belongs to nija Jyeṣṭha (late June 2026), not to the intercalary month. CLOSED MATERIAL: her sādhanā is initiatory; occasion and date only are recorded.",
+  "note": "a kṛṣṇa-pakṣa caturthī",
   "tags": [
    "shakta",
    "devi",
@@ -3658,29 +3415,12 @@
    "paksha": "shukla",
    "tithi": 8
   },
-  "sources": [
-   {
-    "work": "Prokerala, 'Dhumavati Jayanti'",
-    "locus": "festival entry",
-    "note": "Quoted: 'It falls on the \"ashtami\" (8th day) during the \"Shukla Paksha\" ... in the \"Jyestha\" month of the Hindu calendar.' General-interest almanac source; the only one located that states the tithi explicitly."
-   },
-   {
-    "work": "Wikipedia, 'Dhumavati'",
-    "locus": "worship section",
-    "note": "Quoted: 'The fourth lunar day of the dark fortnight (Krishna Paksha) is considered the special day to perform her puja'; and 'Married people, however, are advised not to worship Dhumavati.'"
-   },
-   {
-    "work": "Prāṇatoṣiṇī Tantra; Śaktisaṃgama Tantra; Prapañcasārasāra-saṃgraha",
-    "note": "The Tantric sources on which the standard accounts of Dhūmāvatī rest."
-   },
-   {
-    "author": "David Kinsley",
-    "work": "Tantric Visions of the Divine Feminine: The Ten Mahāvidyās",
-    "locus": "University of California Press, 1997, ch. on Dhūmāvatī"
-   }
-  ],
-  "confidence": "attested",
-  "_corpus": "hindu-shakta"
+  "sources": "SPLIT into three source objects, one per text, or move to `note` as a genre-level reference",
+  "confidence": "reconstructed",
+  "_corpus": "hindu-shakta",
+  "audit": {
+   "corrected": true
+  }
  },
  {
   "key": "matangi-jayanti",
@@ -3688,14 +3428,7 @@
   "ref": "occasions:matangi-jayanti",
   "summary": "The appearance day of Mātaṅgī, ninth of the Mahāvidyās, on Vaiśākha Śukla Tṛtīyā.",
   "note": "Falls on the same tithi as Akṣaya Tṛtīyā, verified independently as Vaiśākha Śukla Tṛtīyā (19 April 2026). Mātaṅgī is the outlier of the Mahāvidyā set in the matter of access: the sources state that no purificatory fast or preparatory rite is prescribed for her worship and that anyone may approach her, including those held unfit or uninitiated for other deities — so unlike most of the ten, her cult is not gated by dīkṣā. She is identified with Śyāmalā/Rājamātaṅgī in the Śrīvidyā tradition, where the material does become initiatory; that layer is not recorded here. CAVEAT: the tithi is attested only through general-interest reporting, not through a critical or Purāṇic source.",
-  "tags": [
-   "shakta",
-   "devi",
-   "matangi",
-   "mahavidya",
-   "vaishakha",
-   "outcaste-goddess"
-  ],
+  "tags": "append \"restricted-detail\"",
   "anchor": {
    "kind": "lunar",
    "month": "Vaiśākha",
@@ -3719,8 +3452,11 @@
     "locus": "University of California Press, 1997, ch. on Mātaṅgī"
    }
   ],
-  "confidence": "attested",
-  "_corpus": "hindu-shakta"
+  "confidence": "reconstructed",
+  "_corpus": "hindu-shakta",
+  "audit": {
+   "corrected": true
+  }
  },
  {
   "key": "bagalamukhi-jayanti",
@@ -3766,7 +3502,7 @@
   "key": "chinnamasta-jayanti",
   "name": "Chinnamastā Jayantī",
   "ref": "occasions:chinnamasta-jayanti",
-  "summary": "The appearance day of Chinnamastā, fifth of the Mahāvidyās, the self-decapitated goddess.",
+  "summary": "sixth of the Mahāvidyās",
   "note": "DISPUTED — DATE NOT VERIFIED. The commonly published date is Vaiśākha Śukla Caturdaśī, the same tithi as Narasiṃha Jayantī (independently verified as 29 April 2026), and that is the anchor recorded here; but no pañcāṅga or scholarly source reached in this pass states it, and the encyclopaedic article on the goddess gives no jayantī date. Treat as the common claim, not as established. CLOSED MATERIAL: her worship is explicitly restricted in the sources — individual worship is 'mainly restricted to heroic Tāntrikas', temples to her alone are rare, and the Tantrasāra directs a householder to invoke her only in abstract terms. Nothing beyond the occasion and its putative date is recorded.",
   "tags": [
    "shakta",
@@ -3803,14 +3539,17 @@
    }
   ],
   "confidence": "disputed",
-  "_corpus": "hindu-shakta"
+  "_corpus": "hindu-shakta",
+  "audit": {
+   "corrected": true
+  }
  },
  {
   "key": "jagaddhatri-puja",
   "name": "Jagaddhātrī Pūjā",
   "ref": "occasions:jagaddhatri-puja",
   "summary": "The Kārtika worship of Durgā as Jagaddhātrī, Upholder of the World, a distinctively Bengali festival.",
-  "note": "Held on Kārtika Śukla Navamī. Practice divides on duration: many places keep only the Navamī tithi, while Krishnanagar and Chandannagar run a five-day form from Ṣaṣṭhī, so the entry carries no lasts field and the variation is noted instead. The Krishnanagar tradition is traced to Mahārāja Kṛṣṇacandra, whose imprisonment by Alivardi Khan and release on Vijayā Daśamī is said to have prompted a compensating autumn festival; the Chasa Para 'Burima' image has been kept since 1772. The earliest textual notice of the goddess is in the Kālaviveka of the smārta Śūlapāṇi (c. 1375–1460), which makes this the best-documented of the Bengali Śākta festivals in pre-modern sources. Śukla-pakṣa tithi, so no reckoning field is required. Verified as 18 November 2026.",
+  "note": "",
   "tags": [
    "shakta",
    "devi",
@@ -3860,7 +3599,10 @@
    }
   ],
   "confidence": "attested",
-  "_corpus": "hindu-shakta"
+  "_corpus": "hindu-shakta",
+  "audit": {
+   "corrected": true
+  }
  },
  {
   "key": "ambubachi-mela",
@@ -3880,7 +3622,9 @@
   ],
   "anchor": {
    "kind": "solar",
-   "degrees": 66.667
+   "degrees": 66.6667,
+   "frame": "sidereal (nirayana)",
+   "ingress": "nakshatra"
   },
   "lasts": {
    "days": 3
@@ -3909,7 +3653,10 @@
    }
   ],
   "confidence": "reconstructed",
-  "_corpus": "hindu-shakta"
+  "_corpus": "hindu-shakta",
+  "audit": {
+   "corrected": true
+  }
  },
  {
   "key": "basanti-puja",
@@ -3958,60 +3705,11 @@
     "note": "Cited in the Bengali tradition on the seasons of Durgā worship; no locus asserted."
    }
   ],
-  "confidence": "attested",
-  "_corpus": "hindu-shakta"
- },
- {
-  "key": "saraswati-puja-vasant-panchami",
-  "name": "Sarasvatī Pūjā (Vasanta Pañcamī)",
-  "ref": "occasions:saraswati-puja-vasant-panchami",
-  "summary": "The Māgha bright fifth, kept in Bengal as the year's principal domestic Devī festival after Durgā and Kālī.",
-  "note": "In Bengal, Assam and Odisha the day is a full pratimā pūjā to Sarasvatī in homes, schools and pandals, with hāte-khaḍi — a child's first letters written under the goddess's eye. Elsewhere in North India it is Vasanta Pañcamī, the opening of spring, with yellow dress and offerings. Verified as 23 January 2026, Māgha Śukla Pañcamī. Included here as part of the Devī-centred calendar although Sarasvatī sits outside the Mahāvidyā set; in Śākta reckoning she is one of the three functional aspects distributed across Navarātri.",
-  "tags": [
-   "shakta",
-   "devi",
-   "saraswati",
-   "bengal",
-   "magha",
-   "spring",
-   "domestic-rite"
-  ],
-  "anchor": {
-   "kind": "lunar",
-   "month": "Māgha",
-   "paksha": "shukla",
-   "tithi": 5
-  },
-  "regionalVariants": [
-   {
-    "region": "Bengal / Assam / Odisha",
-    "note": "Kept as Sarasvatī Pūjā with clay images and hāte-khaḍi; effectively a public festival."
-   },
-   {
-    "region": "North and West India",
-    "note": "Kept as Vasanta Pañcamī, a seasonal rather than image-centred observance."
-   }
-  ],
-  "sources": [
-   {
-    "work": "Drik Panchang, Hindu Calendar 2026",
-    "locus": "Vasant Panchami, 23 January 2026 — 'Magha, Shukla Panchami'"
-   },
-   {
-    "author": "Rachel Fell McDermott",
-    "work": "Revelry, Rivalry, and Longing for the Goddesses of Bengal",
-    "locus": "Columbia University Press, 2011",
-    "note": "On the place of Sarasvatī Pūjā in the Bengali goddess calendar."
-   },
-   {
-    "author": "P. V. Kane",
-    "work": "History of Dharmaśāstra",
-    "locus": "vol. V pt. 1",
-    "note": "On Vasanta Pañcamī / Śrīpañcamī in the nibandha tradition."
-   }
-  ],
-  "confidence": "attested",
-  "_corpus": "hindu-shakta"
+  "confidence": "reconstructed",
+  "_corpus": "hindu-shakta",
+  "audit": {
+   "corrected": true
+  }
  },
  {
   "key": "kojagari-lakshmi-puja",
@@ -4033,7 +3731,8 @@
    "kind": "lunar",
    "month": "Āśvina",
    "paksha": "shukla",
-   "tithi": 15
+   "tithi": 15,
+   "dayRule": "nishitha"
   },
   "regionalVariants": [
    {
@@ -4068,6 +3767,90 @@
    }
   ],
   "confidence": "attested",
-  "_corpus": "hindu-shakta"
+  "_corpus": "hindu-shakta",
+  "audit": {
+   "corrected": true
+  }
+ },
+ {
+  "key": "parama-ekadashi",
+  "name": "Paramā Ekādaśī",
+  "ref": "occasions:parama-ekadashi",
+  "summary": "The two ekādaśīs of the intercalary month, which are observed under their own names even though other vratas are suspended.",
+  "note": "THIS ENTRY EXISTS TO RECORD THE EXPLICIT EXCEPTION TO THE NO-VRATA-IN-ADHIKA-MĀSA RULE. The general rule is well attested: Gārgya, quoted by Hemādri, holds that in an intercalary month one should neither begin a vrata nor perform its udyāpana; Kane states that Rāmanavamī is not celebrated in an intercalary Caitra and that the same applies to Janmāṣṭamī and other vratas; and for the ancestral rites he states separately that Mahālayaśrāddha is not to be performed in a malamāsa. Observances wait for the nija month. BUT the ekādaśīs of the adhika month are not suspended — they were given their own names precisely because they are kept. Kane records that for the twenty-four ekādaśīs of the ordinary year and for THE TWO EKĀDAŚĪS OF THE INTERCALARY MONTH separate names were invented, and refers to Padmapurāṇa VI.64–65 for the names of the dark and bright halves. The adhika month is itself dignified as Puruṣottama Māsa. Saṅkaṣṭī Caturthī likewise carries a thirteenth vrata-kathā and a thirteenth name and pīṭha of Gaṇeśa reserved for the adhika month, which is a second, independent attestation that the monthly cycle continues through it. THE NAME-TO-PAKṢA ASSIGNMENT IS DISPUTED, which is why this is one entry and not two. The prevailing usage makes Padminī the śukla-pakṣa ekādaśī and Paramā the kṛṣṇa-pakṣa one; some published tables reverse them; the OCR of Kane's footnote citing Padma VI.64–65 does not resolve which name the Purāṇa attaches to which half. I record both tithis under one key rather than assert an assignment I cannot verify. SUNRISE OWNERSHIP: inherits the ordinary ekādaśī vedha apparatus.\n\nOCCURS ONLY IN AN INTERCALARY MONTH, so in most years it does not occur at all and an empty result is the correct answer. This is the opposite of the usual rule that festivals wait for the nija month — these two belong to the repeat itself.",
+  "tags": [
+   "hindu",
+   "vaishnava",
+   "ekadashi",
+   "adhika-masa",
+   "purushottama",
+   "vrata",
+   "fast",
+   "intercalary",
+   "disputed"
+  ],
+  "anchor": {
+   "kind": "lunar",
+   "month": "adhika",
+   "paksha": "krishna",
+   "tithi": 11,
+   "reckoning": "amanta",
+   "note": "the kṛṣṇa-pakṣa ekādaśī of the intercalary month; the śukla one is entry adhika-masa-ekadashi. Name-to-pakṣa assignment remains DISPUTED — most pañcāṅgas give Padminī = śukla and Paramā = kṛṣṇa, but at least one 2026 listing reverses them."
+  },
+  "lasts": {
+   "days": 1
+  },
+  "confidence": "disputed",
+  "sources": [
+   {
+    "author": "P. V. Kane",
+    "work": "History of Dharmaśāstra, vol. V part 1",
+    "locus": "Section I, ch. V, p. 109 and footnote 278",
+    "note": "'for the 24 ekādaśīs of the twelve months of the lunar year and for the two ekādaśīs of the intercalary month separate names were invented'; refers to Padmapurāṇa VI.64–65 for the intercalary names."
+   },
+   {
+    "author": "P. V. Kane",
+    "work": "History of Dharmaśāstra, vol. V part 1",
+    "locus": "Section I, ch. III, p. 61 (Gārgya) and ch. IV, p. 88 (Rāmanavamī)",
+    "note": "The general prohibition: no vrata begun and no udyāpana performed in an intercalary month; Rāmanavamī and Janmāṣṭamī not celebrated in an adhika Caitra."
+   },
+   {
+    "author": "P. V. Kane",
+    "work": "History of Dharmaśāstra, vol. IV",
+    "locus": "p. 533",
+    "note": "'The Mahālayaśrāddha is not to be performed in an intercalary month (malamāsa).'"
+   },
+   {
+    "work": "Padmapurāṇa",
+    "locus": "VI.64–65",
+    "note": "Cited by Kane as giving the names of the intercalary month's dark-half and bright-half ekādaśīs; the assignment could not be verified from the available scan."
+   }
+  ],
+  "_corpus": "hindu-monthly",
+  "regionalVariants": [
+   {
+    "region": "—",
+    "anchor": {
+     "kind": "lunar",
+     "month": "adhika",
+     "paksha": "shukla",
+     "tithi": 11
+    },
+    "note": "Padminī Ekādaśī, the bright fortnight of the intercalary month."
+   },
+   {
+    "region": "—",
+    "anchor": {
+     "kind": "lunar",
+     "month": "adhika",
+     "paksha": "krishna",
+     "tithi": 11
+    },
+    "note": "Paramā Ekādaśī, the dark fortnight of the same month."
+   }
+  ],
+  "audit": {
+   "corrected": true
+  }
  }
 ]

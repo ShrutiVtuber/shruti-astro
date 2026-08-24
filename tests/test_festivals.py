@@ -266,3 +266,59 @@ def test_the_deipnon_and_amavasya_are_the_same_dark_moon():
         f"expected the two calendars to agree on most new moons, "
         f"got {len(overlap)} of {len(amavasya)}"
     )
+
+
+# ── bhadrā ──────────────────────────────────────────────────────────────────
+
+def test_bhadra_defers_holika_dahan_by_a_day():
+    """
+    On 2 March 2026 pūrṇimā IS current at pradoṣa — but the karaṇa is Viṣṭi,
+    which is bhadrā, and the bonfire must not be lit in it. The rite waits until
+    bhadrā ends, which lands on the 3rd. Every published almanac gives the 3rd.
+
+    Without this the pradoṣa rule alone picks the 2nd, which is a day early.
+    """
+    anchor = {"kind": "lunar", "month": "Phālguna", "paksha": "shukla",
+              "tithi": 15, "dayRule": "pradosha", "avoidBhadra": True}
+    r = resolve(anchor, 2026)
+    assert r.date == date(2026, 3, 3)
+    assert "bhadrā" in r.note and "deferred" in r.note
+
+
+def test_without_the_bhadra_rule_it_lands_a_day_early():
+    """The control: the same anchor without the exclusion is wrong, which is
+    what makes the exclusion load-bearing rather than decorative."""
+    anchor = {"kind": "lunar", "month": "Phālguna", "paksha": "shukla",
+              "tithi": 15, "dayRule": "pradosha"}
+    assert resolve(anchor, 2026).date == date(2026, 3, 2)
+
+
+def test_bhadra_defers_raksha_bandhan_too():
+    anchor = {"kind": "lunar", "month": "Śrāvaṇa", "paksha": "shukla",
+              "tithi": 15, "dayRule": "aparahna", "avoidBhadra": True}
+    assert resolve(anchor, 2026).date == date(2026, 8, 28)
+
+
+def test_bhadra_postpones_rather_than_cancels():
+    """
+    The first implementation SKIPPED a bhadrā-covered day, which lost the
+    festival entirely — by the next day's reckoning moment the tithi has usually
+    ended. Bhadrā postpones a rite; it does not abolish it.
+    """
+    anchor = {"kind": "lunar", "month": "Phālguna", "paksha": "shukla",
+              "tithi": 15, "dayRule": "pradosha", "avoidBhadra": True}
+    r = resolve(anchor, 2026)
+    assert r.date is not None, "a bhadrā-covered festival must still have a date"
+
+
+def test_bhadra_is_the_vishti_karana_and_is_computed():
+    from datetime import datetime, timezone
+
+    from shruti_astro.core.festivals import _is_bhadra, _reckoning_moment, UJJAIN
+    from shruti_astro.core.panchanga import karana
+    from shruti_astro.core.ephemeris import longitudes
+
+    moment = _reckoning_moment(date(2026, 3, 2), *UJJAIN, "pradosha")
+    L = longitudes(moment)
+    assert karana(L.sun_tropical, L.moon_tropical).name == "Viṣṭi"
+    assert _is_bhadra(moment) is True

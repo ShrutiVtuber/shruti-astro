@@ -87,6 +87,24 @@ def _reckoning_moment(day: date_cls, lat: float, lon: float, rule: str) -> datet
     return sunrise + (sunset - sunrise) * spec
 
 
+def _is_bhadra(moment: datetime) -> bool:
+    """
+    Whether the moment falls in **bhadrā** — the viṣṭi karaṇa.
+
+    Bhadrā is the seventh of the movable karaṇas, and several observances are
+    explicitly forbidden during it: Holikā Dahan must not be lit in bhadrā, and
+    the Rakṣā Bandhan thread must not be tied in it. Both are then deferred past
+    it, which routinely moves them to the following civil day.
+
+    This is computable rather than a convention, because viṣṭi is one of the
+    five limbs the pañcāṅga already yields.
+    """
+    from shruti_astro.core.panchanga import karana as karana_of
+
+    L = longitudes(moment)
+    return karana_of(L.sun_tropical, L.moon_tropical).name == "Viṣṭi"
+
+
 def _tithi_at(day: date_cls, lat: float, lon: float,
               rule: str = "sunrise") -> tuple[int, str] | None:
     """(tithi index 1..30, pakṣa) at the moment this observance is judged by."""
@@ -131,6 +149,8 @@ def resolve_lunar(
     # Absolute tithi index: Śukla 1..15, Kṛṣṇa 16..30.
     target = want_tithi if bright else want_tithi + 15
 
+    avoid_bhadra = bool(anchor.get("avoidBhadra"))
+
     hits: list[date_cls] = []
     d = date_cls(gregorian_year, 1, 1)
     end = date_cls(gregorian_year, 12, 31)
@@ -148,6 +168,19 @@ def resolve_lunar(
                 hits.append(d)
         d += timedelta(days=1)
 
+    # Bhadrā does not cancel the rite, it postpones it. Where bhadrā covers the
+    # moment the observance would be kept, it waits until bhadrā ends — which
+    # falls in the following night and so lands on the next civil day. Skipping
+    # the day outright (the first thing tried) loses the festival entirely,
+    # because the tithi has usually ended by the next day's reckoning moment.
+    deferred_from = None
+    if avoid_bhadra and hits:
+        first = hits[0]
+        moment = _reckoning_moment(first, lat, lon, rule)
+        if moment is not None and _is_bhadra(moment):
+            deferred_from = first
+            hits = [first + timedelta(days=1)] + hits[1:]
+
     if not hits:
         return Resolved(
             key=anchor.get("key", ""), name=anchor.get("name", ""), date=None,
@@ -159,13 +192,19 @@ def resolve_lunar(
             ),
         )
 
+    note = f"judged at {rule}"
+    if deferred_from is not None:
+        note += (f"; deferred from {deferred_from.isoformat()} because bhadrā "
+                 f"(viṣṭi karaṇa) covered that moment")
+    elif len(hits) > 1:
+        note += ("; the tithi spanned two reckoning moments and is counted "
+                 "twice (vṛddhi)")
+
     return Resolved(
         key=anchor.get("key", ""), name=anchor.get("name", ""),
         date=hits[0], anchor=anchor,
-        doubled=len(hits) > 1,
-        note=(f"judged at {rule}"
-              + ("; the tithi spanned two reckoning moments and is counted "
-                 "twice (vṛddhi)" if len(hits) > 1 else "")),
+        doubled=len(hits) > 1 and deferred_from is None,
+        note=note,
     )
 
 

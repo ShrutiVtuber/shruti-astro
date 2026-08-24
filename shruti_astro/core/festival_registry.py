@@ -73,6 +73,14 @@ def _clean(anchor: dict | None) -> dict | None:
     return {k: v for k, v in anchor.items() if k not in _PROVENANCE_KEYS}
 
 
+DEFAULT_PLACE = {
+    # name, (lat, lon), and why this place and not another.
+    "hindu": ("Ujjain", (23.1765, 75.7885),
+              "the classical prime meridian of Indian astronomy"),
+    "attic": ("Athens", (37.9838, 23.7275), "the city whose calendar this is"),
+}
+
+
 def year(
     tradition: str,
     gregorian_year: int,
@@ -103,12 +111,31 @@ def year(
     cannot be dated is a fact about the record, and dropping it would leave a
     consumer believing the corpus is smaller and more certain than it is.
     """
+    from shruti_astro.core.attic import ATHENS, RECKONINGS
     from shruti_astro.core.festivals import UJJAIN
 
+    # The default belongs to the tradition, not to the registry. Serving
+    # Ujjain's sunrise to someone asking for the calendar of Athens was simply
+    # the wrong city.
+    where, home, why = DEFAULT_PLACE.get(
+        tradition,
+        ("Ujjain", UJJAIN, "the classical prime meridian of Indian astronomy"))
     defaulted = lat is None or lon is None
     if defaulted:
-        lat, lon = UJJAIN
+        lat, lon = home
     kw.update(lat=lat, lon=lon)
+
+    # For Athens the school is the reckoning: whether the month opens the day
+    # after the conjunction, or on the evening the crescent can actually be
+    # seen from where you are. They disagree in half the months of a year.
+    reckoning = kw.pop("reckoning", None)
+    if tradition == "attic":
+        reckoning = reckoning or "conjunction"
+        if reckoning not in RECKONINGS:
+            raise ValueError(f"reckoning must be one of {RECKONINGS}, not {reckoning!r}")
+        kw["reckoning"] = reckoning
+    else:
+        reckoning = None
 
     corpus = load(tradition)
     dated: list[dict] = []
@@ -138,11 +165,13 @@ def year(
         "tradition": tradition,
         "year": gregorian_year,
         "location": {"lat": lat, "lon": lon, "defaulted": defaulted,
-                     "note": ("no location was given, so this is computed for "
-                              "Ujjain — festival dates differ by location and "
-                              "this may not be the answer where you are")
+                     "note": (f"no location was given, so this is computed for "
+                              f"{where}, {why} — festival dates differ by "
+                              f"location and this may not be the answer where "
+                              f"you are")
                              if defaulted else None},
         "school": school,
+        "reckoning": reckoning,
         "verified": corpus.verified,
         "verificationNote": corpus.verification_note,
         "counts": {"entries": len(corpus.entries),

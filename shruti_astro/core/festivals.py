@@ -256,7 +256,10 @@ def resolve_lunar(
     )
 
 
-def resolve_crescent_monthly(anchor: dict, gregorian_year: int) -> list[Resolved]:
+def resolve_crescent_monthly(
+    anchor: dict, gregorian_year: int, lat: float | None = None,
+    lon: float | None = None, reckoning: str = "conjunction",
+) -> list[Resolved]:
     """
     An Attic observance kept every month — the noumenia, the days sacred to
     Hermes, Artemis, Apollo, Poseidon, and Hekate's Deipnon.
@@ -289,7 +292,7 @@ def resolve_crescent_monthly(anchor: dict, gregorian_year: int) -> list[Resolved
     d = date_cls(gregorian_year, 1, 1)
     end = date_cls(gregorian_year, 12, 31)
     while d <= end:
-        a = attic_day(d)
+        a = attic_day(d, lat, lon, reckoning)
         want = (a.month_length - from_end + 1) if from_end is not None else fixed_day
         if a.day == want:
             marker = (a.month, a.day)
@@ -307,7 +310,10 @@ def resolve_crescent_monthly(anchor: dict, gregorian_year: int) -> list[Resolved
     return out
 
 
-def resolve_crescent(anchor: dict, gregorian_year: int) -> Resolved:
+def resolve_crescent(
+    anchor: dict, gregorian_year: int, lat: float | None = None,
+    lon: float | None = None, reckoning: str = "conjunction",
+) -> Resolved:
     """
     An Attic anchor → the civil day.
 
@@ -346,7 +352,7 @@ def resolve_crescent(anchor: dict, gregorian_year: int) -> Resolved:
     d = date_cls(gregorian_year, 1, 1)
     end = date_cls(gregorian_year, 12, 31)
     while d <= end:
-        a = attic_day(d)
+        a = attic_day(d, lat, lon, reckoning)
         if a.month == month and a.day == want_day:
             return Resolved(key=anchor.get("key", ""), name=anchor.get("name", ""),
                             date=d, anchor=anchor)
@@ -486,9 +492,13 @@ def resolve(anchor: dict | None, gregorian_year: int, **kw):
             return resolve_recurring(anchor, gregorian_year, **kw)
         return resolve_lunar(anchor, gregorian_year, **kw)
     if kind == "crescent":
+        # The Attic month opens at a place too — half of them open on a
+        # different day in Sydney than in Attica — so the observer goes down
+        # here just as it does for the lunar branch.
+        attic_kw = {k: v for k, v in kw.items() if k in ("lat", "lon", "reckoning")}
         if anchor.get("recurrence") == "monthly" or "month" not in anchor:
-            return resolve_crescent_monthly(anchor, gregorian_year)
-        return resolve_crescent(anchor, gregorian_year)
+            return resolve_crescent_monthly(anchor, gregorian_year, **attic_kw)
+        return resolve_crescent(anchor, gregorian_year, **attic_kw)
     if kind == "relative":
         # Anchored to another festival rather than to the sky. Resolving it
         # needs that festival's date, which the caller has and this function

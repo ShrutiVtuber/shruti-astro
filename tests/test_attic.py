@@ -6,9 +6,14 @@ from datetime import date
 import pytest
 
 from shruti_astro.core.attic import (
-    INTERCALARY_NAME, MONTH_GREEK, MONTH_NAMES, BeforeTheCycle, _attic_year,
-    _day_name, attic_day,
+    ATHENS, INTERCALARY_NAME, MONTH_GREEK, MONTH_NAMES, RECKONINGS,
+    BeforeTheCycle, _attic_year, _day_name, attic_day,
 )
+
+SYDNEY = (-33.8688, 151.2093)
+ANCHORAGE = (61.2181, -149.9003)   # the crescent is not reliably catchable here
+USHUAIA = (-54.8019, -68.3029)
+QUITO = (-0.1807, -78.4678)
 
 
 def test_twelve_months_named_in_both_scripts():
@@ -89,3 +94,95 @@ def test_moon_age_tracks_the_day_of_the_month():
     # Early in the month the Moon is young; the two must not contradict.
     assert 0.0 <= d.moon_age_days < 29.6
     assert abs(d.moon_age_days - (d.day - 1)) < 3.0
+
+
+# --- the observer -----------------------------------------------------------
+#
+# The month opens at a sighting, and a sighting happens somewhere. Until this
+# was fixed the calendar had no observer at all and quietly answered in UTC,
+# which is nobody's calendar.
+
+
+def test_no_observer_means_athens_and_says_so():
+    d = attic_day(date(2026, 8, 24))
+    assert (d.latitude, d.longitude) == ATHENS
+    assert d.location_defaulted is True
+
+
+def test_giving_an_observer_clears_the_defaulted_flag():
+    d = attic_day(date(2026, 8, 24), *SYDNEY)
+    assert d.location_defaulted is False
+    assert (d.latitude, d.longitude) == SYDNEY
+
+
+def test_the_two_reckonings_genuinely_disagree():
+    """If they agreed there would be no choice worth offering."""
+    con = [m[2] for m in _attic_year(2026, *ATHENS, "conjunction")]
+    vis = [m[2] for m in _attic_year(2026, *ATHENS, "visibility")]
+    assert sum(a != b for a, b in zip(con, vis)) >= 4
+
+
+def test_the_same_reckoning_disagrees_between_places():
+    ath = [m[2] for m in _attic_year(2026, *ATHENS, "visibility")]
+    syd = [m[2] for m in _attic_year(2026, *SYDNEY, "visibility")]
+    assert sum(a != b for a, b in zip(ath, syd)) >= 4
+
+
+def test_an_unknown_reckoning_is_refused():
+    with pytest.raises(ValueError, match="reckoning"):
+        _attic_year(2026, *ATHENS, "whatever-i-like")
+
+
+# --- the guard --------------------------------------------------------------
+
+
+@pytest.mark.parametrize("place", [ATHENS, SYDNEY, QUITO, ANCHORAGE, USHUAIA])
+@pytest.mark.parametrize("reckoning", RECKONINGS)
+def test_every_month_is_lunar_everywhere(place, reckoning):
+    """
+    The regression that matters. Swiss Ephemeris will happily report a first
+    crescent 21 days after the conjunction at 61°N, and taking that literally
+    built a forty-day Metageitnion — and 28- and 31-day months once a fallen
+    back month sat beside one that had not. A month runs 29 or 30 days or the
+    thing is not a calendar.
+    """
+    for y in (2025, 2026, 2027):
+        months = _attic_year(y, *place, reckoning)
+        edges = [m[2] for m in months] + [_attic_year(y + 1, *place, reckoning)[0][2]]
+        lengths = {(edges[i + 1] - edges[i]).days for i in range(len(months))}
+        assert lengths <= {29, 30}, f"{place} {reckoning} {y}: {sorted(lengths)}"
+
+
+def test_high_latitude_falls_back_and_admits_it():
+    months = _attic_year(2026, *ANCHORAGE, "visibility")
+    notes = [m[4] for m in months if m[4]]
+    assert notes, "Anchorage cannot catch the crescent; it must say so"
+    assert "conjunction" in notes[0]
+
+
+def test_the_fallback_matches_conjunction_exactly():
+    """Falling back has to actually fall back, not land somewhere in between."""
+    vis = [m[2] for m in _attic_year(2026, *ANCHORAGE, "visibility")]
+    con = [m[2] for m in _attic_year(2026, *ANCHORAGE, "conjunction")]
+    assert vis == con
+
+
+def test_a_non_lunar_month_has_no_attic_day_name():
+    """Rather than an IndexError off the end of the ordinals."""
+    with pytest.raises(ValueError, match="not lunar"):
+        _day_name(21, 31)
+
+
+def test_intercalation_does_not_depend_on_the_observer():
+    """
+    The count of months comes from the conjunctions between one solstice and
+    the next. Only where each month *opens* is local, so a year is thirteen
+    months for everyone or twelve for everyone.
+    """
+    for y in (2025, 2026, 2027):
+        counts = {
+            len(_attic_year(y, *place, rk))
+            for place in (ATHENS, SYDNEY, ANCHORAGE, QUITO)
+            for rk in RECKONINGS
+        }
+        assert len(counts) == 1, f"{y}: year length disagrees across observers"

@@ -625,6 +625,12 @@ async def sigil_endpoint(
 @router.get("/attic-calendar")
 async def attic_calendar_endpoint(
     when: str | None = Query(None, description="ISO-8601 date; defaults to today"),
+    lat: float | None = Query(None, ge=-90, le=90),
+    lon: float | None = Query(None, ge=-180, le=180),
+    reckoning: str = Query(
+        "conjunction",
+        description="conjunction | visibility — how the month is opened",
+    ),
 ) -> dict:
     """
     The Attic calendar of Athens.
@@ -633,6 +639,14 @@ async def attic_calendar_endpoint(
     next conjunction falls. **The last third is counted backwards** — δεκάτη
     φθίνοντος is the tenth *from the end* — and the final day is ἕνη καὶ νέα,
     "old and new", belonging to both months at once.
+
+    **The month opens at a place.** `reckoning=conjunction` opens it the day
+    after the conjunction: deterministic, defined at every latitude, and what
+    most modern practice uses. `reckoning=visibility` opens it the evening the
+    crescent can first be seen from where you are, which is what Athens did.
+    They disagree in six months of twelve, and Athens and Sydney disagree in
+    seven. Above about 55° the crescent cannot be caught reliably at all; there
+    the year is given by conjunction and `reckoning.note` says so.
 
     Cannot-compute: before 432 BCE the Metonic cycle was not in use and Athens'
     intercalations were magistrates' decisions, argued about at the time and not
@@ -645,7 +659,7 @@ async def attic_calendar_endpoint(
 
     d = _moment(when).date() if when else date_cls.today()
     try:
-        a = attic_day(d)
+        a = attic_day(d, lat, lon, reckoning)
     except BeforeTheCycle as exc:
         raise HTTPException(422, str(exc))
     except ValueError as exc:
@@ -661,6 +675,15 @@ async def attic_calendar_endpoint(
                 "decad": a.decad, "remaining": a.days_remaining},
         "moonAgeDays": a.moon_age_days,
         "nextNoumenia": a.next_noumenia.isoformat(),
+        "observer": {
+            "lat": a.latitude, "lon": a.longitude,
+            "defaulted": a.location_defaulted,
+            "note": ("no location was given, so this is Athens — under "
+                     "visibility reckoning half the months of a year open on a "
+                     "different day elsewhere")
+                    if a.location_defaulted else None,
+        },
+        "reckoning": {"used": a.reckoning, "note": a.noumenia_note},
         "year": {"months": a.months_in_year, "intercalary": a.year_is_intercalary},
         "archonYear": None,
         "archonNote": "Archon years are not derivable from the astronomy and are never invented here.",
@@ -1064,6 +1087,10 @@ async def festivals(
     year: int = Query(..., ge=1, le=9999),
     lat: float | None = Query(None, ge=-90, le=90),
     lon: float | None = Query(None, ge=-180, le=180),
+    reckoning: str | None = Query(
+        None,
+        description="Attic only: conjunction | visibility — how the month opens",
+    ),
     school: str | None = Query(
         None,
         description="Pick one side of a contested reckoning — e.g. smarta, "
@@ -1098,7 +1125,8 @@ async def festivals(
     if tradition not in CORPORA:
         raise HTTPException(400, f"tradition must be one of {sorted(CORPORA)}")
     try:
-        return resolve_year(tradition, year, lat=lat, lon=lon, school=school)
+        kw = {"reckoning": reckoning} if reckoning else {}
+        return resolve_year(tradition, year, lat=lat, lon=lon, school=school, **kw)
     except ValueError as exc:
         raise HTTPException(400, str(exc))
 

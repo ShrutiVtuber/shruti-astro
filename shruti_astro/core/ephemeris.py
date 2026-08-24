@@ -300,3 +300,75 @@ def chart_positions(
         ayanamsa=ayan,
         sidereal=sidereal,
     )
+
+
+# ── limb endings ────────────────────────────────────────────────────────────
+
+def _sidereal_lon(jd: float, body: int, ayanamsa: str) -> float:
+    _ensure_init()
+    swe.set_sid_mode(AYANAMSAS[ayanamsa], 0, 0)
+    return swe.calc_ut(jd, body, _flags(sidereal=True))[0][0] % 360.0
+
+
+def _measure(kind: str, jd: float, ayanamsa: str) -> float:
+    """The continuously-increasing quantity whose divisions define each limb."""
+    if kind == "tithi" or kind == "karana":
+        sun = swe.calc_ut(jd, swe.SUN, _flags())[0][0]
+        moon = swe.calc_ut(jd, swe.MOON, _flags())[0][0]
+        return (moon - sun) % 360.0
+    if kind == "nakshatra":
+        return _sidereal_lon(jd, swe.MOON, ayanamsa)
+    if kind == "yoga":
+        return (_sidereal_lon(jd, swe.SUN, ayanamsa)
+                + _sidereal_lon(jd, swe.MOON, ayanamsa)) % 360.0
+    raise ValueError(f"unknown limb: {kind}")
+
+
+def limb_end(kind: str, moment: datetime, ayanamsa: str = "lahiri") -> datetime | None:
+    """
+    When the limb in force at `moment` ends.
+
+    A limb is a span, not a label. Naming only the one in force at the moment
+    asked — with no ending — is what makes a pañcāṅga unusable for choosing a
+    time, which is most of what a pañcāṅga is for.
+
+    Solved by stepping forward until the division index changes, then bisecting.
+    The measures wrap at 360°, so the crossing is detected on the index rather
+    than on the raw value.
+    """
+    _ensure_init()
+    span = {"tithi": 12.0, "karana": 6.0,
+            "nakshatra": 360.0 / 27.0, "yoga": 360.0 / 27.0}[kind]
+
+    jd0 = _julday(moment)
+    idx0 = int(_measure(kind, jd0, ayanamsa) * (360.0 / span) / 360.0)
+
+    step = 1.0 / 48.0                       # 30 minutes
+    jd = jd0
+    for _ in range(24 * 6):                 # a limb never lasts three days
+        jd += step
+        if int(_measure(kind, jd, ayanamsa) * (360.0 / span) / 360.0) != idx0:
+            lo, hi = jd - step, jd
+            for _ in range(50):             # to well under a second
+                mid = (lo + hi) / 2
+                if int(_measure(kind, mid, ayanamsa) * (360.0 / span) / 360.0) == idx0:
+                    lo = mid
+                else:
+                    hi = mid
+            return _from_julday((lo + hi) / 2)
+    return None
+
+
+def moon_events(day: datetime, lat: float, lon: float) -> tuple[datetime | None, datetime | None]:
+    """(moonrise, moonset) after the start of `day`. Either may be None."""
+    _ensure_init()
+    start = day.astimezone(timezone.utc).replace(hour=0, minute=0, second=0, microsecond=0)
+    jd0 = _julday(start)
+
+    def one(rsmi: int) -> datetime | None:
+        res, tret = swe.rise_trans(jd0, swe.MOON, rsmi, (lon, lat, 0.0), 0.0, 0.0, _flags())
+        if res < 0 or not tret or not tret[0]:
+            return None
+        return _from_julday(tret[0])
+
+    return one(swe.CALC_RISE), one(swe.CALC_SET)

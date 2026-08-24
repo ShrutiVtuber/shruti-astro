@@ -3,7 +3,7 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 from fastapi import APIRouter, HTTPException, Query
 
@@ -94,69 +94,107 @@ async def panchanga_endpoint(
     ),
 ) -> dict:
     """
-    The five limbs.
+    The five limbs, each with the time it ends.
 
-    Each limb reports how far through itself it is, because a limb is a span,
-    not a label — naming only the one in force at the moment you asked is the
-    error most pañcāṅga sites make.
+    A limb is a span, not a label: naming only the one in force at the moment
+    asked is what makes a pañcāṅga useless for choosing a time, which is most of
+    what a pañcāṅga is for.
 
-    **To match a printed Indian almanac, pass `at_sunrise=true` with lat/lon.**
-    Almanacs name the day by the tithi prevailing at *sunrise*, computed under
-    the Hindu rise convention (centre of disc, no refraction). Asking at noon
-    can legitimately return the next tithi and disagree with the almanac by a
-    day — that is not a bug in either, it is a different question.
+    With lat/lon this also returns the almanac strip (sunrise, sunset, moonrise,
+    moonset, ayana, ṛtu) and the day's named windows — **reported, not
+    prescribed**.
+
+    **`at_sunrise=true` reproduces a printed Indian almanac**, which names the
+    day by the tithi prevailing at sunrise under the Hindu rise convention.
+
+    Cannot-compute: where the Sun does not rise, the day has no beginning. The
+    vāra and the windows are then undefined — but the four Moon-and-Sun limbs
+    still hold, and are still returned.
     """
+    from shruti_astro.core import muhurta as mu
+    from shruti_astro.core import panchanga as pa
+    from shruti_astro.core.ephemeris import (
+        SunNeverRose, limb_end, moon_events, sun_events,
+    )
+
     if ayanamsa not in AYANAMSAS:
         raise HTTPException(400, f"unknown ayanamsa; choose from {sorted(AYANAMSAS)}")
 
     moment = _moment(when)
     evaluated_at = "instant"
-    sunrise_used = None
+    sunrise = sunset = moonrise = moonset = None
+    vara = None
+    day_windows: list[dict] = []
+    undefined: list[str] = []
+
+    if lat is not None and lon is not None:
+        try:
+            sunrise, sunset, _ = sun_events(moment, lat, lon, "hindu")
+            # The Hindu day runs sunrise to sunrise: before dawn still belongs
+            # to yesterday's vāra, and takes yesterday's windows.
+            if moment < sunrise:
+                sunrise, sunset, _ = sun_events(
+                    moment - timedelta(days=1), lat, lon, "hindu"
+                )
+            weekday = sunrise.weekday()
+            name, ruler = mu.VARA[weekday]
+            vara = {"name": name, "ruler": ruler,
+                    "startsAt": sunrise.isoformat()}
+            day_windows = [
+                {"name": w.name, "start": w.start.isoformat(),
+                 "end": w.end.isoformat(), "note": w.note}
+                for w in mu.windows(sunrise, sunset, weekday)
+            ]
+            moonrise, moonset = moon_events(moment, lat, lon)
+        except SunNeverRose as exc:
+            undefined.append(f"vāra and the day's windows: {exc}")
 
     if at_sunrise:
-        if lat is None or lon is None:
-            raise HTTPException(400, "at_sunrise requires lat and lon")
-        try:
-            # Hindu convention deliberately hardcoded here: this mode exists to
-            # reproduce an almanac, and almanacs use that definition.
-            sunrise, _, _ = sun_events(moment, lat, lon, "hindu")
-        except SunNeverRose as exc:
-            raise HTTPException(422, str(exc))
-        moment, evaluated_at, sunrise_used = sunrise, "sunrise", sunrise.isoformat()
+        if sunrise is None:
+            raise HTTPException(400, "at_sunrise requires lat and lon, and a Sun that rises")
+        moment, evaluated_at = sunrise, "sunrise"
 
     L = longitudes(moment, ayanamsa)
 
-    def limb(x) -> dict:
-        return {"index": x.index, "name": x.name, "fraction": round(x.fraction, 6)}
+    def limb(name: str, x) -> dict:
+        ends = limb_end(name, moment, ayanamsa)
+        return {
+            "index": x.index, "name": x.name,
+            "fraction": round(x.fraction, 6),
+            "endsAt": ends.isoformat() if ends else None,
+        }
+
+    sun_rashi = int(L.sun_sidereal // 30)
+    lunar_month_index = (sun_rashi + 1) % 12
 
     return {
         "at": moment.isoformat(),
         "evaluatedAt": evaluated_at,
-        "sunrise": sunrise_used,
-        "ayanamsa": {"name": L.ayanamsa_name, "degrees": round(L.ayanamsa, 6)},
-        "tithi": limb(pa.tithi(L.sun_tropical, L.moon_tropical)),
-        "nakshatra": limb(pa.nakshatra(L.moon_sidereal)),
-        "yoga": limb(pa.yoga(L.sun_sidereal, L.moon_sidereal)),
-        "karana": limb(pa.karana(L.sun_tropical, L.moon_tropical)),
+        "sunrise": sunrise.isoformat() if sunrise else None,
+        "ayanamsa": {"name": L.ayanamsa_name, "degrees": round(L.ayanamsa, 6),
+                     "note": "a different ayanāṁśa can move a nakṣatra boundary"},
+        "vara": vara,
+        "tithi": limb("tithi", pa.tithi(L.sun_tropical, L.moon_tropical)),
+        "nakshatra": limb("nakshatra", pa.nakshatra(L.moon_sidereal)),
+        "yoga": limb("yoga", pa.yoga(L.sun_sidereal, L.moon_sidereal)),
+        "karana": limb("karana", pa.karana(L.sun_tropical, L.moon_tropical)),
+        "almanac": {
+            "sunrise": sunrise.isoformat() if sunrise else None,
+            "sunset": sunset.isoformat() if sunset else None,
+            "moonrise": moonrise.isoformat() if moonrise else None,
+            "moonset": moonset.isoformat() if moonset else None,
+            "ayana": mu.ayana(sun_rashi),
+            "rtu": mu.rtu(lunar_month_index),
+        },
+        # Reported, not prescribed. When each falls; nothing about what to do.
+        "windows": day_windows,
+        "undefined": undefined,
         "longitudes": {
             "sunTropical": round(L.sun_tropical, 6),
             "moonTropical": round(L.moon_tropical, 6),
             "sunSidereal": round(L.sun_sidereal, 6),
             "moonSidereal": round(L.moon_sidereal, 6),
         },
-    }
-
-
-@router.get("/rise-conventions")
-async def list_rise_conventions() -> dict:
-    """Sunrise is not one definition. Both traditions are served, not merged."""
-    return {
-        "conventions": {
-            "visible_disc": "upper limb of the apparent disc, with refraction — "
-                            "Hellenistic planetary hours and Western almanacs",
-            "hindu": "centre of the disc, no refraction — Indian pañcāṅgas and "
-                     "the Vedic day boundary",
-        }
     }
 
 

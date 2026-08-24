@@ -865,3 +865,192 @@ async def stations_ical(
             "Cache-Control": "public, max-age=3600",
         },
     )
+
+
+# ── day at a glance ─────────────────────────────────────────────────────────
+
+@router.get("/today")
+async def today(
+    lat: float = Query(..., ge=-90, le=90),
+    lon: float = Query(..., ge=-180, le=180),
+    when: str | None = Query(None, description="ISO-8601; defaults to now"),
+    ayanamsa: str = Query("lahiri"),
+    preset: str = Query("none", description="hellenic | thelemic | none"),
+    natal: str | None = Query(
+        None,
+        description="Birth moment as ISO-8601 with offset. Adds transits.",
+    ),
+    natal_lat: float | None = Query(None, ge=-90, le=90),
+    natal_lon: float | None = Query(None, ge=-180, le=180),
+) -> dict:
+    """
+    What the sky is doing right now, here.
+
+    Everything on this page works from a location alone. `natal` is optional and
+    adds transits — the page is meant to be useful before anyone signs up,
+    because a page that is only a teaser for signing up gets no signups.
+
+    Each block degrades on its own. A polar latitude loses stations and
+    planetary hours but keeps the luminaries, the sky and the reckonings; a
+    nativity without a birth time keeps the planetary transits and marks the
+    angular ones undefined. **No block failing takes another down.**
+    """
+    from datetime import timezone as _tz
+
+    from shruti_astro.core import hellenistic as he
+    from shruti_astro.core import vedic as ve
+    from shruti_astro.core.attic import BeforeTheCycle, attic_day
+    from shruti_astro.core.ephemeris import SunNeverRose, chart_positions, sun_events
+    from shruti_astro.core.hindu_calendar import hindu_date
+    from shruti_astro.core.planetary_hours import build_hours, current_hour
+    from shruti_astro.core.stations import PRESETS, next_station, stations_for_day
+
+    if ayanamsa not in AYANAMSAS:
+        raise HTTPException(400, f"unknown ayanamsa; choose from {sorted(AYANAMSAS)}")
+    if preset not in PRESETS:
+        raise HTTPException(400, f"unknown preset; choose from {sorted(PRESETS)}")
+
+    moment = _moment(when)
+    undefined: list[str] = []
+
+    # ── the luminaries ──────────────────────────────────────────────────────
+    pos = chart_positions(moment, lat, lon, sidereal=False)
+    by_name = {b.name: b for b in pos.bodies}
+    sid = chart_positions(moment, lat, lon, sidereal=True, ayanamsa=ayanamsa)
+    sid_by = {b.name: b.longitude for b in sid.bodies}
+
+    def luminary(name: str) -> dict:
+        b = by_name[name]
+        return {
+            "tropical": {"sign": he.SIGNS[he.sign_of(b.longitude)],
+                         "degree": round(he.degree_in_sign(b.longitude), 4),
+                         "longitude": round(b.longitude, 6)},
+            "sidereal": {"rashi": ve.rashi(sid_by[name])["name"],
+                         "degree": round(sid_by[name] % 30, 4),
+                         "nakshatra": ve.nakshatra_of(sid_by[name])["name"]},
+            "speedPerDay": round(b.speed, 4),
+        }
+
+    # ── stations ────────────────────────────────────────────────────────────
+    stations: dict = {}
+    for body in ("sun", "moon"):
+        try:
+            day = stations_for_day(moment.date(), lat, lon, body, preset)
+            found = next_station(moment, lat, lon, body, preset)
+            stations[body] = {
+                "today": [
+                    {"name": s.name, "at": s.at.isoformat() if s.at else None,
+                     "occurred": s.occurred, "absentReason": s.absent_reason,
+                     "dedication": s.dedication}
+                    for s in day.stations
+                ],
+                "next": None if found is None else {
+                    "name": found[0].name, "at": found[0].at.isoformat(),
+                    "secondsAway": int((found[0].at - moment).total_seconds()),
+                    "dedication": found[0].dedication,
+                },
+            }
+        except Exception:                          # noqa: BLE001 — degrade alone
+            stations[body] = {"today": [], "next": None}
+            undefined.append(f"{body} stations could not be computed here")
+
+    # ── planetary hours ─────────────────────────────────────────────────────
+    hours: dict | None = None
+    try:
+        sunrise, sunset, next_sunrise = sun_events(moment, lat, lon)
+        built = build_hours(sunrise, sunset, next_sunrise, sunrise.weekday())
+        now_hour = current_hour(built, moment)
+        idx = built.index(now_hour) if now_hour else None
+        upcoming = built[idx + 1] if idx is not None and idx + 1 < len(built) else None
+        hours = {
+            "current": None if now_hour is None else {
+                "index": now_hour.index, "ruler": now_hour.ruler,
+                "isNight": now_hour.is_night,
+                "startsAt": now_hour.starts_at.isoformat(),
+                "endsAt": now_hour.ends_at.isoformat(),
+            },
+            # The next hour is the point — people plan against the coming hour,
+            # not the present one.
+            "next": None if upcoming is None else {
+                "index": upcoming.index, "ruler": upcoming.ruler,
+                "isNight": upcoming.is_night,
+                "startsAt": upcoming.starts_at.isoformat(),
+                "endsAt": upcoming.ends_at.isoformat(),
+            },
+        }
+    except SunNeverRose as exc:
+        undefined.append(f"planetary hours: {exc}")
+
+    # ── reckonings ──────────────────────────────────────────────────────────
+    reckonings: dict = {"gregorian": moment.date().isoformat()}
+    try:
+        hd = hindu_date(moment, "amanta", ayanamsa)
+        reckonings["hindu"] = {
+            "month": hd.month, "paksha": hd.paksha, "tithi": hd.tithi_name,
+            "vikrama": hd.years["vikrama"], "shaka": hd.years["shaka"],
+        }
+    except Exception:                              # noqa: BLE001
+        undefined.append("the Hindu date could not be computed")
+    try:
+        a = attic_day(moment.date())
+        reckonings["attic"] = {
+            "month": a.month, "greek": a.month_greek,
+            "day": a.day_name_greek, "moonAgeDays": a.moon_age_days,
+        }
+    except (BeforeTheCycle, ValueError) as exc:
+        undefined.append(f"the Attic date: {exc}")
+
+    # ── transits, only with a nativity ──────────────────────────────────────
+    transits: dict | None = None
+    if natal:
+        if natal_lat is None or natal_lon is None:
+            raise HTTPException(400, "natal requires natal_lat and natal_lon")
+        birth = _moment(natal)
+        n = chart_positions(birth, natal_lat, natal_lon, sidereal=False)
+        natal_by = {b.name: b.longitude for b in n.bodies}
+
+        from shruti_astro.core import aspects as asp
+
+        combined = {f"transit {k}": v.longitude for k, v in by_name.items()}
+        combined.update({f"natal {k}": v for k, v in natal_by.items()})
+        crossing = [
+            {"from": a.from_body, "to": a.to_body, "aspect": a.name,
+             "separationSigns": a.separation_signs}
+            for a in asp.whole_sign_aspects(combined)
+            if a.from_body.startswith("transit ") != a.to_body.startswith("transit ")
+        ]
+        transits = {
+            "natalAngles": {
+                "ascendant": round(n.ascendant, 6),
+                "midheaven": round(n.midheaven, 6),
+            },
+            "configurations": crossing,
+            "note": (
+                "Angular transits depend on the birth time. If it is uncertain, "
+                "treat the ascendant, midheaven and house transits as undefined "
+                "— the ascendant moves a degree every four minutes."
+            ),
+        }
+
+    return {
+        "at": moment.isoformat(),
+        "location": {"lat": lat, "lon": lon},
+        "sun": luminary("Sun"),
+        "moon": luminary("Moon"),
+        "stations": stations,
+        "planetaryHours": hours,
+        "reckonings": reckonings,
+        "sky": {
+            "ascendant": round(pos.ascendant, 6),
+            "midheaven": round(pos.midheaven, 6),
+            "bodies": [
+                {"name": b.name, "longitude": round(b.longitude, 6),
+                 "sign": he.SIGNS[he.sign_of(b.longitude)],
+                 "retrograde": b.retrograde}
+                for b in pos.bodies
+            ],
+        },
+        "transits": transits,
+        # Present so a degraded block is visible rather than silently missing.
+        "undefined": undefined,
+    }

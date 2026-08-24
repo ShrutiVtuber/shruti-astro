@@ -223,6 +223,8 @@ async def chart(
     true_node: bool = Query(False, description="True node instead of mean"),
     dasha_levels: int = Query(2, ge=1, le=3, description="Vedic: mahā / antara / pratyantara"),
     dasha_year: str = Query("julian", description="Vedic: julian | sidereal | savana"),
+    diagram: bool = Query(True, description="include the rendered chart figure"),
+    vedic_style: str = Query("north", description="Vedic figure: north | south"),
 ) -> dict:
     """
     A full natal chart, in whichever tradition the visitor chooses.
@@ -239,6 +241,7 @@ async def chart(
     """
     from shruti_astro.core import aspects as asp
     from shruti_astro.core import dasha as da
+    from shruti_astro.core import wheel as wh
     from shruti_astro.core import hellenistic as he
     from shruti_astro.core import vedic as ve
     from shruti_astro.core.doctrine import DEFAULT, Doctrine, DoctrineError
@@ -322,6 +325,18 @@ async def chart(
                 for a in asp.degree_aspects(by_name, speeds)
             ],
         }
+        if diagram:
+            # Drawn from the same numbers as the tables — a wheel that
+            # disagrees with its own table is a second, wrong source.
+            out["diagram"] = {
+                "kind": "wheel",
+                "svg": wh.hellenistic_wheel(
+                    pos.ascendant,
+                    [{"name": b.name, "longitude": b.longitude,
+                      "retrograde": b.retrograde} for b in pos.bodies],
+                    out["aspects"]["configurations"],
+                ),
+            }
     else:
         asc_sign = int(pos.ascendant // 30)
         out["lagna"] = ve.rashi(pos.ascendant)
@@ -370,6 +385,19 @@ async def chart(
                 for a in asp.graha_drishti(by_name)
             ],
         }
+        if diagram:
+            if vedic_style not in ("north", "south"):
+                raise HTTPException(400, "vedic_style must be north or south")
+            # A square chart, not a relabelled wheel — they are different
+            # figures, and a Vedic astrologer notices immediately.
+            out["diagram"] = {
+                "kind": f"{vedic_style}_indian_square",
+                "svg": wh.vedic_square(
+                    asc_sign,
+                    [{"name": b.name, "longitude": b.longitude} for b in pos.bodies],
+                    vedic_style,
+                ),
+            }
 
     return out
 

@@ -213,6 +213,7 @@ HOUSE_SYSTEMS = {
     "porphyry": b"O",
     "regiomontanus": b"R",
     "koch": b"K",
+    "campanus": b"C",
 }
 
 

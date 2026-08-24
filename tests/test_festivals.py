@@ -322,3 +322,47 @@ def test_bhadra_is_the_vishti_karana_and_is_computed():
     L = longitudes(moment)
     assert karana(L.sun_tropical, L.moon_tropical).name == "Viṣṭi"
     assert _is_bhadra(moment) is True
+
+
+def test_a_refined_rule_that_finds_no_day_falls_back_to_sunrise():
+    """
+    A day rule can find no day at all: the tithi begins and ends between two
+    consecutive madhyāhna or pradoṣa moments, so no day carries it AT THAT
+    MOMENT even though every day carries it at some moment.
+
+    Measured across 2026–30 this made Rāma Navamī vanish in 2029 and Dhanteras
+    in 2028 and 2029. A festival missing from the calendar is a worse error than
+    one placed by the base rule, so it falls back and says it fell back.
+    """
+    anchor = {"kind": "lunar", "month": "Chaitra", "paksha": "shukla",
+              "tithi": 9, "dayRule": "madhyahna"}
+    r = resolve(anchor, 2029)
+    assert r.date is not None, "Rāma Navamī must not disappear from 2029"
+    assert "falls back" in r.note
+
+
+def test_no_dated_festival_disappears_across_five_years():
+    """
+    The regression this guards: an entry that resolves in the year it was
+    checked and vanishes in another. Five years is enough to catch the kṣaya
+    cases that one year hides.
+    """
+    import json
+    from pathlib import Path
+
+    data = json.loads(
+        (Path(__file__).resolve().parent.parent
+         / "shruti_astro" / "data" / "hindu-festivals.json").read_text()
+    )
+    keep = ("kind", "month", "paksha", "tithi", "reckoning", "dayRule", "avoidBhadra")
+    vanished = []
+    for entry in data:
+        a = entry.get("anchor") or {}
+        if not a.get("dayRule") or a.get("month") in ("*", "adhika"):
+            continue
+        anchor = {k: v for k, v in a.items() if k in keep}
+        for year in range(2026, 2031):
+            result = resolve(anchor, year)
+            if not isinstance(result, list) and result.date is None:
+                vanished.append((entry["key"], year))
+    assert not vanished, f"these vanish in some years: {vanished}"

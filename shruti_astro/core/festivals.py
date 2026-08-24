@@ -182,13 +182,36 @@ def resolve_lunar(
             hits = [first + timedelta(days=1)] + hits[1:]
 
     if not hits:
+        # A refined rule can find no day at all: the tithi begins and ends
+        # between two consecutive madhyāhna or pradoṣa moments, so no day
+        # carries it AT THAT MOMENT even though every day carries it at some
+        # moment. Measured over 2026–30, this makes Rāma Navamī vanish in 2029
+        # and Dhanteras in 2028 and 2029.
+        #
+        # The observance still happens. Falling back to sunrise and saying so is
+        # right: a festival missing from the calendar is a worse error than one
+        # placed by the base rule, and silently dropping it hides the fact that
+        # the refinement did not apply.
+        if rule != "sunrise":
+            fallback = resolve_lunar(
+                {**anchor, "dayRule": "sunrise"}, gregorian_year, lat, lon
+            )
+            if fallback.date is not None:
+                fallback.note = (
+                    f"the {rule} rule found no day this year — the tithi began "
+                    f"and ended between two {rule} moments — so this falls back "
+                    f"to the tithi at sunrise"
+                )
+                fallback.anchor = anchor
+                return fallback
+
         return Resolved(
             key=anchor.get("key", ""), name=anchor.get("name", ""), date=None,
             anchor=anchor, skipped=True,
             skipped_reason=(
                 f"no day in {gregorian_year} carried {anchor['paksha']} {want_tithi} "
-                f"of {month} at {rule} — the tithi began and ended between two "
-                f"reckoning moments (kṣaya)"
+                f"of {month} at any reckoning moment — the tithi began and ended "
+                f"between two sunrises (kṣaya)"
             ),
         )
 

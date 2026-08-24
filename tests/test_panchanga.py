@@ -49,3 +49,24 @@ def test_fractions_stay_in_range():
     for lon in (0.0, 37.5, 180.0, 359.99):
         for limb in (tithi(0.0, lon), nakshatra(lon), yoga(0.0, lon), karana(0.0, lon)):
             assert 0.0 <= limb.fraction < 1.0
+
+
+def test_known_sky_2026_08_24():
+    """
+    Regression against an independently checked instant.
+
+    2026-08-24 ~10:42 UTC: the Sun is at 151.3° tropical, i.e. 1.3° Virgo —
+    it ingressed Virgo on 23 August, so this is the sanity anchor. Elongation
+    of 137.46° puts the Moon 45% through Śukla Dvādaśī, and the Moon's sidereal
+    264.53° lands in Pūrva Āṣāḍhā.
+    """
+    sun_t, moon_t = 151.300853, 288.761622
+    moon_s, sun_s = 264.52964, 127.06887
+
+    t = tithi(sun_t, moon_t)
+    assert t.index == 12 and t.name == "Śukla Dvādaśī"
+    assert 0.45 < t.fraction < 0.46
+
+    assert nakshatra(moon_s).name == "Pūrva Āṣāḍhā"
+    assert yoga(sun_s, moon_s).name == "Āyuṣmān"
+    assert karana(sun_t, moon_t).name == "Bava"

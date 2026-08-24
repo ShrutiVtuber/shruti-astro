@@ -38,6 +38,11 @@ async def attach_source_offer(request: Request, call_next):
     return response
 
 
+from shruti_astro.api.routes import router  # noqa: E402
+
+app.include_router(router)
+
+
 @app.get("/health")
 async def health() -> dict:
     return {"status": "ok"}

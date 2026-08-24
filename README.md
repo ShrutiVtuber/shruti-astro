@@ -56,6 +56,10 @@ Hellenistic and Vedic are first-class together, not one bolted onto the other:
 | `GET /chart` | full natal chart — `tradition=hellenistic\|vedic` |
 | `GET /house-systems` | whole sign, equal, Placidus, Porphyry, Regiomontanus, Koch |
 | `GET /rise-conventions` | the sunrise toggle — both traditions, described |
+| `GET /hindu-calendar` | lunar month, pakṣa, tithi — `reckoning=amanta\|purnimanta` |
+| `GET /reckonings` | the amānta / pūrṇimānta choice, described |
+| `GET /isopsephy` | sum text under a cipher |
+| `GET /ciphers` | the catalogue — Greek, Hebrew, English, Coptic, Arabic, Sanskrit |
 | `GET /ayanamsas` | the six ayanāṁśas |
 
 ## Sunrise is a toggle, not a setting

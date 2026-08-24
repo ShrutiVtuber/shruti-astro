@@ -334,3 +334,87 @@ async def chart(
         }
 
     return out
+
+
+# ── isopsephy / gematria ────────────────────────────────────────────────────
+
+@router.get("/ciphers")
+async def list_ciphers() -> dict:
+    """
+    The bundled catalogue — Greek, Hebrew, English, Coptic, Arabic, Sanskrit.
+
+    Every entry cites a public-domain source. Nothing here is invented.
+    """
+    from shruti_astro.core.isopsephy import LANGUAGES, catalogue
+
+    return {"languages": LANGUAGES, "ciphers": catalogue()}
+
+
+@router.get("/isopsephy")
+async def isopsephy_endpoint(
+    text: str = Query(..., min_length=1, max_length=2000),
+    cipher: str = Query("greek-iso"),
+    strip_marks: bool = Query(True, description="Fold diacritics and Hebrew pointing"),
+) -> dict:
+    """
+    Sum text under one cipher.
+
+    Unmatched characters are returned rather than silently counted as zero — a
+    letter outside the cipher is not worth nothing, and a total whose basis is
+    invisible cannot be reproduced.
+    """
+    from shruti_astro.core.isopsephy import isopsephy as compute
+
+    try:
+        return compute(text, cipher, strip_marks)
+    except ValueError as exc:
+        raise HTTPException(400, str(exc))
+
+
+# ── Hindu calendar ──────────────────────────────────────────────────────────
+
+@router.get("/hindu-calendar")
+async def hindu_calendar_endpoint(
+    when: str | None = Query(None, description="ISO-8601; defaults to now"),
+    reckoning: str = Query("amanta", description="amanta (southern) | purnimanta (northern)"),
+    ayanamsa: str = Query("lahiri"),
+) -> dict:
+    """
+    The lunar month, pakṣa and tithi.
+
+    `reckoning` is a real choice, not a preference: a month may end at the new
+    moon (amānta, southern) or the full moon (pūrṇimānta, northern). In the dark
+    fortnight the two name *different months*, and both are correct where they
+    are kept.
+    """
+    from shruti_astro.core.hindu_calendar import RECKONINGS, hindu_date
+
+    if reckoning not in RECKONINGS:
+        raise HTTPException(400, f"reckoning must be one of {list(RECKONINGS)}")
+    if ayanamsa not in AYANAMSAS:
+        raise HTTPException(400, f"unknown ayanamsa; choose from {sorted(AYANAMSAS)}")
+
+    try:
+        d = hindu_date(_moment(when), reckoning, ayanamsa)
+    except ValueError as exc:
+        raise HTTPException(400, str(exc))
+
+    return {
+        "reckoning": d.reckoning,
+        "month": {"name": d.month, "index": d.month_index,
+                  "adhika": d.is_adhika, "kshaya": d.is_kshaya},
+        "paksha": d.paksha,
+        "tithi": {"index": d.tithi_index, "name": d.tithi_name},
+        "years": d.years,
+        "lunation": {"start": d.month_start.isoformat(), "end": d.month_end.isoformat()},
+    }
+
+
+@router.get("/reckonings")
+async def list_reckonings() -> dict:
+    return {
+        "reckonings": {
+            "amanta": "month ends at the new moon — southern Indian practice",
+            "purnimanta": "month ends at the full moon — northern Indian practice",
+        }
+    }

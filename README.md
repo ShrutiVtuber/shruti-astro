@@ -61,6 +61,12 @@ Hellenistic and Vedic are first-class together, not one bolted onto the other:
 | `GET /reckonings` | the amānta / pūrṇimānta choice, described |
 | `GET /isopsephy` | sum text under a cipher |
 | `GET /ciphers` | the catalogue — Greek, Hebrew, English, Coptic, Arabic, Sanskrit |
+| `GET /hindu-year` | the year as a table of lunations, adhika marked |
+| `GET /attic-calendar` | Athens — noumenia, full/hollow, the backwards third |
+| `GET /sigil` | letter elimination, every step shown, SVG |
+| `GET /void-of-course` | kenodromia — `rule=thirtyDegrees\|signExit` |
+| `GET /doctrine` | the contested points and their options |
+| `GET /authorities` | Dṛk gaṇita vs Sūrya Siddhānta |
 | `GET /ayanamsas` | the six ayanāṁśas |
 
 ## Sunrise is a toggle, not a setting

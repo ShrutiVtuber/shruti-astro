@@ -221,6 +221,7 @@ async def chart(
     house_system: str = Query("whole_sign"),
     include_modern: bool = Query(False, description="Uranus, Neptune, Pluto"),
     true_node: bool = Query(False, description="True node instead of mean"),
+    solar_phase: str = Query("paulus", description="Hellenistic: paulus | lilly1647 | medievalUnattributed"),
     dasha_levels: int = Query(2, ge=1, le=3, description="Vedic: mahā / antara / pratyantara"),
     dasha_year: str = Query("julian", description="Vedic: julian | sidereal | savana"),
     diagram: bool = Query(True, description="include the rendered chart figure"),
@@ -241,6 +242,7 @@ async def chart(
     """
     from shruti_astro.core import aspects as asp
     from shruti_astro.core import dasha as da
+    from shruti_astro.core import solar_phase as sp
     from shruti_astro.core import wheel as wh
     from shruti_astro.core import hellenistic as he
     from shruti_astro.core import vedic as ve
@@ -308,6 +310,14 @@ async def chart(
             # Nodes have no essential dignity in the tradition.
             if b.name not in ("Rahu", "Ketu"):
                 entry["dignities"] = he.dignities(b.name, b.longitude, s.is_day, DEFAULT)
+            if b.name != "Sun":
+                # Cazimi / combust / under the beams, by the caller's doctrine —
+                # the boundaries are contested and are not ours to standardise.
+                ph = sp.solar_phase(b.longitude, by_name["Sun"], solar_phase)
+                entry["solarPhase"] = {
+                    "state": ph.state, "separation": ph.separation,
+                    "doctrine": ph.doctrine, "boundaries": ph.boundaries,
+                }
             out["bodies"].append(entry)
 
         # Configuration is by SIGN in the tradition; the degree list is a
@@ -516,6 +526,59 @@ async def hindu_calendar_endpoint(
                 )
 
     return out
+
+
+@router.get("/doctrine")
+async def list_doctrine() -> dict:
+    """
+    The contested points, and the options for each.
+
+    Where the tradition genuinely holds two opinions the practitioner chooses;
+    where it holds one, it is simply implemented. Nothing here is ranked.
+    """
+    from shruti_astro.core.doctrine import (
+        EXALTATION_MODE, PREDOMINATOR, SATURN_EXALTATION_DEGREES,
+        SOLAR_PHASE, VENUS_EXALTATION_DEGREES, VOID_OF_COURSE,
+    )
+    from shruti_astro.core.solar_phase import DESCRIPTIONS
+
+    return {
+        "solarPhase": {"options": list(SOLAR_PHASE), "default": "paulus",
+                       "descriptions": DESCRIPTIONS},
+        "voidOfCourse": {
+            "options": list(VOID_OF_COURSE), "default": "thirtyDegrees",
+            "descriptions": {
+                "thirtyDegrees": "kenodromia — no exact configuration within the "
+                                 "Moon's next thirty degrees, sign boundaries crossed",
+                "signExit": "no exact configuration before the Moon leaves her sign",
+            },
+        },
+        "predominator": {"options": list(PREDOMINATOR), "default": "valensWholeSign"},
+        "exaltationDegrees": {"options": list(EXALTATION_MODE), "default": "signLevel"},
+        "saturnExaltationDegree": {"options": list(SATURN_EXALTATION_DEGREES),
+                                   "default": 21,
+                                   "note": "19 is an OCR artefact and is not storable"},
+        "venusExaltationDegree": {"options": list(VENUS_EXALTATION_DEGREES), "default": 27},
+        "maltreatmentContestedSextile": {"options": [True, False], "default": True},
+    }
+
+
+@router.get("/void-of-course")
+async def void_of_course_endpoint(
+    when: str | None = Query(None),
+    rule: str = Query("thirtyDegrees", description="thirtyDegrees | signExit"),
+) -> dict:
+    """
+    Whether the Moon is void, under the chosen rule.
+
+    The two rules disagree often and in both directions — measured across a
+    sample, on roughly a third of moments. Neither is a refinement of the other.
+    """
+    from shruti_astro.core.void_of_course import RULES, is_void_of_course
+
+    if rule not in RULES:
+        raise HTTPException(400, f"rule must be one of {list(RULES)}")
+    return is_void_of_course(_moment(when), rule)
 
 
 @router.get("/sigil")

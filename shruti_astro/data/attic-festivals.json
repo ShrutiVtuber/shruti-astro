@@ -1,0 +1,2358 @@
+[
+ {
+  "key": "kronia",
+  "name": "Kronia",
+  "ref": "occasions:kronia",
+  "summary": "Midsummer festival of Kronos, at which masters and slaves feasted together.",
+  "note": "Sacrifice to Kronos and Rhea near the Olympieion, a public meal, and the inversion in which slaves dine with their masters. DAY CONVENTIONAL: Dem. 24.26 puts an Assembly on the 12th 'after the Kronia', which strictly fixes the festival at or before the 12th. Hekatombaion was earlier called Kronion, supporting an old placement.",
+  "tags": [
+   "attic",
+   "athens",
+   "hekatombaion",
+   "kronos",
+   "harvest",
+   "role-reversal"
+  ],
+  "anchor": {
+   "kind": "crescent",
+   "reckoning": "kata-theon",
+   "month": "Hekatombaion",
+   "day": 12,
+   "dayCertainty": "conventional",
+   "dayBeginsAtSunset": true
+  },
+  "sources": [
+   {
+    "author": "Demosthenes",
+    "work": "Against Timokrates",
+    "locus": "24.26"
+   },
+   {
+    "author": "Philochoros",
+    "work": "FGrHist 328 F 97, at Macrobius, Saturnalia 1.10.22",
+    "note": "Corrected locus: 1.7.36–37 is the Accius passage."
+   },
+   {
+    "author": "Pausanias",
+    "work": "Description of Greece",
+    "locus": "1.18.7",
+    "note": "The sanctuary."
+   },
+   {
+    "author": "Plutarch",
+    "work": "Theseus",
+    "locus": "12.3",
+    "note": "The month formerly Kronion."
+   }
+  ],
+  "confidence": "attested"
+ },
+ {
+  "key": "synoikia",
+  "name": "Synoikia",
+  "ref": "occasions:synoikia",
+  "summary": "State festival commemorating Theseus' unification of Attica.",
+  "note": "THE DAY IS DIRECTLY ATTESTED and does not rest on contested epigraphy: Plutarch, Theseus 24, gives the Metoikia on 16 Hekatombaion, 'and this is still celebrated'. Thucydides attests the festival but no day. The alternate-year 15th is a RESTORATION from contested Nikomachos fragments and is graded separately. Eirene added in 374. CLAIM REMOVED: Zeus Phratrios and Athena Phratria as recipients — those are the Apatouria's deities. An astu festival, absent from the Erchia and Tetrapolis calendars.",
+  "tags": [
+   "attic",
+   "athens",
+   "hekatombaion",
+   "athena",
+   "theseus",
+   "polis",
+   "biennial"
+  ],
+  "anchor": {
+   "kind": "crescent",
+   "reckoning": "kata-theon",
+   "month": "Hekatombaion",
+   "day": 16,
+   "dayCertainty": "attested",
+   "elaboratedYear": {
+    "days": [
+     15,
+     16
+    ],
+    "dayCertainty": "reconstructed"
+   },
+   "dayBeginsAtSunset": true
+  },
+  "sources": [
+   {
+    "author": "Plutarch",
+    "work": "Theseus",
+    "locus": "24",
+    "note": "The direct attestation of the day."
+   },
+   {
+    "author": "Thucydides",
+    "work": "History",
+    "locus": "2.15.2"
+   },
+   {
+    "author": "Philochoros",
+    "work": "FGrHist 328 F 151",
+    "note": "Eirene, 374; witness to a state sacrifice on the 16th."
+   },
+   {
+    "work": "Nikomachos calendar",
+    "locus": "IG I³ 234 with Lambert, BSA 97 (2002)",
+    "note": "Fragmentary; readings contested."
+   }
+  ],
+  "confidence": "attested"
+ },
+ {
+  "key": "panathenaia-lesser",
+  "name": "Lesser Panathenaia",
+  "ref": "occasions:panathenaia-lesser",
+  "summary": "The annual birthday festival of Athena Polias, with hecatomb and procession.",
+  "note": "ANCHOR IS THE CLIMACTIC DAY, NOT THE FIRST — hence no lasts. Reconstructions of the opening run from two days (27–28 with a pannychis) upward; the nineteenth-century scheme starting on the 17th is accepted by no modern handbook. DAY CONVENTIONAL: the 28th rests on Proclus plus consensus; IG II² 334 gives no day. Whether the peplos was woven annually or only for the penteteric festival is genuinely disputed (Mansfield vs Barber); the annual Chalkeia warp-setting on the LAST DAY of Pyanepsion is one argument for an annual garment.",
+  "tags": [
+   "attic",
+   "athens",
+   "hekatombaion",
+   "athena",
+   "procession",
+   "annual",
+   "peplos"
+  ],
+  "anchor": {
+   "kind": "crescent",
+   "reckoning": "kata-theon",
+   "month": "Hekatombaion",
+   "day": 28,
+   "dayCertainty": "conventional",
+   "note": "climactic day; opening unattested",
+   "dayBeginsAtSunset": true
+  },
+  "cycle": {
+   "rule": "annual EXCEPT in Greater Panathenaia years",
+   "excludes": [
+    "occasions:panathenaia-greater"
+   ]
+  },
+  "sources": [
+   {
+    "work": "Decree on the Lesser Panathenaia",
+    "locus": "IG II² 334",
+    "note": "No day-number."
+   },
+   {
+    "author": "Proclus",
+    "work": "Commentary on the Timaeus",
+    "note": "Late; the usual support for the 28th."
+   },
+   {
+    "author": "J. Neils (ed.)",
+    "work": "Goddess and Polis"
+   }
+  ],
+  "confidence": "disputed"
+ },
+ {
+  "key": "panathenaia-greater",
+  "name": "Greater Panathenaia",
+  "ref": "occasions:panathenaia-greater",
+  "summary": "The penteteric great festival of Athena, culminating in the peplos procession and hecatomb.",
+  "note": "ANCHOR IS THE CLIMAX; lasts omitted because the span is disputed, not because the festival was one day. Only the 28th is fixed — Shear reconstructs 23–30, Parke roughly the last week. Anyone needing a span must choose a reconstruction and name it. Every fourth year, third year of each Olympiad, reorganised 566/5. Musical, gymnic and hippic contests, apobates, euandria, pyrrhiche, torch race and pannychis, the pompe from the Dipylon, the peplos presented to Athena Polias, hecatomb distributed by deme. The ship-cart is attested only for the Hellenistic and Roman festival; retrojection is unsafe.",
+  "tags": [
+   "attic",
+   "athens",
+   "hekatombaion",
+   "athena",
+   "penteteric",
+   "games",
+   "peplos"
+  ],
+  "anchor": {
+   "kind": "crescent",
+   "reckoning": "kata-theon",
+   "month": "Hekatombaion",
+   "day": 28,
+   "dayCertainty": "conventional",
+   "spanReconstructions": [
+    {
+     "days": [
+      23,
+      30
+     ],
+     "author": "J. L. Shear"
+    }
+   ],
+   "dayBeginsAtSunset": true
+  },
+  "cycle": {
+   "rule": "penteteric, third year of each Olympiad",
+   "epoch": "566/5 BC"
+  },
+  "sources": [
+   {
+    "author": "Aristotle (attrib.)",
+    "work": "Athenaion Politeia",
+    "locus": "54.7, 60.1–3"
+   },
+   {
+    "author": "Thucydides",
+    "work": "History",
+    "locus": "6.56–58"
+   },
+   {
+    "work": "Prize-list",
+    "locus": "IG II² 2311"
+   },
+   {
+    "author": "J. L. Shear",
+    "work": "Polis and Panathenaia"
+   }
+  ],
+  "confidence": "disputed"
+ },
+ {
+  "key": "genesia",
+  "name": "Genesia",
+  "ref": "occasions:genesia",
+  "summary": "State festival of the dead, at which the city made offerings to its ancestors.",
+  "note": "SINGLE-SOURCE DATE: Hesychius alone gives 'the fifth of Boedromion'. Do not later strengthen this with corroboration it does not have. Originally a private rite on a parent's death-anniversary; Solon is credited with fixing it as a public civic day. A connection to the Nemeseia at Rhamnous has been argued (Jacoby) but is not secure.",
+  "tags": [
+   "attic",
+   "athens",
+   "boedromion",
+   "dead",
+   "ancestors",
+   "chthonic"
+  ],
+  "anchor": {
+   "kind": "crescent",
+   "reckoning": "kata-theon",
+   "month": "Boedromion",
+   "day": 5,
+   "dayCertainty": "attested",
+   "sourceCount": 1,
+   "dayBeginsAtSunset": true
+  },
+  "sources": [
+   {
+    "author": "Hesychius",
+    "work": "Lexicon",
+    "locus": "s.v. Γενέσια"
+   },
+   {
+    "author": "F. Jacoby",
+    "work": "ΓΕΝΕΣΙΑ: A Forgotten Festival of the Dead",
+    "locus": "CQ 38 (1944) 65–75"
+   }
+  ],
+  "confidence": "attested"
+ },
+ {
+  "key": "boedromia",
+  "name": "Boedromia",
+  "ref": "occasions:boedromia",
+  "summary": "Festival of Apollo Boedromios, the helper who runs to the cry.",
+  "note": "DAY CONVENTIONAL, NOT ATTESTED — the 7th is uniform in the handbooks and consistent with Apollo's hebdome, but no classical author states it; graded disputed, correcting an earlier record that paired a conventional day with an attested confidence. Two aetiologies, neither to be preferred: Theseus over the Amazons after sacrifice to Phobos (Plutarch), or Ion against Eumolpos (Suda). DO NOT CONFLATE with the Artemis Agrotera goats on 6 Boedromion — Xenophon, Anabasis 3.2.12, records the vow and the 500 goats but NO DAY; the date comes from Plutarch, De malignitate Herodoti 862a.",
+  "tags": [
+   "attic",
+   "athens",
+   "boedromion",
+   "apollo",
+   "month-eponym"
+  ],
+  "anchor": {
+   "kind": "crescent",
+   "reckoning": "kata-theon",
+   "month": "Boedromion",
+   "day": 7,
+   "dayCertainty": "conventional",
+   "dayBasis": "lexicographic tradition plus Apollo's hebdome",
+   "dayBeginsAtSunset": true
+  },
+  "sources": [
+   {
+    "author": "Plutarch",
+    "work": "Theseus",
+    "locus": "27"
+   },
+   {
+    "work": "Suda",
+    "locus": "s.v. Βοηδρόμια"
+   },
+   {
+    "author": "Plutarch",
+    "work": "De malignitate Herodoti",
+    "locus": "862a",
+    "note": "Correct source for the 6 Boedromion Agrotera sacrifice."
+   }
+  ],
+  "confidence": "disputed"
+ },
+ {
+  "key": "eleusinian-mysteries-greater",
+  "name": "Greater Eleusinian Mysteries",
+  "ref": "occasions:eleusinian-mysteries-greater",
+  "summary": "The annual initiation of Demeter and Kore, from Athens to the night rites at Eleusis.",
+  "note": "INITIATORY AND CLOSED — public frame only. The telete was under an oath of silence enforced by law and the surviving descriptions are late and Christian-polemical; do not publish reconstructions. FRAME: 14, hiera brought to the City Eleusinion; 15 Agyrmos and prorrhesis; 16 'Halade mystai'; 17 sacrifices; 17–18 Epidauria for latecomers (the older scheme's 22nd is rejected); 19 or 20 the pompe escorting Iakchos with the gephyrismoi; 20–21 the nights of the telete; 22 Plemochoai. POMPE DAY: Plutarch twice gives the 20th and is the only explicit ANCIENT testimony; 19 is the modern majority and is graded reconstructed. A third figure, 18, carried in an earlier draft on a Wikipedia article, is REMOVED — a tertiary error must not be enshrined as a scholarly option.",
+  "tags": [
+   "attic",
+   "athens",
+   "eleusis",
+   "boedromion",
+   "demeter",
+   "mysteries",
+   "initiation",
+   "closed"
+  ],
+  "anchor": {
+   "kind": "crescent",
+   "reckoning": "kata-theon",
+   "month": "Boedromion",
+   "day": 15,
+   "dayCertainty": "attested",
+   "pompeDay": {
+    "attested": 20,
+    "reconstructedPreferred": 19
+   },
+   "dayBeginsAtSunset": true
+  },
+  "lasts": {
+   "days": 8,
+   "alternativeDays": 9,
+   "note": "15–22; some reconstructions extend to 23"
+  },
+  "disclosure": "closed",
+  "sources": [
+   {
+    "author": "Andokides",
+    "work": "On the Mysteries",
+    "locus": "1.111"
+   },
+   {
+    "author": "Plutarch",
+    "work": "Phokion",
+    "locus": "28.1"
+   },
+   {
+    "author": "Plutarch",
+    "work": "Camillus",
+    "locus": "19.6"
+   },
+   {
+    "author": "Aristotle (attrib.)",
+    "work": "Athenaion Politeia",
+    "locus": "57.1",
+    "note": "An earlier draft also cited 56.4, which concerns the eponymous archon; verify before reinstating."
+   },
+   {
+    "author": "G. E. Mylonas",
+    "work": "Eleusis and the Eleusinian Mysteries",
+    "locus": "243–285"
+   }
+  ],
+  "confidence": "attested"
+ },
+ {
+  "key": "proerosia",
+  "name": "Proerosia",
+  "ref": "occasions:proerosia",
+  "summary": "The before-the-ploughing sacrifice to Demeter at Eleusis.",
+  "note": "DAY DISPUTED, 5 or 6 Pyanepsion. The Eleusinian deme calendar dates entries RELATIVE to the Proerosia rather than fixing it. Further: the aetiology has the rite proclaimed by the hierophant on a Delphic instruction after famine, which some read as evidence the date was announced rather than fixed — on that reading no day-number exists and this should be month-level. Precedes the Pyanepsia; do not merge.",
+  "tags": [
+   "attic",
+   "eleusis",
+   "pyanepsion",
+   "demeter",
+   "ploughing"
+  ],
+  "anchor": {
+   "kind": "crescent",
+   "reckoning": "kata-theon",
+   "month": "Pyanepsion",
+   "day": 6,
+   "dayCertainty": "disputed",
+   "dayAlternatives": [
+    5,
+    6
+   ],
+   "dayBeginsAtSunset": true
+  },
+  "sources": [
+   {
+    "work": "Eleusinian deme calendar",
+    "locus": "IG II² 1363"
+   },
+   {
+    "work": "IG I³ 78",
+    "note": "First-fruits decree; the ideological frame."
+   },
+   {
+    "work": "Suda",
+    "locus": "s.v. Προηρόσια"
+   }
+  ],
+  "confidence": "disputed"
+ },
+ {
+  "key": "pyanepsia",
+  "name": "Pyanepsia",
+  "ref": "occasions:pyanepsia",
+  "summary": "Autumn harvest festival of Apollo, with a stew of beans and pulses and the eiresione branch.",
+  "note": "Day uncontested; the month is named for the rite. The panspermia, a boiled mixture of beans, pulses and grains eaten in common; and the eiresione, an olive or laurel branch wound with wool and hung with fruits and small jars of honey, oil and wine, carried by a boy with both parents living and fixed over the temple and house doors until replaced next year. The Oschophoria falls in the same days and shares Plutarch's Theseus aetiology, but the two are distinct rites with distinct personnel and stay separate.",
+  "tags": [
+   "attic",
+   "athens",
+   "pyanepsion",
+   "apollo",
+   "harvest",
+   "eiresione",
+   "month-eponym"
+  ],
+  "anchor": {
+   "kind": "crescent",
+   "reckoning": "kata-theon",
+   "month": "Pyanepsion",
+   "day": 7,
+   "dayCertainty": "attested",
+   "dayBeginsAtSunset": true
+  },
+  "sources": [
+   {
+    "author": "Plutarch",
+    "work": "Theseus",
+    "locus": "22"
+   },
+   {
+    "author": "Harpokration",
+    "work": "Lexicon",
+    "locus": "s.v. εἰρεσιώνη"
+   },
+   {
+    "author": "Aristophanes",
+    "work": "Ploutos",
+    "locus": "1054 with scholia"
+   }
+  ],
+  "confidence": "attested"
+ },
+ {
+  "key": "oschophoria",
+  "name": "Oschophoria",
+  "ref": "occasions:oschophoria",
+  "summary": "Vintage procession in which two youths dressed as women carry vine-branches to Athena Skiras at Phaleron.",
+  "note": "NO DAY IS SUPPLIED. Smith states flatly that 'the time of its celebration is not mentioned by any ancient writer', and the 6th, 7th and 8th are all defended (Deubner, Parke, and those linking it to Theseus' return on the 8th). This is UNKNOWN, not disputed between attested readings, so anchor.day is omitted rather than carrying Parke's guess. Two youths of good family carry oschoi from a Dionysos sanctuary to Phaleron with a chorus, deipnophoroi bearing provisions and telling stories, and a race of ephebes whose winner drinks the pentaploa. Administered by the genē Salaminioi and Oschophoroi. NOTE THE COLLISION: if the 8th is chosen it coincides with the Theseia.",
+  "tags": [
+   "attic",
+   "athens",
+   "phaleron",
+   "pyanepsion",
+   "dionysos",
+   "athena-skiras",
+   "ephebes"
+  ],
+  "anchor": {
+   "kind": "crescent",
+   "reckoning": "kata-theon",
+   "month": "Pyanepsion",
+   "dayCertainty": "unknown",
+   "dayCandidates": [
+    6,
+    7,
+    8
+   ],
+   "dayBasis": "no ancient writer gives the day",
+   "dayBeginsAtSunset": true
+  },
+  "sources": [
+   {
+    "author": "Plutarch",
+    "work": "Theseus",
+    "locus": "22–23",
+    "note": "Fullest account; gives no day."
+   },
+   {
+    "work": "Decree of the Salaminioi",
+    "locus": "SEG 21.527 / Agora XIX L4",
+    "note": "Genos administration; dateless."
+   },
+   {
+    "author": "Athenaeus",
+    "work": "Deipnosophistae",
+    "locus": "11.495f; 14.631b",
+    "note": "The pentaploa."
+   }
+  ],
+  "confidence": "disputed"
+ },
+ {
+  "key": "theseia",
+  "name": "Theseia",
+  "ref": "occasions:theseia",
+  "summary": "Festival of Theseus commemorating his return from Crete.",
+  "note": "Plutarch, Theseus 36, gives the day directly, and the eighth of every month was sacred to Theseus as to Poseidon his father. Kimon's recovery of the supposed bones from Skyros (c. 476/5) turned a modest hero-cult into a state festival; by the Hellenistic period a major agonistic occasion with torch race, hoplite events, euandria judged on military bearing, and foreign competitors in the victor lists. Also a refuge festival — the Theseion was an asylum for runaway slaves. COLLISION: if the Oschophoria is placed on the 8th the two share a date.",
+  "tags": [
+   "attic",
+   "athens",
+   "pyanepsion",
+   "theseus",
+   "hero-cult",
+   "games",
+   "asylum"
+  ],
+  "anchor": {
+   "kind": "crescent",
+   "reckoning": "kata-theon",
+   "month": "Pyanepsion",
+   "day": 8,
+   "dayCertainty": "attested",
+   "dayBeginsAtSunset": true
+  },
+  "sources": [
+   {
+    "author": "Plutarch",
+    "work": "Theseus",
+    "locus": "36"
+   },
+   {
+    "author": "Plutarch",
+    "work": "Kimon",
+    "locus": "8"
+   },
+   {
+    "work": "Theseia victor lists",
+    "locus": "IG II² 956–965"
+   }
+  ],
+  "confidence": "attested"
+ },
+ {
+  "key": "stenia",
+  "name": "Stenia",
+  "ref": "occasions:stenia",
+  "summary": "Women's nocturnal festival of Demeter and Kore before the Thesmophoria, marked by ritual abuse between women.",
+  "note": "DAY RECONSTRUCTED: Photius and Hesychius describe a night festival of women reviling one another and place it before the Thesmophoria, but give no number. The 9th is inferred from that relative placement plus the Thesmophoria's start — an inference that inherits whatever uncertainty attaches to the 11th, which is itself weaker than usually stated (see thesmophoria). CONFLICT TO FLAG: Photius' testimony about an anodos of Demeter at the Stenia is why some treat this as the opening of a longer Thesmophoric complex; the thesmophoria entry names 11 Pyanepsion ANODOS. Both entries should not assert an anodos as settled fact on different days. The obscenity is usually read against the Iambe episode.",
+  "tags": [
+   "attic",
+   "athens",
+   "pyanepsion",
+   "demeter",
+   "women",
+   "nocturnal",
+   "aischrologia"
+  ],
+  "anchor": {
+   "kind": "crescent",
+   "reckoning": "kata-theon",
+   "month": "Pyanepsion",
+   "day": 9,
+   "dayCertainty": "reconstructed",
+   "dayBasis": "'before the Thesmophoria' in the lexicographers plus the Thesmophoria's start",
+   "dayBeginsAtSunset": true
+  },
+  "sources": [
+   {
+    "author": "Photius",
+    "work": "Lexicon",
+    "locus": "s.v. Στήνια"
+   },
+   {
+    "author": "Hesychius",
+    "work": "Lexicon",
+    "locus": "s.v. Στήνια"
+   },
+   {
+    "work": "Homeric Hymn to Demeter",
+    "locus": "195–211",
+    "note": "The Iambe episode."
+   }
+  ],
+  "confidence": "reconstructed"
+ },
+ {
+  "key": "thesmophoria",
+  "name": "Thesmophoria",
+  "ref": "occasions:thesmophoria",
+  "summary": "The three-day women-only festival of Demeter Thesmophoros and Kore.",
+  "note": "DOWNGRADED TO DISPUTED, and the reason is not obscure. The 11th is sourced in the handbooks and in Smith, but NO ancient testimonium for the day-number is cited anywhere; meanwhile the one ancient text that DOES give an explicit day for a Thesmophoria day disagrees — Plutarch, Demosthenes 30, has Demosthenes die 'on the sixteenth of Pyanepsion, the most gloomy day of the Thesmophoria, which the women observe by fasting'. That puts the Nesteia on the 16th, not the 12th. It is a known crux (calendar tampering in 322, kata theon vs kat' archonta dating, or Plutarch's error) and belongs in the record. Day-names are secure: ANODOS/KATHODOS, NESTEIA (fast, seated on lygos, courts closed), KALLIGENEIA (feasting and petitions for fertility). Citizen wives only, men absolutely excluded; the husband met the cost, evidence used in inheritance suits. Duration outside Athens varied — ten days at Syracuse — so three days is Athenian, not universal. The megara piglet-retrieval is placed by some at the Skira instead.",
+  "tags": [
+   "attic",
+   "athens",
+   "pyanepsion",
+   "demeter",
+   "kore",
+   "women",
+   "fertility",
+   "fasting",
+   "exclusive"
+  ],
+  "anchor": {
+   "kind": "crescent",
+   "reckoning": "kata-theon",
+   "month": "Pyanepsion",
+   "day": 11,
+   "dayCertainty": "disputed",
+   "conflictingTestimony": {
+    "source": "Plutarch, Demosthenes 30",
+    "implies": "Nesteia on 16 Pyanepsion"
+   },
+   "dayBeginsAtSunset": true
+  },
+  "lasts": {
+   "days": 3
+  },
+  "regionalVariants": [
+   {
+    "region": "Halimous",
+    "variantType": "different-day",
+    "anchor": {
+     "kind": "crescent",
+     "month": "Pyanepsion",
+     "day": 10,
+     "dayCertainty": "reconstructed"
+    },
+    "note": "Traditionally placed one day earlier so the deme's women could attend both. The 10th is a modern reconstruction; Plutarch, Solon 8, attests the deme's Thesmophoria without dating it."
+   },
+   {
+    "region": "Syracuse and Sicily",
+    "variantType": "different-structure",
+    "note": "A ten-day festival per schol. Theokritos 4.25; do not apply the Attic three-day span outside Attica."
+   }
+  ],
+  "sources": [
+   {
+    "work": "Scholia to Lucian, Dialogues of the Courtesans",
+    "locus": "2.1",
+    "note": "The fullest account of the rite and the day-names."
+   },
+   {
+    "author": "Aristophanes",
+    "work": "Thesmophoriazousai",
+    "note": "Exclusion of men, the Nesteia; comic but contemporary."
+   },
+   {
+    "author": "Plutarch",
+    "work": "Demosthenes",
+    "locus": "30",
+    "note": "The conflicting 16 Pyanepsion Nesteia."
+   },
+   {
+    "author": "Isaeus",
+    "work": "Orations",
+    "locus": "3.80; 6.49–50",
+    "note": "A husband paying for his wife's Thesmophoria as proof of lawful marriage."
+   }
+  ],
+  "confidence": "disputed"
+ },
+ {
+  "key": "apatouria",
+  "name": "Apatouria",
+  "ref": "occasions:apatouria",
+  "summary": "The three-day phratry festival of Zeus Phratrios and Athena Phratria, at which children and wives were enrolled in the kinship group.",
+  "note": "NO DAY, AND NO CANDIDATES. The figure 11–13 circulates widely but Smith hedges it as 'probably', no ancient source gives a number, and those days are already occupied by the Thesmophoria; modern handbooks prefer roughly 19–21, which is equally inference. An earlier draft carried dayCandidates [11,19], which re-imports the poison — a consumer reading the first element schedules the Apatouria on the Thesmophoria — so the array is deleted. Treat as unschedulable. The three days are securely named: DORPIA, the evening banquet; ANARRHYSIS, the public ox-sacrifice; KOUREOTIS, enrolment, when fathers presented children born since the last festival, swore to their legitimacy, dedicated a lock of hair, and the phratores voted. Hesychius' fourth day EPIBDA is simply the general term for the day after any festival and is not a festival day. Ionian, not merely Athenian.",
+  "tags": [
+   "attic",
+   "athens",
+   "pyanepsion",
+   "phratry",
+   "kinship",
+   "enrolment",
+   "citizenship",
+   "ionian"
+  ],
+  "anchor": {
+   "kind": "crescent",
+   "reckoning": "kata-theon",
+   "month": "Pyanepsion",
+   "dayCertainty": "unknown",
+   "dayBasis": "no ancient source gives a day; 11–13 collides with the Thesmophoria and 19–21 is modern inference",
+   "dayBeginsAtSunset": true
+  },
+  "lasts": {
+   "days": 3,
+   "note": "Dorpia, Anarrhysis, Koureotis"
+  },
+  "sources": [
+   {
+    "author": "Herodotus",
+    "work": "Histories",
+    "locus": "1.147",
+    "note": "Keeping the Apatouria as the mark of Ionian descent."
+   },
+   {
+    "author": "Theophrastus",
+    "work": "Characters",
+    "locus": "3.5",
+    "note": "'the Mysteries in Boedromion, the Apatouria in Pyanepsion, the Rural Dionysia in Poseideon' — the direct month attestation."
+   },
+   {
+    "work": "Decree of the Demotionidai",
+    "locus": "IG II² 1237",
+    "note": "Phratry procedure at the Koureotis; no day-number."
+   },
+   {
+    "author": "S. D. Lambert",
+    "work": "The Phratries of Attica"
+   }
+  ],
+  "confidence": "disputed"
+ },
+ {
+  "key": "chalkeia",
+  "name": "Chalkeia",
+  "ref": "occasions:chalkeia",
+  "summary": "Festival of Athena Ergane and Hephaistos on the last day of Pyanepsion, when the warp of the peplos was set on the loom.",
+  "note": "BACKWARD-COUNTED, CONVERTED. The sources give the last day (hene kai nea); forward that is 30 in a full month and 29 in a hollow one. The day is encoded as an OFFSET FROM THE MONTH END so a hollow month cannot silently schedule a day that does not exist — the earlier encoding put 30 in the field consumers read and the fallback in an undocumented key. The priestess and the arrhephoroi set the warp, which the ergastinai wove over the following nine months for the Panathenaia — the nine-month interval being the strongest argument for an annually woven peplos, a question that remains disputed. Originally Athena Ergane's; the smiths made it their own, whence the name.",
+  "tags": [
+   "attic",
+   "athens",
+   "pyanepsion",
+   "athena-ergane",
+   "hephaistos",
+   "craft",
+   "weaving",
+   "peplos",
+   "month-end"
+  ],
+  "anchor": {
+   "kind": "crescent",
+   "reckoning": "kata-theon",
+   "month": "Pyanepsion",
+   "dayFromEnd": 1,
+   "attestedAs": "hene kai nea",
+   "day": 30,
+   "hollowMonthDay": 29,
+   "dayCertainty": "attested",
+   "note": "day is derived from dayFromEnd; do not read the literal 30 in a hollow month",
+   "dayBeginsAtSunset": true
+  },
+  "sources": [
+   {
+    "author": "Harpokration",
+    "work": "Lexicon",
+    "locus": "s.v. Χαλκεῖα"
+   },
+   {
+    "work": "Suda",
+    "locus": "s.v. Χαλκεῖα"
+   },
+   {
+    "author": "E. J. W. Barber",
+    "work": "The Peplos of Athena, in Neils (ed.), Goddess and Polis",
+    "note": "Argues for an annually woven peplos."
+   }
+  ],
+  "confidence": "attested"
+ },
+ {
+  "key": "pompaia",
+  "name": "Pompaia",
+  "ref": "occasions:pompaia",
+  "summary": "Apotropaic winter procession carrying the Dios kodion and the herald's staff to avert storms and pollution.",
+  "note": "NO DAY. Maimakterion is the emptiest month of the Attic year and this is its only observance, but no source gives a number — month-level only. The fleece of a ram sacrificed to Zeus, usually identified as Zeus Meilichios, carried with a kerykeion; the fleece was spread under the feet of those being purified. Read as apotropaic against the oncoming winter and against Zeus Maimaktes, from whom the month is named. Whether a separate 'Maimakteria' existed is doubtful and no entry is offered. Evidence is entirely lexicographic and Byzantine; nothing classical describes the rite, so even the reconstruction is thin.",
+  "tags": [
+   "attic",
+   "athens",
+   "maimakterion",
+   "zeus-meilichios",
+   "hermes",
+   "apotropaic",
+   "purification",
+   "winter"
+  ],
+  "anchor": {
+   "kind": "crescent",
+   "reckoning": "kata-theon",
+   "month": "Maimakterion",
+   "dayCertainty": "unknown",
+   "dayBeginsAtSunset": true
+  },
+  "sources": [
+   {
+    "work": "Suda",
+    "locus": "s.v. Διὸς κῴδιον"
+   },
+   {
+    "author": "Eustathius",
+    "work": "Commentary on the Odyssey",
+    "locus": "on Od. 22.481"
+   },
+   {
+    "author": "Hesychius",
+    "work": "Lexicon",
+    "locus": "s.v. πομπαία"
+   }
+  ],
+  "confidence": "disputed"
+ },
+ {
+  "key": "haloa",
+  "name": "Haloa",
+  "ref": "occasions:haloa",
+  "summary": "Midwinter festival of Demeter, Kore and Dionysos at Eleusis, with feasting on the threshing floors and a women's banquet.",
+  "note": "THE 'RESTRICTED MATERIAL' FRAMING IS REMOVED and the summary generalised: an earlier draft declared the women's interior restricted and then reproduced it in the summary field, which is the worst of both. This material is published ancient text — late, hostile and polemical, as the scholiast to Lucian is — and is treated here as the Thesmophoria's megara material is. DAY RECONSTRUCTED: the month is secure, 26 Poseideon is the handbook figure derived from the Eleusinian accounts, and no surviving source states it explicitly. Public elements: procession, contests and a feast on the threshing floors, with wine-tasting at the season of vine-pruning and Dionysos joined to the two goddesses. Restricted to women: an interior banquet presided over by priestesses, with cereals, fish and cakes, wine set out, and ritual obscenity. Note the etymological difficulty the name creates — halōs is a threshing floor but the festival falls at pruning, not threshing.",
+  "tags": [
+   "attic",
+   "eleusis",
+   "poseideon",
+   "demeter",
+   "kore",
+   "dionysos",
+   "women",
+   "threshing-floor",
+   "winter"
+  ],
+  "anchor": {
+   "kind": "crescent",
+   "reckoning": "kata-theon",
+   "month": "Poseideon",
+   "day": 26,
+   "dayCertainty": "reconstructed",
+   "dayBasis": "handbook figure from the Eleusinian accounts; month secure, day unstated in any surviving source",
+   "dayBeginsAtSunset": true
+  },
+  "sources": [
+   {
+    "work": "Scholia to Lucian, Dialogues of the Courtesans",
+    "locus": "7.4",
+    "note": "The fullest account; late, Byzantine and polemical in tone."
+   },
+   {
+    "author": "Demosthenes (attrib. Apollodoros)",
+    "work": "Against Neaira",
+    "locus": "59.116–117",
+    "note": "The priestess and an unlawful sacrifice; contemporary legal evidence."
+   },
+   {
+    "work": "Eleusinian accounts",
+    "locus": "IG II² 1672"
+   },
+   {
+    "author": "A. C. Brumfield",
+    "work": "The Attic Festivals of Demeter",
+    "note": "On the threshing/pruning problem."
+   }
+  ],
+  "confidence": "reconstructed"
+ },
+ {
+  "key": "rural-dionysia",
+  "name": "Rural Dionysia",
+  "ref": "occasions:rural-dionysia",
+  "summary": "The deme festivals of Dionysos held throughout Attica in Poseideon, with phallic processions and, in larger demes, dramatic contests.",
+  "note": "NO FIXED DAY, AND THAT IS THE POINT: not one festival on one day but the same festival held by each deme on days it set for itself, staggered precisely so spectators could travel between them — which is what Plato's remark about running round to every Dionysia depends on. Any consumer needing a date must supply a deme-specific one. Phallophoria with kanephoros and phallic hymn, sacrifice, askoliasmos, and general licence. Larger demes mounted dramatic contests, often reperforming plays already given in the city, which is why the deme theatres and choregic inscriptions matter for the history of drama. The City Dionysia and Lenaia are separate festivals.",
+  "tags": [
+   "attic",
+   "attica",
+   "poseideon",
+   "dionysos",
+   "demes",
+   "procession",
+   "drama",
+   "movable"
+  ],
+  "anchor": {
+   "kind": "crescent",
+   "reckoning": "kata-theon",
+   "month": "Poseideon",
+   "dayCertainty": "unknown",
+   "dayBasis": "each deme set its own, deliberately staggered",
+   "dayBeginsAtSunset": true
+  },
+  "regionalVariants": [
+   {
+    "region": "Piraeus",
+    "variantType": "different-day",
+    "note": "Dramatic contests attested; substantial enough to appear in Athenian financial and honorific records."
+   },
+   {
+    "region": "Ikarion",
+    "variantType": "different-day",
+    "note": "Claimed as where Dionysos first came to Attica; theatre and choregic inscriptions survive."
+   },
+   {
+    "region": "Kollytos, Eleusis, Aixone, Acharnai, Thorikos, Salamis",
+    "variantType": "different-day",
+    "note": "Deme theatres and choregic dedications; days unknown and independent of one another."
+   }
+  ],
+  "sources": [
+   {
+    "author": "Aristophanes",
+    "work": "Acharnians",
+    "locus": "237–279",
+    "note": "Dikaiopolis' private Rural Dionysia."
+   },
+   {
+    "author": "Plato",
+    "work": "Republic",
+    "locus": "475d",
+    "note": "Running round to every Dionysia — evidence for the staggered days."
+   },
+   {
+    "author": "Theophrastus",
+    "work": "Characters",
+    "locus": "3.5",
+    "note": "The direct ancient attestation that the festival belongs to Poseideon."
+   },
+   {
+    "author": "D. Whitehead",
+    "work": "The Demes of Attica 508/7 – ca. 250 B.C."
+   }
+  ],
+  "confidence": "attested"
+ },
+ {
+  "key": "lenaia",
+  "name": "Lenaia",
+  "ref": "occasions:lenaia",
+  "summary": "The winter Dionysia at Athens: procession, sacrifice, and the city's second dramatic festival.",
+  "note": "NO DAY IS SUPPLIED. The month is secure; no ancient source gives a day at all, and the reconstructions genuinely conflict — Deubner 12–15, Mommsen 8–11, Boeckh the 19th (from the 'ivying of Dionysos'), Pickard-Cambridge only 'about the middle of the month'. Treat mid-Gamelion as open. The archon basileus presided with his epimeletai, and the Eleusinian dadouchos called on the assembly to invoke the god. Held out of the sailing season, it was a festival among Athenians themselves: 'this is the Lenaia and we are by ourselves.' TWO DISPUTES WORTH KEEPING: the venue (a separate Lenaion versus the theatre of Dionysos) is unsettled; and the ritual abuse shouted from wagons (ta ex hamaxōn skōmmata) is assigned by the lexicographers variously to this festival AND to the Anthesterion Choes procession — do not state it here as settled.",
+  "tags": [
+   "attic",
+   "athens",
+   "gamelion",
+   "dionysos",
+   "theatre",
+   "winter"
+  ],
+  "anchor": {
+   "kind": "crescent",
+   "reckoning": "kata-theon",
+   "month": "Gamelion",
+   "dayCertainty": "unknown",
+   "dayReconstructions": [
+    {
+     "days": [
+      12,
+      15
+     ],
+     "author": "Deubner"
+    },
+    {
+     "days": [
+      8,
+      11
+     ],
+     "author": "A. Mommsen"
+    },
+    {
+     "days": [
+      19,
+      19
+     ],
+     "author": "Boeckh"
+    }
+   ],
+   "dayBeginsAtSunset": true
+  },
+  "lasts": {
+   "days": 4,
+   "note": "length itself follows whichever reconstruction is chosen"
+  },
+  "sources": [
+   {
+    "author": "Aristotle (attrib.)",
+    "work": "Athenaion Politeia",
+    "locus": "57.1",
+    "note": "The archon basileus administers 'the procession and the contest'."
+   },
+   {
+    "author": "Aristophanes",
+    "work": "Acharnians",
+    "locus": "502–8 with scholia",
+    "note": "The domestic character; the scholia place it in Gamelion."
+   },
+   {
+    "work": "Scholia on Aristophanes, Frogs",
+    "locus": "479",
+    "note": "The dadouchos' summons."
+   },
+   {
+    "author": "A. W. Pickard-Cambridge",
+    "work": "The Dramatic Festivals of Athens",
+    "locus": "2nd ed. 1968, ch. 1",
+    "note": "The day within Gamelion is unrecoverable."
+   },
+   {
+    "author": "A. Mommsen",
+    "work": "Heortologie",
+    "locus": "332–37",
+    "note": "EDITION UNVERIFIED: page refs to Mommsen throughout this pack do not state whether the 1864 Heortologie or the 1898 Feste der Stadt Athen is meant."
+   }
+  ],
+  "confidence": "disputed"
+ },
+ {
+  "key": "theogamia",
+  "name": "Theogamia (Hieros Gamos)",
+  "ref": "occasions:theogamia",
+  "summary": "The marriage of Zeus and Hera, kept in the wedding month with a linked set of sacrifices in Hera's sanctuary.",
+  "note": "DOWNGRADED TO RECONSTRUCTED AT THE TOP LEVEL: the day is Erchian, not Athenian. The Erchia calendar records, on tetradi phthinontos, a cluster in Hera's sanctuary — piglet for Kourotrophos, sheep for Hera, Zeus Teleios and Poseidon. Thorikos independently names the rite ('for Hera, at the Sacred Marriage') but gives no day, and NO CITY-WIDE ATHENIAN DATE SURVIVES. Neither stone uses the name 'Theogamia'; the equation is a modern synthesis. BACKWARD COUNT: tetradi phthinontos = 27 forward in a full month. The hollow-month value is CONTESTED, not arithmetic — Pritchett's rule gives 26, but on Meritt's view the suppressed day was deutera phthinontos, on which the label keeps 27. Both are recorded.",
+  "tags": [
+   "attic",
+   "hera",
+   "zeus",
+   "gamelion",
+   "marriage",
+   "deme"
+  ],
+  "anchor": {
+   "kind": "crescent",
+   "reckoning": "kata-theon",
+   "month": "Gamelion",
+   "attestedAs": "tetradi phthinontos",
+   "dayFromEnd": 4,
+   "day": 27,
+   "hollowMonthDay": {
+    "pritchett": 26,
+    "meritt": 27,
+    "note": "contested; do not ship one view as arithmetic"
+   },
+   "dayCertainty": "reconstructed",
+   "dayBasis": "Erchian deme date generalised to Athens",
+   "dayBeginsAtSunset": true
+  },
+  "regionalVariants": [
+   {
+    "region": "Erchia",
+    "variantType": "different-day",
+    "anchor": {
+     "kind": "crescent",
+     "month": "Gamelion",
+     "day": 27,
+     "dayCertainty": "attested"
+    },
+    "note": "Where the date is actually attested."
+   },
+   {
+    "region": "Thorikos",
+    "variantType": "naming",
+    "note": "'For Hera, at the Sacred Marriage' — month recorded, day not."
+   }
+  ],
+  "sources": [
+   {
+    "work": "Sacrificial calendar of Erchia",
+    "locus": "SEG 21.541 (= CGRN 52; AIO 593), cols. B, C, D"
+   },
+   {
+    "work": "Sacrificial calendar of Thorikos",
+    "locus": "IG I³ 256bis (= SEG 33.147; AIO 847), l. 33"
+   },
+   {
+    "author": "R. Parker",
+    "work": "Polytheism and Society at Athens",
+    "locus": "456–87"
+   }
+  ],
+  "confidence": "reconstructed"
+ },
+ {
+  "key": "anthesteria",
+  "name": "Anthesteria",
+  "ref": "occasions:anthesteria",
+  "summary": "The three-day spring festival of Dionysos in the Marshes — a grouping, not a schedulable observance.",
+  "note": "CONTAINER ENTRY: no anchor, so it cannot double-book its three day-entries. Thucydides calls it 'the older Dionysia', kept at the sanctuary en Limnais by Athenians and their Ionian descendants alike — pre-Kleisthenic and pan-Ionian, older than the City Dionysia. Slaves and hired labourers shared the wine and had leisure throughout; schoolboys had holidays; a fair drew foreign traders beforehand. The sequence runs from opening (jars) through consumption (pitchers) to riddance (pots). Note that Thucydides 2.15.4's day-number is bracketed by some editors as an intrusion from a scholion — the 12th does not fall with it, since Harpokration supplies it independently, but the day rests on two legs, not one.",
+  "tags": [
+   "attic",
+   "athens",
+   "anthesterion",
+   "dionysos",
+   "wine",
+   "dead",
+   "ionian",
+   "container"
+  ],
+  "container": true,
+  "members": [
+   "occasions:anthesteria-pithoigia",
+   "occasions:anthesteria-choes",
+   "occasions:anthesteria-chytroi"
+  ],
+  "sources": [
+   {
+    "author": "Thucydides",
+    "work": "History",
+    "locus": "2.15.4"
+   },
+   {
+    "author": "Harpokration",
+    "work": "Lexicon",
+    "locus": "s.vv. Choes, Chytroi"
+   },
+   {
+    "author": "R. Hamilton",
+    "work": "Choes and Anthesteria: Athenian Iconography and Ritual",
+    "locus": "1992",
+    "note": "Sceptical re-examination of the standard reconstruction against the vase evidence."
+   }
+  ],
+  "confidence": "attested",
+  "anchor": null,
+  "containerOf": [
+   "anthesteria-pithoigia",
+   "anthesteria-choes",
+   "anthesteria-chytroi"
+  ]
+ },
+ {
+  "key": "anthesteria-pithoigia",
+  "name": "Pithoigia",
+  "ref": "occasions:anthesteria-pithoigia",
+  "summary": "Day one of the Anthesteria: the jars of the previous vintage are broached and the first draught offered to Dionysos.",
+  "note": "Plutarch names and dates the day twice. UNRESOLVED CONFLICT TO FLAG: Phanodemos, at Athenaeus 11.465a, has the new wine brought to the Limnaion and mixed there — but the Limnaion is standardly said to have been opened one day of the year only, and that day, on [Dem.] 59.76, is the Choes. Either the Pithoigia was not at the Limnaion or the one-day rule is wrong; the Phanodemos passage is often referred to the Choes instead. Do not assert both. A scholion on Hesiod preserves the rule that ancestral custom forbade barring any slave or hired labourer from the wine.",
+  "tags": [
+   "attic",
+   "athens",
+   "anthesterion",
+   "dionysos",
+   "wine",
+   "first-fruits",
+   "slaves"
+  ],
+  "anchor": {
+   "kind": "crescent",
+   "reckoning": "kata-theon",
+   "month": "Anthesterion",
+   "day": 11,
+   "dayCertainty": "attested",
+   "dayBeginsAtSunset": true
+  },
+  "sources": [
+   {
+    "author": "Plutarch",
+    "work": "Quaestiones Convivales",
+    "locus": "3.7.1 (655e)",
+    "note": "Names the day and dates it. A second reference at 8.10.3 is cited in the handbooks and is UNVERIFIED."
+   },
+   {
+    "work": "Scholia on Hesiod, Works and Days",
+    "locus": "368–70"
+   },
+   {
+    "author": "Athenaeus",
+    "work": "Deipnosophistae",
+    "locus": "11.465a, citing Phanodemos (FGrH 325)"
+   }
+  ],
+  "confidence": "attested"
+ },
+ {
+  "key": "anthesteria-choes",
+  "name": "Choes",
+  "ref": "occasions:anthesteria-choes",
+  "summary": "Day two of the Anthesteria: competitive silent drinking on a day of pollution, and the marriage of the basilinna to Dionysos.",
+  "note": "The festival's centre. Each drinker had his own chous and table and drank in silence at a trumpet signal; the aition is Orestes arriving still blood-polluted, whom the king would neither turn away nor let share a common krater. A miara hemera: sanctuaries roped off, doorways smeared with pitch, buckthorn chewed against the dead. Children of about three received miniature choes — a reconstruction Hamilton argues outruns the vase evidence, and that caveat belongs here, not only on the parent entry. CLOSED, AND THE SOURCES CLOSE IT THEMSELVES: on this day the basilinna was given as bride to Dionysos in the Boukoleion. The fourteen gerarai swore an oath of secrecy, and the prosecution against Neaira reports the legal frame — who may perform it, and that the oath existed — without the content. Nothing further is known and nothing further should be reconstructed.",
+  "tags": [
+   "attic",
+   "athens",
+   "anthesterion",
+   "dionysos",
+   "wine",
+   "pollution",
+   "children",
+   "closed"
+  ],
+  "anchor": {
+   "kind": "crescent",
+   "reckoning": "kata-theon",
+   "month": "Anthesterion",
+   "day": 12,
+   "dayCertainty": "attested",
+   "dayBeginsAtSunset": true
+  },
+  "disclosure": "closed",
+  "sources": [
+   {
+    "author": "Thucydides",
+    "work": "History",
+    "locus": "2.15.4"
+   },
+   {
+    "author": "[Demosthenes]",
+    "work": "Against Neaira",
+    "locus": "59.73–78",
+    "note": "The basilinna, the Boukoleion, the oath. Reports the frame, not the rite."
+   },
+   {
+    "author": "Euripides",
+    "work": "Iphigenia among the Taurians",
+    "locus": "947–60",
+    "note": "The Orestes aition."
+   },
+   {
+    "author": "Photios",
+    "work": "Lexicon",
+    "locus": "s.v. miara hemera"
+   }
+  ],
+  "confidence": "attested"
+ },
+ {
+  "key": "anthesteria-chytroi",
+  "name": "Chytroi",
+  "ref": "occasions:anthesteria-chytroi",
+  "summary": "Day three of the Anthesteria: a seed-mash cooked for the chthonic dead and not eaten by the living.",
+  "note": "A panspermia boiled in cheap pots and offered to Hermes Chthonios for the dead; no living person ate of it and no Olympian received it. The festival closed with 'Out the door, Kares — the Anthesteria are over.' The day-number is not in doubt; the name's meaning and the ghost-element's antiquity both are. ATTRIBUTIONS CORRECTED: Harrison's Prolegomena thesis is that PITHOI were grave-jars and the PITHOIGIA an opening of graves, not that chytroi were grave-holes; and the water-jar reading with the Deukalion aition is the lexicographers' and Nilsson's, not Rohde's, whose position is that the day is a festival of souls. Burkert takes the wine-to-dead sequence as original; others treat the Chytroi as separately grown and later attached. From the fourth century the day carried the chytrinoi agones, comic contests kept distinct from the City Dionysia competition.",
+  "tags": [
+   "attic",
+   "athens",
+   "anthesterion",
+   "dionysos",
+   "dead",
+   "hermes",
+   "chthonic",
+   "disputed-meaning"
+  ],
+  "anchor": {
+   "kind": "crescent",
+   "reckoning": "kata-theon",
+   "month": "Anthesterion",
+   "day": 13,
+   "dayCertainty": "attested",
+   "dayBeginsAtSunset": true
+  },
+  "sources": [
+   {
+    "author": "Harpokration",
+    "work": "Lexicon",
+    "locus": "s.v. Chytroi"
+   },
+   {
+    "author": "Philochoros",
+    "work": "FGrH 328 F 84, via schol. Ar. Frogs 218",
+    "note": "The chytrinoi agones; supplies the citation an earlier draft asserted without one."
+   },
+   {
+    "author": "Zenobios",
+    "work": "Centuriae",
+    "locus": "4.33",
+    "note": "The closing formula."
+   },
+   {
+    "author": "W. Burkert",
+    "work": "Homo Necans",
+    "note": "Defends the integrity of the three-day sequence."
+   }
+  ],
+  "confidence": "attested"
+ },
+ {
+  "key": "diasia",
+  "name": "Diasia",
+  "ref": "occasions:diasia",
+  "summary": "The great festival of Zeus Meilichios outside the city, kept household by household with wineless offerings and burnt cakes.",
+  "note": "SINGLE-SOURCE DATE: the scholion on Clouds 408 alone gives the 23rd, and the Greek day-formula it uses is not recorded in the modern citations — until that is checked one cannot tell whether this is a stable forward count or a phthinontos form that moves in a hollow month. Thucydides calls it 'the greatest festival of Zeus Meilichios', kept outside the city, where the whole people sacrifice not victims but local offerings — the festival of the Kylon oracle. Erchia locates it 'in the city at Agrai' with a sheep, wineless up to the roasting of the innards; Thorikos lists a sheep 'to be sold', implying no communal feast there. Many brought popana, cakes moulded into animal shapes and burnt whole (that detail is the scholiast on Thucydides, not Aristophanes). Alongside the grimness a family occasion, with presents for children and a fair. The apparent tension between Thucydides' 'outside the city' and Erchia's en astei is probably not one: for an Erchian, en astei means 'in town, not here', and Agrai lay just beyond the circuit.",
+  "tags": [
+   "attic",
+   "athens",
+   "anthesterion",
+   "zeus",
+   "meilichios",
+   "chthonic",
+   "household",
+   "wineless"
+  ],
+  "anchor": {
+   "kind": "crescent",
+   "reckoning": "kata-theon",
+   "month": "Anthesterion",
+   "day": 23,
+   "dayCertainty": "attested",
+   "sourceCount": 1,
+   "attestedAs": "UNRECORDED — Greek day-formula needs checking for full/hollow stability",
+   "dayBeginsAtSunset": true
+  },
+  "sources": [
+   {
+    "work": "Scholia on Aristophanes, Clouds",
+    "locus": "408",
+    "note": "The sole day-source."
+   },
+   {
+    "author": "Thucydides",
+    "work": "History",
+    "locus": "1.126.6"
+   },
+   {
+    "work": "Sacrificial calendar of Erchia",
+    "locus": "SEG 21.541 (AIO 593), col. A 37–43"
+   },
+   {
+    "work": "Sacrificial calendar of Thorikos",
+    "locus": "IG I³ 256bis (AIO 847), ll. 35–36"
+   }
+  ],
+  "confidence": "attested"
+ },
+ {
+  "key": "lesser-mysteries",
+  "name": "Lesser Mysteries at Agrai",
+  "ref": "occasions:lesser-mysteries",
+  "summary": "The spring preliminary initiation on the Ilissos, normally required before the Greater Mysteries.",
+  "note": "INITIATORY — kept to what the ancient witnesses themselves published. NO DAY IS SUPPLIED: the month is secure epigraphically and from the scholiast on Wealth 845, who calls these 'a preliminary purification and sanctification of the Greater'; the day is only Mommsen's conjecture (19 preparatory, 20–21 the mystery days). An earlier draft anchored day 20 with lasts 3, producing 20–22, a span Mommsen never proposed; the off-by-one is removed with the day. Publicly reportable: held at Agrai on the Ilissos, where there was a temple of Demeter with altars of Artemis and Poseidon; purification used the river water; they concerned Persephone more than Demeter; and they admitted many, including foreigners, who never went on to Eleusis. Content of the telete is not publishable and the sources refuse it.",
+  "tags": [
+   "attic",
+   "athens",
+   "anthesterion",
+   "eleusinian",
+   "demeter",
+   "persephone",
+   "mysteries",
+   "initiatory",
+   "closed"
+  ],
+  "anchor": {
+   "kind": "crescent",
+   "reckoning": "kata-theon",
+   "month": "Anthesterion",
+   "dayCertainty": "unknown",
+   "dayReconstructions": [
+    {
+     "days": [
+      19,
+      21
+     ],
+     "author": "A. Mommsen"
+    }
+   ],
+   "dayBeginsAtSunset": true
+  },
+  "disclosure": "closed",
+  "sources": [
+   {
+    "author": "Plato",
+    "work": "Gorgias",
+    "locus": "497c",
+    "note": "Initiation in the Lesser before the Greater."
+   },
+   {
+    "work": "Scholia on Aristophanes, Wealth",
+    "locus": "845, 1013"
+   },
+   {
+    "work": "IG I³ 6",
+    "locus": "the truce clause",
+    "note": "Fifth-century Eleusinian regulation naming the Mysteries at Agrai; the spondai are the strongest epigraphic anchor for the month."
+   },
+   {
+    "author": "K. Clinton",
+    "work": "Myth and Cult",
+    "note": "Treats the day as unfixed."
+   }
+  ],
+  "confidence": "reconstructed"
+ },
+ {
+  "key": "asklepieia",
+  "name": "Asklepieia",
+  "ref": "occasions:asklepieia",
+  "summary": "Asklepios' Athenian festival on the south slope of the Acropolis, sharing its day with the Proagon of the City Dionysia.",
+  "note": "The date comes from one Aeschines passage and its scholion, pairing the Asklepieia with the Proagon — note that the Proagon's own day is known largely from the same pairing, so the two support each other rather than being independent. The god arrived only in 420/19, brought by Telemachos from Epidauros, so this is a late addition slotted into a full calendar, which is one reason it sits against an existing festival. Procession and sacrifice at the City Asklepieion; the Hellenistic honorific decrees add a bouthysia, couches strewn for the god and Hygieia, and a pannychis. Do not confuse with the Epidauria (17/18 Boedromion), folded into the Eleusinian Mysteries, nor with the quadrennial Asklepieia of Epidauros.",
+  "tags": [
+   "attic",
+   "athens",
+   "elaphebolion",
+   "asklepios",
+   "healing",
+   "theoxenia",
+   "pannychis"
+  ],
+  "anchor": {
+   "kind": "crescent",
+   "reckoning": "kata-theon",
+   "month": "Elaphebolion",
+   "day": 8,
+   "dayCertainty": "attested",
+   "dayBeginsAtSunset": true
+  },
+  "sources": [
+   {
+    "author": "Aeschines",
+    "work": "Against Ktesiphon",
+    "locus": "3.66–67 with scholia",
+    "note": "VERIFY the exact section and the exact scholion; the Elaphebolion 8 assembly is discussed across 3.66–69."
+   },
+   {
+    "work": "Honours for the priest of Asklepios",
+    "locus": "SEG 18.26, 18.27, 18.29"
+   },
+   {
+    "work": "Telemachos monument",
+    "locus": "IG II² 4960 / SEG 25.226",
+    "note": "Evidence for the 420/19 arrival."
+   }
+  ],
+  "confidence": "attested"
+ },
+ {
+  "key": "city-dionysia",
+  "name": "City Dionysia",
+  "ref": "occasions:city-dionysia",
+  "summary": "The great spring festival of Dionysos Eleuthereus: the statue's escorted return, a vast procession, dithyrambs, and the tragic and comic contests.",
+  "note": "THE MONTH IS CERTAIN AND THE PROGRAMME IS NOT. Fixed points only: Elaphebolion 8 is the Proagon (shared with the Asklepieia); the festival occupies the middle of the month; the Pandia follows; and by the law at Dem. 21.8 the Assembly met in the theatre the day after the Pandia. Reconstructions: Mommsen 9–13 with pompe on the 9th; Pickard-Cambridge pompe on the 10th running to the 14th; Csapo and Wilson ending on the 15th, which fits Erchia's Elaphebolion 16 sacrifices to Dionysos and Semele. 9–16 IS THE HONEST OUTER RANGE and is recorded as such. The xoanon is carried out to a shrine near the Academy and escorted back by torchlight, re-enacting the arrival from Eleutherai; then a great pompe, dithyrambic contests by tribe, tragedy (three tragedies and a satyr play per poet) and comedy, official from 487/6. Allied tribute displayed in the orchestra and war-orphans paraded in armour.",
+  "tags": [
+   "attic",
+   "athens",
+   "elaphebolion",
+   "dionysos",
+   "theatre",
+   "tragedy",
+   "comedy",
+   "procession"
+  ],
+  "anchor": {
+   "kind": "crescent",
+   "reckoning": "kata-theon",
+   "month": "Elaphebolion",
+   "day": 10,
+   "dayCertainty": "disputed",
+   "dayRange": [
+    9,
+    16
+   ],
+   "dayBeginsAtSunset": true
+  },
+  "lasts": {
+   "days": 6,
+   "note": "follows whichever reconstruction is chosen; not independent of dayRange"
+  },
+  "sources": [
+   {
+    "author": "Demosthenes",
+    "work": "Against Meidias",
+    "locus": "21.8–10",
+    "note": "Quotes the law: Assembly in the theatre 'on the day next after the Pandia'."
+   },
+   {
+    "author": "Aeschines",
+    "work": "Against Ktesiphon",
+    "locus": "3.66–67",
+    "note": "The Proagon on Elaphebolion 8."
+   },
+   {
+    "author": "Aristotle (attrib.)",
+    "work": "Athenaion Politeia",
+    "locus": "56.3–5"
+   },
+   {
+    "work": "Fasti",
+    "locus": "IG II² 2318"
+   },
+   {
+    "author": "E. Csapo and P. Wilson",
+    "work": "A Social and Economic History of the Theatre to 300 BC, vol. II",
+    "locus": "6–7",
+    "note": "UNVERIFIED: vol. II is Theatre beyond Athens; check the reference."
+   }
+  ],
+  "confidence": "disputed"
+ },
+ {
+  "key": "pandia",
+  "name": "Pandia",
+  "ref": "occasions:pandia",
+  "summary": "A festival following the City Dionysia, with the post-festival Assembly on the day after it.",
+  "note": "RE-ANCHORED AS RELATIVE, NOT ABSOLUTE. Every fixed point is relational: Pandia follows the Dionysia; the theatre Assembly is Pandia + 1. A hard day silently inherits whichever Dionysia reconstruction is fashionable, so an offset is used instead, with the range 14–17. Smith proposes the 14th (assuming the 13th ended the Dionysia), Mikalson and most recent handbooks the 17th. INTERNAL TENSION WORTH FLAGGING: the festival is characterised as a full-moon rite, which argues AGAINST the 17th and toward the 14th or 15th. Even the honorand was disputed in antiquity — Pandia the moon-goddess, the king Pandion, or Zeus. What was actually done is essentially unknown; the festival survives in the record mainly as a date-marker.",
+  "tags": [
+   "attic",
+   "athens",
+   "elaphebolion",
+   "zeus",
+   "selene",
+   "full-moon",
+   "assembly",
+   "obscure"
+  ],
+  "anchor": {
+   "kind": "relative",
+   "reckoning": "kata-theon",
+   "month": "Elaphebolion",
+   "after": "occasions:city-dionysia",
+   "dayRange": [
+    14,
+    17
+   ],
+   "dayCertainty": "unknown",
+   "dayBeginsAtSunset": true
+  },
+  "sources": [
+   {
+    "author": "Demosthenes",
+    "work": "Against Meidias",
+    "locus": "21.8–9",
+    "note": "The law placing the theatre Assembly the day after the Pandia."
+   },
+   {
+    "author": "Photios",
+    "work": "Lexicon",
+    "locus": "s.v. Pandia",
+    "note": "Three competing derivations."
+   },
+   {
+    "work": "Deme calendar of Plotheia",
+    "locus": "IG I³ 258",
+    "note": "eis Pandia — independent attestation of the festival and its funding."
+   }
+  ],
+  "confidence": "disputed"
+ },
+ {
+  "key": "delphinia",
+  "name": "Delphinia",
+  "ref": "occasions:delphinia",
+  "summary": "A supplication to Apollo Delphinios at the Delphinion by the Ilissos, with children carrying the suppliant's bough.",
+  "note": "Plutarch is explicit: Theseus took a hiketeria — an olive bough wreathed in white wool — to the Delphinion and went down to the sea 'on the sixth day of Mounichion, on which day even now the Athenians send their maidens to the Delphinion'. The rite is a supplication with the bough carried by a chorus of children; the 'seven boys and seven girls' figure is EXTRAPOLATED from the tribute myth — Plutarch says only parthenoi. Apollo Delphinios was a god of the passage to adulthood, and the Delphinion housed the homicide court for admitted but justified killing. DEME DIVERGENCE: Erchia sacrificed to Apollo Delphinios, with Kourotrophos, on GAMELION 7 — a different month; deme and city calendars need not agree, and the Erchian Delphinion may be a local sanctuary of the same name.",
+  "tags": [
+   "attic",
+   "athens",
+   "mounichion",
+   "apollo",
+   "supplication",
+   "youth",
+   "deme-variant"
+  ],
+  "anchor": {
+   "kind": "crescent",
+   "reckoning": "kata-theon",
+   "month": "Mounichion",
+   "day": 6,
+   "dayCertainty": "attested",
+   "dayBeginsAtSunset": true
+  },
+  "regionalVariants": [
+   {
+    "region": "Erchia",
+    "variantType": "different-day",
+    "anchor": {
+     "kind": "crescent",
+     "month": "Gamelion",
+     "day": 7,
+     "dayCertainty": "attested"
+    },
+    "note": "A different month entirely."
+   }
+  ],
+  "sources": [
+   {
+    "author": "Plutarch",
+    "work": "Theseus",
+    "locus": "18.1–2"
+   },
+   {
+    "work": "Sacrificial calendar of Erchia",
+    "locus": "SEG 21.541 (AIO 593), col. A 24–31"
+   },
+   {
+    "author": "R. Parker",
+    "work": "Polytheism and Society at Athens",
+    "locus": "436"
+   }
+  ],
+  "confidence": "attested"
+ },
+ {
+  "key": "mounichia",
+  "name": "Mounichia",
+  "ref": "occasions:mounichia",
+  "summary": "The full-moon festival of Artemis Mounichia above Piraeus, marked by round cakes ringed with lights.",
+  "note": "The offering is the amphiphon, a round cake set about with burning candles — the one Attic cake that plainly figures the full moon. Plutarch reports the Athenian aition that the day was Artemis' because she shone full on the Greeks winning at Salamis; TREAT THAT AS AN AITION, NOT A DATE FOR THE BATTLE — Plutarch elsewhere puts Salamis on Boedromion 20, and the festival is certainly older than 480. A second aition, the Embaros story, explains a goat sacrificed in place of a girl after a she-bear was killed in the sanctuary, the same substitution logic as the Brauronian arkteia. Lysander is said to have chosen this day to begin pulling down the Long Walls. The Thorikos entry may equally record a local Thorikian sacrifice as a contribution to the Piraeus festival.",
+  "tags": [
+   "attic",
+   "piraeus",
+   "mounichion",
+   "artemis",
+   "full-moon",
+   "girls"
+  ],
+  "anchor": {
+   "kind": "crescent",
+   "reckoning": "kata-theon",
+   "month": "Mounichion",
+   "day": 16,
+   "dayCertainty": "attested",
+   "dayBeginsAtSunset": true
+  },
+  "sources": [
+   {
+    "author": "Plutarch",
+    "work": "De gloria Atheniensium",
+    "locus": "349F"
+   },
+   {
+    "author": "Plutarch",
+    "work": "Camillus",
+    "locus": "19",
+    "note": "Places Salamis on Boedromion 20 — the inconsistency showing 349F is aition, not history."
+   },
+   {
+    "author": "Athenaeus",
+    "work": "Deipnosophistae",
+    "locus": "14.645a",
+    "note": "The amphiphon."
+   },
+   {
+    "work": "Suda / Paus. Att.",
+    "locus": "s.v. Ἔμβαρός εἰμι",
+    "note": "The Embaros aition."
+   }
+  ],
+  "confidence": "attested"
+ },
+ {
+  "key": "olympieia",
+  "name": "Olympieia",
+  "ref": "occasions:olympieia",
+  "summary": "A festival of Zeus Olympios at the Olympieion, whose signature is a cavalry procession and the anthippasia.",
+  "note": "THE DAY IS ATTESTED, THE IDENTIFICATION IS INFERRED, and an earlier draft ran them together. Plutarch dates an execution and 'the horsemen conducting the procession in honour of Zeus' to Mounichion 19 — he never names the Olympieia. The equation is a modern inference, secure-ish via the anthippasia dedications, but an inference, and the entry itself concedes the festival may be a fourth-century institution rather than an inherited one; the surviving evidence is fourth-century and later. The cavalry are the mark: dedications record tribal squadrons winning the anthippasia, the mock engagement in which two bodies of horse charge through each other and wheel.",
+  "tags": [
+   "attic",
+   "athens",
+   "mounichion",
+   "zeus",
+   "olympieion",
+   "cavalry",
+   "anthippasia"
+  ],
+  "anchor": {
+   "kind": "crescent",
+   "reckoning": "kata-theon",
+   "month": "Mounichion",
+   "day": 19,
+   "dayCertainty": "attested",
+   "identificationCertainty": "inferred",
+   "dayBeginsAtSunset": true
+  },
+  "sources": [
+   {
+    "author": "Plutarch",
+    "work": "Phokion",
+    "locus": "37.1",
+    "note": "Dates the procession, not a named festival."
+   },
+   {
+    "author": "Xenophon",
+    "work": "Hipparchikos",
+    "locus": "3.10–13",
+    "note": "The anthippasia as a display."
+   },
+   {
+    "work": "Anthippasia dedications",
+    "locus": "IG II³ 4 252, 265; Agora XVI 203",
+    "note": "'... at the Olympieia in the anthippasia ...'"
+   }
+  ],
+  "confidence": "attested"
+ },
+ {
+  "key": "thargelia",
+  "name": "Thargelia",
+  "ref": "occasions:thargelia",
+  "summary": "Apollo's chief Athenian festival over two days: the expulsion of the pharmakoi, then first-fruits, the eiresione, and the cyclic chorus contest.",
+  "note": "Both days securely attested — Diogenes Laertius has Socrates born on the 6th and Plato on the 7th, 'Apollo's birthday'. The 6th carried the pharmakos rite: two persons maintained at public expense, one for the men and one for the women, led out carrying the city's pollution. WHETHER THEY WERE KILLED, AND WHETHER THE RITE WAS ANNUAL OR ONLY FOR EMERGENCIES, IS THE STANDARD CRUX; the lethal version rests largely on Hipponax and the later lexicographers, and Bremmer and Parker treat the killing as literary elaboration rather than classical Athenian practice. State the range, not the sensation. The 7th was Apollo's own: the thargelos, a pot of first boiled fruits; the eiresione carried by children; a procession and a contest of cyclic choruses of men and boys, each choregos drawing from two tribes, the prize a tripod dedicated at the Pythion.",
+  "tags": [
+   "attic",
+   "athens",
+   "thargelion",
+   "apollo",
+   "first-fruits",
+   "purification",
+   "pharmakos",
+   "chorus"
+  ],
+  "anchor": {
+   "kind": "crescent",
+   "reckoning": "kata-theon",
+   "month": "Thargelion",
+   "day": 6,
+   "dayCertainty": "attested",
+   "dayBeginsAtSunset": true
+  },
+  "lasts": {
+   "days": 2
+  },
+  "sources": [
+   {
+    "author": "Diogenes Laertius",
+    "work": "Lives",
+    "locus": "2.44; 3.2"
+   },
+   {
+    "author": "Harpokration",
+    "work": "Lexicon",
+    "locus": "s.v. pharmakos"
+   },
+   {
+    "author": "Porphyry",
+    "work": "De Abstinentia",
+    "locus": "2.7",
+    "note": "The offerings on the second day."
+   },
+   {
+    "author": "Aristotle (attrib.)",
+    "work": "Athenaion Politeia",
+    "locus": "56.3–5",
+    "note": "The archon eponymos and his epimeletai — a better witness than Pollux 8.89."
+   },
+   {
+    "author": "J. N. Bremmer",
+    "work": "Scapegoat Rituals in Ancient Greece",
+    "locus": "HSCP 87 (1983) 299–320",
+    "note": "Argues the pharmakos was expelled, not killed."
+   },
+   {
+    "author": "R. Parker",
+    "work": "Miasma",
+    "locus": "esp. pp. 24–26, 257–80",
+    "note": "Chapter number in an earlier draft was wrong."
+   }
+  ],
+  "confidence": "attested"
+ },
+ {
+  "key": "bendideia",
+  "name": "Bendideia",
+  "ref": "occasions:bendideia",
+  "summary": "The state festival of the Thracian goddess Bendis at Piraeus: two processions, a mounted torch race, and an all-night rite.",
+  "note": "A DISJUNCTION, NOT A DURATION: the 19th OR the 20th is undecided in the modern literature, and an earlier encoding rendered that as a two-day festival on the 19th–20th — a different and unattested claim. One day, with a pannychis. CITATION CHAIN HAS NO PRIMARY LINK: the only date source is an editorial note quoting Parker quoting nothing in particular; the date is derived from secondary literature and should be marked so until the primary evidence is traced. Plato's account of what was said to be the first celebration: two processions, one of citizens and one of resident Thracians, then an evening torch race on horseback with riders passing torches at the gallop, then a pannychis, which the fifth-century decree independently confirms. Orgeones of Bendis administered it; the cult was in place before the decree, which regulates rather than founds it. COLLISION: the 19th is also the usual Kallynteria date, and both assignments are uncertain — neither should be used to correct the other.",
+  "tags": [
+   "attic",
+   "piraeus",
+   "thargelion",
+   "bendis",
+   "thracian",
+   "torch-race",
+   "pannychis",
+   "metics"
+  ],
+  "anchor": {
+   "kind": "crescent",
+   "reckoning": "kata-theon",
+   "month": "Thargelion",
+   "dayCertainty": "disputed",
+   "dayAlternatives": [
+    19,
+    20
+   ],
+   "dayBasis": "derived from secondary literature; no primary link traced",
+   "dayBeginsAtSunset": true
+  },
+  "lasts": {
+   "days": 1,
+   "note": "plus a pannychis running into the following night"
+  },
+  "sources": [
+   {
+    "author": "Plato",
+    "work": "Republic",
+    "locus": "327a–328a"
+   },
+   {
+    "work": "Decree about the cult of Bendis",
+    "locus": "IG I³ 136",
+    "note": "l. 27 names the pannychis."
+   },
+   {
+    "work": "Decree of the orgeones of Bendis",
+    "locus": "IG II² 1361 (= LSCG 45)",
+    "note": "Corrected reference: an AIO note was earlier attached to a Sokolowski number."
+   },
+   {
+    "author": "R. Parker",
+    "work": "Polytheism and Society at Athens",
+    "locus": "463",
+    "note": "The 19th-or-20th formulation."
+   }
+  ],
+  "confidence": "disputed"
+ },
+ {
+  "key": "kallynteria",
+  "name": "Kallynteria",
+  "ref": "occasions:kallynteria",
+  "summary": "The Beautification — sweeping and re-adorning the temple of Athena Polias, paired with the Plynteria.",
+  "note": "NO DAY IS SUPPLIED. The rite is uncontested and the date is weak: Photios treats Kallynteria and Plynteria under one heading, which is why their days are confused with one another; the conventional Thargelion 19 rests on a lexicographic text whose reading is not secure, and other scholars place it immediately before the Plynteria in the last decade. Since the Plynteria's own day is contested (25 vs 29), any Kallynteria date derived from it inherits that. Range 19–24, not narrowed, and no hard day — the 19th would otherwise collide with the Bendideia in every generated calendar. The temple is swept and cleaned and the goddess's ornaments set back in order; the genos concerned is the Praxiergidai.",
+  "tags": [
+   "attic",
+   "athens",
+   "thargelion",
+   "athena",
+   "polias",
+   "acropolis",
+   "purification",
+   "genos"
+  ],
+  "anchor": {
+   "kind": "crescent",
+   "reckoning": "kata-theon",
+   "month": "Thargelion",
+   "dayCertainty": "unknown",
+   "dayRange": [
+    19,
+    24
+   ],
+   "dayBeginsAtSunset": true
+  },
+  "sources": [
+   {
+    "author": "Photios",
+    "work": "Lexicon",
+    "locus": "s.v. Kallynteria kai Plynteria",
+    "note": "The source of the conventional 19th; the reading is not secure and the lemma should be printed in full before it is relied on."
+   },
+   {
+    "author": "Hesychius",
+    "work": "Lexicon",
+    "locus": "s.v. Kallynteria"
+   },
+   {
+    "work": "Decree about the genos Praxiergidai",
+    "locus": "IG I³ 7 (= OR 108)",
+    "note": "VERIFY whether the month is actually in the preserved text."
+   }
+  ],
+  "confidence": "disputed"
+ },
+ {
+  "key": "plynteria",
+  "name": "Plynteria",
+  "ref": "occasions:plynteria",
+  "summary": "The Washing of the ancient image of Athena Polias, carried veiled to the sea and back by torchlight on the year's unluckiest day.",
+  "note": "TWO RIVAL ATHENIAN READINGS, RECORDED AS COMPETING DATES RATHER THAN AS REGIONS — an earlier draft listed both under regionalVariants, which renders as two Athenian observances eleven days apart. (1) Plutarch: hektei phthinontos, sixth from the end = 25 forward in a full month; the day Alkibiades sailed in, and explicitly the unluckiest day of the year for business. (2) Photios and the state sacrificial calendar: deuterai phthinontos, second from the end = 29 forward. The 25th is anchored because it is the only figure supplied by a classical narrative source; THE 29TH HAS THE BETTER EPIGRAPHIC CLAIM and a consumer must be told so. Dodwell's 22nd is neither a backward count nor an emendation of one. Hollow-month values are contested (Pritchett vs Meritt), and on Meritt's view deuterai phthinontos has no forward equivalent in a hollow month at all. Rite: the Erechtheion roped off; the Praxiergidai strip the image, the plyntrides wash the robe, the image is veiled, carried to the sea at Phaleron escorted by ephebes and brought back after dark by torchlight, a string of dried figs borne before it. Apophras: no public business, the city for one day without its goddess.",
+  "tags": [
+   "attic",
+   "athens",
+   "thargelion",
+   "athena",
+   "polias",
+   "purification",
+   "apophras",
+   "praxiergidai"
+  ],
+  "anchor": {
+   "kind": "crescent",
+   "reckoning": "kata-theon",
+   "month": "Thargelion",
+   "attestedAs": "hektei phthinontos",
+   "dayFromEnd": 6,
+   "day": 25,
+   "hollowMonthDay": {
+    "pritchett": 24,
+    "meritt": 25
+   },
+   "dayCertainty": "disputed",
+   "dayBeginsAtSunset": true
+  },
+  "competingDates": [
+   {
+    "attestedAs": "deuterai phthinontos",
+    "dayFromEnd": 2,
+    "day": 29,
+    "hollowMonthDay": {
+     "pritchett": 28,
+     "meritt": "no equivalent"
+    },
+    "authority": "Photios; Athenian state sacrificial calendar, AIO 1189 F3",
+    "note": "The epigraphically stronger reading."
+   },
+   {
+    "day": 22,
+    "authority": "Dodwell",
+    "note": "Neither a backward count nor an emendation of one."
+   }
+  ],
+  "regionalVariants": [
+   {
+    "region": "Thorikos",
+    "variantType": "different-day",
+    "anchor": {
+     "kind": "crescent",
+     "month": "Skirophorion",
+     "dayCertainty": "unknown"
+    },
+    "note": "The deme calendar enters the Plynteria a month after the city, with sheep for Athena and Aglauros; no day given. Compare the month-name Plynterion at Paros and Thasos."
+   }
+  ],
+  "sources": [
+   {
+    "author": "Plutarch",
+    "work": "Alkibiades",
+    "locus": "34.1"
+   },
+   {
+    "author": "Xenophon",
+    "work": "Hellenika",
+    "locus": "1.4.12"
+   },
+   {
+    "author": "Photios",
+    "work": "Lexicon",
+    "locus": "s.v. Kallynteria kai Plynteria"
+   },
+   {
+    "work": "Sacrificial Calendar of Athens",
+    "locus": "AIO 1189 F3 col. 1 (= SEG 52.48)"
+   },
+   {
+    "work": "Sacrificial calendar of Thorikos",
+    "locus": "IG I³ 256bis (AIO 847), ll. 52–56"
+   }
+  ],
+  "confidence": "disputed"
+ },
+ {
+  "key": "skira",
+  "name": "Skira (Skirophoria)",
+  "ref": "occasions:skira",
+  "summary": "A procession under a great white canopy out to Skiron, and a festival at which the women of Attica left their households and assembled.",
+  "note": "Unusually well fixed for so obscure a rite: the scholiast on Ekklesiazousai 18 gives the day, and a third-century AD endowment was still paying out 'on the twelfth at the Skira' six hundred years later. TWO THINGS BEAR VERSIONS OF THE NAME and it is not certain they are one festival; both are recorded rather than resolved. (a) A procession under the skiron from the Acropolis along the Sacred Way to Skiron, with the priestess of Athena and the priests of Poseidon and Helios beneath it, held by a member of the Eteoboutadai (further identified as the priest of Erechtheus — an identification, not a datum); the sources disagree whether the festival belongs to Athena or to Demeter and Kore. (b) A women's festival at which wives left their households and gathered — Aristophanes uses it for the women's conspiracy, and a Piraeus deme decree names 'the Skira' among the days on which the women come together at the Thesmophorion by ancestral custom. The Tetrapolis calendar dates offerings 'before the Skira', showing it as a calendar landmark.",
+  "tags": [
+   "attic",
+   "athens",
+   "skirophorion",
+   "athena",
+   "demeter",
+   "poseidon",
+   "women",
+   "procession"
+  ],
+  "anchor": {
+   "kind": "crescent",
+   "reckoning": "kata-theon",
+   "month": "Skirophorion",
+   "day": 12,
+   "dayCertainty": "attested",
+   "dayBeginsAtSunset": true
+  },
+  "sources": [
+   {
+    "work": "Scholia on Aristophanes, Ekklesiazousai",
+    "locus": "18",
+    "note": "The day."
+   },
+   {
+    "work": "Endowment of Flavius Asklepiades",
+    "locus": "IG II² 2773, ll. 13–14"
+   },
+   {
+    "author": "Aristophanes",
+    "work": "Ekklesiazousai",
+    "locus": "18, 59",
+    "note": "The women's conspiracy passage — corrected from an earlier citation to Thesmophoriazousai 834–5."
+   },
+   {
+    "work": "Decree of deme Piraeus",
+    "locus": "IG II² 1177, l. 10"
+   },
+   {
+    "author": "Harpokration",
+    "work": "Lexicon",
+    "locus": "s.vv. skiron, Skirophorion"
+   }
+  ],
+  "confidence": "attested"
+ },
+ {
+  "key": "dipolieia",
+  "name": "Dipolieia (Bouphonia)",
+  "ref": "occasions:dipolieia",
+  "summary": "The archaic rite of Zeus Polieus on the Acropolis: an ox kills itself by eating the god's grain, and the axe stands trial for its death.",
+  "note": "THE MONTH IN THE INSCRIPTION IS RESTORED — the text reads 'fourteenth of [Skirophori]on' — so the security comes from the scholia, not from the stone, and 'securely so' overstates it. Rite, in Theophrastos via Porphyry: grain laid on the bronze table of Zeus Polieus; oxen driven round; the one that eats is killed. The man who fells it drops the axe and runs; the knife-man cuts the throat and flees. Then a trial in which the water-carriers accuse the sharpeners, the sharpeners the axe-bearer, he the knife — and the knife, having no voice, is condemned and thrown into the sea. The hide is stuffed with straw and yoked to a plough. Aristophanes uses the rite as a byword for musty antiquity, itself evidence it was already felt old in the fifth century. NOT the Diasia, though both are festivals of Zeus and the two were conflated in antiquity.",
+  "tags": [
+   "attic",
+   "athens",
+   "skirophorion",
+   "zeus",
+   "polieus",
+   "acropolis",
+   "sacrifice",
+   "archaic",
+   "trial"
+  ],
+  "anchor": {
+   "kind": "crescent",
+   "reckoning": "kata-theon",
+   "month": "Skirophorion",
+   "day": 14,
+   "dayCertainty": "attested",
+   "monthRestored": true,
+   "dayBeginsAtSunset": true
+  },
+  "sources": [
+   {
+    "work": "About a festival (Dipolieia)",
+    "locus": "IG II³ 1 551, ll. 3–10",
+    "note": "Month restored in the text."
+   },
+   {
+    "author": "Porphyry",
+    "work": "De Abstinentia",
+    "locus": "2.28–30, drawing on Theophrastos",
+    "note": "The fullest description and the trial of the knife."
+   },
+   {
+    "author": "Aristophanes",
+    "work": "Clouds",
+    "locus": "984–5 with scholia; and Peace 419, which names the festival in the text itself"
+   },
+   {
+    "author": "W. Burkert",
+    "work": "Homo Necans",
+    "note": "The standard reading of the comedy of innocence."
+   }
+  ],
+  "confidence": "attested"
+ },
+ {
+  "key": "arrhephoria",
+  "name": "Arrhephoria",
+  "ref": "occasions:arrhephoria",
+  "summary": "Two girls carry covered vessels down from the Acropolis by a hidden stair and bring back something else, neither knowing what.",
+  "note": "CLOSED, AND THE SOURCES CLOSE IT THEMSELVES — Pausanias, who describes the rite, says he does not know what is carried, and one ancient derivation of the name is from arrheta. Kept to what the witnesses published. Four girls between seven and eleven were elected by cheirotonia, the archon basileus selecting two (an earlier draft had him choose all four); two began the peplos at the Chalkeia and two lived a year on the Acropolis. At the festival the priestess placed covered vessels on their heads whose contents neither they nor she knew; they went down a natural underground stair to a precinct of Aphrodite in the Gardens, left them, took up something else likewise covered, and carried it back. NO DAY IS SUPPLIED: Skirophorion is the month the lexicographers give; Skirophorion 3 is Deubner's conjecture propped up only by an Erchian cluster that names no festival. An unattributed claim that 'some scholars have argued for Thargelion' is deleted — an unattributable rival date is worse than none.",
+  "tags": [
+   "attic",
+   "athens",
+   "skirophorion",
+   "athena",
+   "aphrodite",
+   "girls",
+   "acropolis",
+   "arrheta",
+   "closed"
+  ],
+  "anchor": {
+   "kind": "crescent",
+   "reckoning": "kata-theon",
+   "month": "Skirophorion",
+   "dayCertainty": "unknown",
+   "dayReconstructions": [
+    {
+     "day": 3,
+     "author": "Deubner"
+    }
+   ],
+   "dayBeginsAtSunset": true
+  },
+  "disclosure": "closed",
+  "sources": [
+   {
+    "author": "Pausanias",
+    "work": "Description of Greece",
+    "locus": "1.27.3",
+    "note": "Fullest description; explicitly declines to say what is carried."
+   },
+   {
+    "author": "Harpokration",
+    "work": "Lexicon",
+    "locus": "s.v. arrhephorein"
+   },
+   {
+    "author": "L. Deubner",
+    "work": "Attische Feste",
+    "locus": "1932, 9–17",
+    "note": "Proposes Skirophorion 3."
+   },
+   {
+    "author": "W. Burkert",
+    "work": "Kekropidensage und Arrhephoria",
+    "locus": "Hermes 94 (1966) 1–25",
+    "note": "Skirophorion, day unfixed."
+   }
+  ],
+  "confidence": "reconstructed"
+ },
+ {
+  "key": "noumenia",
+  "name": "Noumenia",
+  "ref": "occasions:noumenia",
+  "summary": "The first day of every Attic month, kept as a household holy day for Apollo Noumenios, Hestia and the gods of the house.",
+  "note": "Recurs in every month, so no month name. Incense, wreaths, wine and cakes at the hearth, the household herm, and the Apollo Agyieus pillar by the street door. Plutarch calls it 'really the holiest day of the month', made accursed only because loan interest fell due on it — itself evidence that Athenians felt the day as sacred. TAG REMOVED: 'new-moon'. The month opens at FIRST CRESCENT VISIBILITY, one to two days after conjunction, and a renderer keying off a new-moon tag places every noumenia — and so every month — one to two days early. CITATION MOVED: Hesiod WD 770 was cited here for the day's sanctity, but ἔνη in that line is the same word as the ἕνη of hene kai nea, the month's LAST day, and WD 766 four lines earlier calls the thirtieth the best day of the month; the line may bracket the last day with the 4th and 7th and attest nothing about the noumenia. A genuine crux — see hekates-deipnon. The tidy modern roster of noumenia deities is assembled by handbooks and hardened by the modern Hellenic revival; no single ancient text lists it.",
+  "tags": [
+   "attic",
+   "monthly",
+   "household",
+   "apollo",
+   "hestia",
+   "noumenia"
+  ],
+  "anchor": {
+   "kind": "crescent",
+   "reckoning": "kata-theon",
+   "day": 1,
+   "recurrence": "monthly",
+   "decad": "histamenou",
+   "dayCertainty": "attested",
+   "dayBeginsAtSunset": true
+  },
+  "sources": [
+   {
+    "author": "Plutarch",
+    "work": "Moralia, De vitando aere alieno",
+    "locus": "828b",
+    "note": "Verified directly."
+   },
+   {
+    "author": "Herodotus",
+    "work": "Histories",
+    "locus": "6.57.2",
+    "note": "Spartan kings' monthly noumenia and seventh for Apollo. Comparative; cited from standard knowledge, page would not render."
+   },
+   {
+    "author": "Hesiod",
+    "work": "Works and Days",
+    "locus": "766, 770",
+    "note": "CRUX: ἔνη may mean the month's last day, not the first."
+   }
+  ],
+  "confidence": "attested"
+ },
+ {
+  "key": "tetras-histamenou",
+  "name": "Fourth Day — Hermes",
+  "ref": "occasions:tetras-histamenou",
+  "summary": "The fourth of every Attic month: Hermes' birthday, a day for weddings, and one of the two days the superstitious man never missed.",
+  "note": "RETITLED, AND THE DEITY ROSTER SPLIT. What is attested is Hermes: the Homeric Hymn has Maia bear him 'on the fourth day of the month' (lines 17–19), Hesiod tells the farmer to bring home his bride on the fourth (800) and to open a wine jar (820), and Theophrastus' Deisidaimon keeps 'the fourth and seventh days of each month' with mulled wine, myrtle, frankincense and smilax. APHRODITE, EROS AND HERAKLES ARE CONVENTIONAL, NOT ATTESTED. The Hermaphroditoi Theophrastus' man garlands are images of HERMAPHRODITOS, a deity in his own right — not a 'Hermes-plus-Aphrodite image', so the passage does not warrant Aphrodite, and Eros was inferred on top of that inference. For Herakles the relevant thread is the proverb 'born on the fourth', said of one who toils for others and referred to him in the paroemiographers; it is not an Attic monthly cult day. NOTE also that Hesiod's 'holy above all' at WD 820 belongs to the MIDDLE fourth, the 14th, and must not migrate to day 4.",
+  "tags": [
+   "attic",
+   "monthly",
+   "household",
+   "hermes",
+   "marriage"
+  ],
+  "anchor": {
+   "kind": "crescent",
+   "reckoning": "kata-theon",
+   "day": 4,
+   "recurrence": "monthly",
+   "decad": "histamenou",
+   "dayCertainty": "attested",
+   "dayBeginsAtSunset": true
+  },
+  "attestedDeities": [
+   "Hermes"
+  ],
+  "conventionalDeities": [
+   "Aphrodite",
+   "Eros",
+   "Herakles"
+  ],
+  "sources": [
+   {
+    "author": "Homeric Hymns",
+    "work": "Hymn 4, to Hermes",
+    "locus": "17–19",
+    "note": "Verified directly."
+   },
+   {
+    "author": "Hesiod",
+    "work": "Works and Days",
+    "locus": "800; 820",
+    "note": "Verified directly."
+   },
+   {
+    "author": "Theophrastus",
+    "work": "Characters 16",
+    "locus": "§10",
+    "note": "Direct evidence of monthly household observance at Athens."
+   }
+  ],
+  "confidence": "attested"
+ },
+ {
+  "key": "hekte-artemidos",
+  "name": "Sixth Day — Artemis",
+  "ref": "occasions:hekte-artemidos",
+  "summary": "The sixth of every Attic month, conventionally Artemis'.",
+  "note": "DOWNGRADED. After removing circular support, the generalisation from particular sixths to EVERY sixth rests on one late source reporting a DELIAN opinion about one particular sixth: Diogenes Laertius has Socrates born 6 Thargelion, 'when the Athenians purify their city, which according to the Delians is the birthday of Artemis'. THREE SUPPORTS STRUCK: the Elaphebolia's own date is not directly attested and was assigned to the 6th by modern scholarship BECAUSE sixths are held to be Artemis' — using it back is circular; the Delphinia is Apollo Delphinios' festival, and Artemis' own great Mounichion festival falls on the 16th, which cuts against the pattern; and '6 Thargelion, the Artemis day of the Thargelia' is the same Delian fact counted twice, that day being the purification day of Apollo's festival. The sixth/seventh sequence of the divine twins is genuinely ancient, which is what keeps the convention plausible.",
+  "tags": [
+   "attic",
+   "monthly",
+   "household",
+   "artemis",
+   "twins"
+  ],
+  "anchor": {
+   "kind": "crescent",
+   "reckoning": "kata-theon",
+   "day": 6,
+   "recurrence": "monthly",
+   "decad": "histamenou",
+   "dayCertainty": "conventional",
+   "dayBasis": "one late notice of a Delian opinion, generalised",
+   "dayBeginsAtSunset": true
+  },
+  "sources": [
+   {
+    "author": "Diogenes Laertius",
+    "work": "Lives",
+    "locus": "2.44",
+    "note": "Verified directly."
+   },
+   {
+    "author": "Plutarch",
+    "work": "Quaestiones Convivales",
+    "locus": "8.1 (717b–c)",
+    "note": "UNVERIFIED: could not render; an earlier draft gave 717d."
+   }
+  ],
+  "confidence": "disputed"
+ },
+ {
+  "key": "hebdome-apollonos",
+  "name": "Seventh Day — Apollo",
+  "ref": "occasions:hebdome-apollonos",
+  "summary": "The seventh of every Attic month, Apollo's own day — the best attested of the recurring monthly days.",
+  "note": "Hesiod calls the seventh 'a holy day, for on it Leto bore Apollo of the golden sword'; Diogenes Laertius, citing Apollodorus, dates Plato's birth to 7 Thargelion, 'the same day on which the Delians say that Apollo himself was born'; Theophrastus' superstitious man keeps the fourth and the seventh of each month — household observance, not state cult; and Herodotus shows Spartan kings drawing a victim, barley and wine for Apollo on the noumenia and the seventh, so the monthly seventh is panhellenic. The Attic annual calendar piles onto sevenths: Boedromia, Pyanepsia, and Apollo's day of the Thargelia. Bay, cakes and libation at the Agyieus pillar. The cult titles Hebdomeios and Hebdomagetes belong here but their Attic currency is thinner than the day itself and no source is offered for them.",
+  "tags": [
+   "attic",
+   "monthly",
+   "household",
+   "apollo",
+   "agyieus"
+  ],
+  "anchor": {
+   "kind": "crescent",
+   "reckoning": "kata-theon",
+   "day": 7,
+   "recurrence": "monthly",
+   "decad": "histamenou",
+   "dayCertainty": "attested",
+   "dayBeginsAtSunset": true
+  },
+  "sources": [
+   {
+    "author": "Hesiod",
+    "work": "Works and Days",
+    "locus": "770–771",
+    "note": "Verified directly; note the ἔνη crux affecting the first half of 770 only."
+   },
+   {
+    "author": "Diogenes Laertius",
+    "work": "Lives",
+    "locus": "3.2, citing Apollodorus",
+    "note": "Verified directly."
+   },
+   {
+    "author": "Theophrastus",
+    "work": "Characters 16",
+    "locus": "§10"
+   },
+   {
+    "author": "Herodotus",
+    "work": "Histories",
+    "locus": "6.57.2",
+    "note": "Cited from standard knowledge; page would not render."
+   }
+  ],
+  "confidence": "attested"
+ },
+ {
+  "key": "ogdoe-poseidonos",
+  "name": "Eighth Day — Poseidon and Theseus",
+  "ref": "occasions:ogdoe-poseidonos",
+  "summary": "The eighth of every Attic month, given to Poseidon and to his son Theseus.",
+  "note": "THE ONE MONTHLY DAY WITH AN EXPLICIT ANCIENT STATEMENT OF ITS MONTHLY CHARACTER, verified directly: Plutarch, Theseus 36.3–4 — the chief sacrifice for Theseus falls on 8 Pyanepsion, but the Athenians honour him 'on the eighth day of the other months' as well, 'since he was said to be a son of Poseidon. For they pay honours to Poseidon on the eighth day of every month.' Plutarch's arithmological gloss (eight is the first cube of an even number, fitly representing the god's immovable power) is at 36.4 and is his own rationalisation, not the origin of the practice. Hesiod WD 772 rates the eighth and ninth good for a man's work, but that is agriculture, not cult.",
+  "tags": [
+   "attic",
+   "monthly",
+   "poseidon",
+   "theseus",
+   "hero-cult"
+  ],
+  "anchor": {
+   "kind": "crescent",
+   "reckoning": "kata-theon",
+   "day": 8,
+   "recurrence": "monthly",
+   "decad": "histamenou",
+   "dayCertainty": "attested",
+   "dayBeginsAtSunset": true
+  },
+  "sources": [
+   {
+    "author": "Plutarch",
+    "work": "Life of Theseus",
+    "locus": "36.3–4",
+    "note": "Verified directly on LacusCurtius."
+   },
+   {
+    "author": "Hesiod",
+    "work": "Works and Days",
+    "locus": "772",
+    "note": "Verified; agricultural, not cultic."
+   }
+  ],
+  "confidence": "attested"
+ },
+ {
+  "key": "hekates-deipnon",
+  "name": "Hekate's Deipnon (hene kai nea)",
+  "ref": "occasions:hekates-deipnon",
+  "summary": "The supper set out for Hekate at the crossroads on the last night of every Attic month, together with the sweepings of the purified house.",
+  "note": "COUNTED BACKWARDS: the last day, 30 forward in a full month and 29 in a hollow one. THE HOLLOW-MONTH RULE IS LOAD-BEARING AND CONTESTED — the standard view that the Athenians dropped the 'second waning' is Pritchett's; Meritt disputes which day was omitted. Get it wrong and the deipnon lands a day off in roughly half of all months. THE DAY ITSELF, formerly a separate entry: Plutarch credits Solon with the name 'old and new' and with counting downward from thirty after the twentieth, so Attic dates in the last decade read 'third of Thargelion waning' (=28); that account is a second-century-CE aetiology and good evidence for the practice Plutarch knew, not for its origin — Aristophanes, Clouds 1131–34 and 1178–1200, is the contemporary fifth-century witness and the better one. The day is also the civic hinge on which debts fell due. ANCIENT WARRANT for the rite: Aristophanes, Plutus 594–597, and Apollodorus at Athenaeus 7.325a–b, who says meals are offered to Hekate 'on the thirtieths'. Practice: the house swept and fumigated, the katharmata and food carried out at nightfall to the three-way shrine and not brought back. THE POOR TOOK THEM — Aristophanes' joke — BUT THAT IS NOT THE SAME CLAIM AS THE OFFERING BEING INTENDED AS CHARITY, which the text does not say and the joke arguably depends on it not saying. CAVEATS: the familiar menu comes from Athenaeus and the scholia rather than one authoritative list; 'do not look back' is generalised from other apotropaic rites and is not attested for this one; the dog-scapegoat rite is not Attic monthly household practice.",
+  "tags": [
+   "attic",
+   "monthly",
+   "household",
+   "hekate",
+   "purification",
+   "crossroads",
+   "dead",
+   "month-end"
+  ],
+  "anchor": {
+   "kind": "crescent",
+   "reckoning": "kata-theon",
+   "dayFromEnd": 1,
+   "day": 30,
+   "hollowMonthDay": 29,
+   "hollowMonthRuleContested": "Pritchett vs Meritt on which day a hollow month omits",
+   "recurrence": "monthly",
+   "decad": "phthinontos",
+   "dayCertainty": "attested",
+   "dayBeginsAtSunset": true
+  },
+  "alternateNames": [
+   {
+    "name": "hene kai nea",
+    "scope": "Athens",
+    "note": "'The old and the new' — the Athenian name."
+   },
+   {
+    "name": "triakas",
+    "scope": "general Greek and ordinary Attic deme usage",
+    "note": "Simply 'the thirtieth'; Apollodorus of Athens uses it, so the Athens/elsewhere split is overdrawn."
+   }
+  ],
+  "sources": [
+   {
+    "author": "Aristophanes",
+    "work": "Plutus",
+    "locus": "594–597",
+    "note": "Verified directly."
+   },
+   {
+    "author": "Apollodorus of Athens",
+    "work": "On the Gods, at Athenaeus 7.325a–b",
+    "note": "'they offer her meals on the thirtieth days' — the explicit ancient statement of the day. NOT RENDERED this pass; confirm in print."
+   },
+   {
+    "author": "Aristophanes",
+    "work": "Clouds",
+    "locus": "1131–34, 1178–1200",
+    "note": "The contemporary fifth-century witness to hene kai nea."
+   },
+   {
+    "author": "Plutarch",
+    "work": "Life of Solon",
+    "locus": "25.3",
+    "note": "Verified; an aetiology, not evidence of origin."
+   },
+   {
+    "author": "S. I. Johnston",
+    "work": "Restless Dead",
+    "locus": "Berkeley, 1999, ch. 2"
+   }
+  ],
+  "confidence": "attested"
+ }
+]

@@ -70,6 +70,8 @@ Hellenistic and Vedic are first-class together, not one bolted onto the other:
 | `GET /stations/next` | the next station, with a countdown |
 | `GET /stations/ical` | the same as a **subscribable** calendar feed |
 | `GET /today` | day at a glance — luminaries, stations, hours, sky, reckonings, transits |
+| `GET /festivals` | a year of festivals — `tradition=attic\|hindu` |
+| `GET /festivals/traditions` | what corpora exist, and whether each is verified |
 | `GET /authorities` | Dṛk gaṇita vs Sūrya Siddhānta |
 | `GET /ayanamsas` | the six ayanāṁśas |
 

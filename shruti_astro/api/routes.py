@@ -1054,3 +1054,48 @@ async def today(
         # Present so a degraded block is visible rather than silently missing.
         "undefined": undefined,
     }
+
+
+# ── festivals ───────────────────────────────────────────────────────────────
+
+@router.get("/festivals")
+async def festivals(
+    tradition: str = Query("attic", description="attic | hindu"),
+    year: int = Query(..., ge=1, le=9999),
+) -> dict:
+    """
+    A year of festivals, with the undatable ones reported rather than hidden.
+
+    **Verification status travels with the response.** The Attic corpus has been
+    audited adversarially; the Hindu one has not yet, and says so in
+    `verificationNote`. A consumer is entitled to know which it is reading.
+
+    `undated` is not an error list. Several Attic festivals are known to have
+    happened and cannot be dated — the entry carries the reconstructions and
+    who proposed them. Dropping them would leave the corpus looking smaller and
+    more certain than it is.
+    """
+    from shruti_astro.core.festival_registry import CORPORA, year as resolve_year
+
+    if tradition not in CORPORA:
+        raise HTTPException(400, f"tradition must be one of {sorted(CORPORA)}")
+    try:
+        return resolve_year(tradition, year)
+    except ValueError as exc:
+        raise HTTPException(400, str(exc))
+
+
+@router.get("/festivals/traditions")
+async def festival_traditions() -> dict:
+    from shruti_astro.core.festival_registry import CORPORA, load
+
+    return {
+        "traditions": {
+            name: {
+                "entries": len(load(name).entries),
+                "verified": spec["verified"],
+                "note": spec["note"],
+            }
+            for name, spec in CORPORA.items()
+        }
+    }

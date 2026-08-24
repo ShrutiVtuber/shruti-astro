@@ -265,14 +265,19 @@ def resolve_crescent(anchor: dict, gregorian_year: int) -> Resolved:
                             date=d, anchor=anchor)
         d += timedelta(days=1)
 
+    # Say WHICH reason, rather than offering two and letting the reader pick.
+    # A hollow month has 29 days, so it can only explain a missing day 30 —
+    # offering it for day 26 is an explanation that cannot be true.
+    if want_day == 30:
+        why = (f"{month} ran hollow in {gregorian_year} and has no day 30, "
+               f"or fell outside the Gregorian year")
+    else:
+        why = (f"{month} {want_day} fell outside the Gregorian year "
+               f"{gregorian_year} — Attic months straddle the civil year, so a "
+               f"month near either end lands partly in the neighbouring one")
     return Resolved(
         key=anchor.get("key", ""), name=anchor.get("name", ""), date=None,
-        anchor=anchor, skipped=True,
-        skipped_reason=(
-            f"{month} {want_day} did not occur in {gregorian_year} — either the "
-            f"month was hollow and has no day {want_day}, or it fell outside the "
-            f"Gregorian year"
-        ),
+        anchor=anchor, skipped=True, skipped_reason=why,
     )
 
 

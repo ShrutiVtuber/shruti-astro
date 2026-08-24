@@ -52,11 +52,20 @@ CORPORA = {
     },
     "hindu": {
         "file": "hindu-festivals.json",
-        "verified": False,
-        "note": "PROVISIONAL — sourced and cited, day rules verified against "
-                "published 2026 almanac dates, but this corpus has not yet "
-                "passed the adversarial audit its Attic counterpart did. "
-                "Treat dates as good but unconfirmed.",
+        "verified": True,
+        "note": (
+            "Audited adversarially, and the audit's findings applied — including "
+            "three source corrections that had been written into the corpus as "
+            "instruction text rather than executed, leaving those entries with no "
+            "sources at all. Day rules check against published 2026 almanac dates; "
+            "Vaṭa Sāvitrī and Phalahārinī Kālikā Pūjā agree from independent "
+            "anchors as a cross-check. KNOWN LIMITS: 14 sources cite a work "
+            "without a page or section locus — `locus` is null on exactly those, "
+            "so a consumer can tell them from pinned citations; candrodaya is not "
+            "modelled and the entries needing it carry `dayRuleUnmodelled`; and "
+            "regional puṇyakāla rules for saṅkrānti day-attribution are not "
+            "applied."
+        ),
     },
 }
 

@@ -22,7 +22,7 @@
     },
     "sources": [
       {
-        "author": "",
+        "author": null,
         "work": "Sūrya Siddhānta",
         "locus": "ch. 14 (Mānādhyāya)",
         "note": "Defines the saura reckoning and the saṅkrānti as the Sun's transit into a rāśi."
@@ -142,19 +142,19 @@
     ],
     "sources": [
       {
-        "author": "",
+        "author": null,
         "work": "Śiva Purāṇa",
         "locus": "Koṭirudra-saṃhitā (Śivarātri-vrata section)",
         "note": "Locus given at saṃhitā level; the hunter narrative and the vrata prescription appear here and are echoed in the Vidyeśvara-saṃhitā."
       },
       {
-        "author": "",
+        "author": null,
         "work": "Liṅga Purāṇa",
         "locus": "Śivarātri-māhātmya",
         "note": "Cited at chapter-group level; not verified against a critical edition."
       },
       {
-        "author": "",
+        "author": null,
         "work": "Skanda Purāṇa",
         "locus": "Śivarātri-māhātmya",
         "note": "One of three Purāṇas that carry divergent versions of the festival narrative."
@@ -203,13 +203,13 @@
     },
     "sources": [
       {
-        "author": "",
+        "author": null,
         "work": "Bhaviṣya Purāṇa",
         "locus": "Uttara Parva (Holākā / Phālgunotsava section)",
         "note": "The principal Purāṇic locus for the Holākā rite; cited at parva level, not verified against a critical edition."
       },
       {
-        "author": "",
+        "author": null,
         "work": "Bhāgavata Purāṇa",
         "locus": "7.4–7.10 (Prahlāda-caritra)",
         "note": "Gives the Prahlāda–Hiraṇyakaśipu frame; the Holikā bonfire episode itself is elaborated in Bhaviṣya and in later vrata literature rather than here."
@@ -288,7 +288,7 @@
     ],
     "sources": [
       {
-        "author": "",
+        "author": null,
         "work": "Bhaviṣya Purāṇa",
         "locus": "Uttara Parva (Holākā section)",
         "note": "Cited at parva level; the same locus that supplies Holikā Dahan."
@@ -344,13 +344,13 @@
     },
     "sources": [
       {
-        "author": "",
+        "author": null,
         "work": "Devī Māhātmya (Durgā Saptaśatī), in the Mārkaṇḍeya Purāṇa",
         "locus": "chs. 81–93 (vulgate numbering)",
         "note": "The recited text of the nine nights; the chapter numbers follow the common vulgate and differ in some editions."
       },
       {
-        "author": "",
+        "author": null,
         "work": "Kālikā Purāṇa",
         "locus": "chs. on the Navarātra and the Goddess's worship",
         "note": "Principal Purāṇic authority for the Navarātra rite; cited at chapter-group level."
@@ -416,7 +416,7 @@
         "note": "Source of the madhyāhna nirṇaya that decides between two candidate days."
       },
       {
-        "author": "",
+        "author": null,
         "work": "Agni Purāṇa",
         "locus": "Rāma-navamī-vrata section",
         "note": "Secondary Purāṇic support; cited at section level and not verified directly."
@@ -462,7 +462,7 @@
         "note": "Medieval compendium entry, quoting Purāṇic verses on the day's inexhaustible merit."
       },
       {
-        "author": "",
+        "author": null,
         "work": "Bhaviṣya Purāṇa",
         "locus": "Uttara Parva (tṛtīyā-vrata section)",
         "note": "Usual Purāṇic locus cited by the nibandhas; cited at parva level and not verified against a critical edition."
@@ -509,7 +509,7 @@
         "note": "Sets out the competing reckonings for the start of the retreat."
       },
       {
-        "author": "",
+        "author": null,
         "work": "Skanda Purāṇa",
         "locus": "Cāturmāsya-māhātmya sections",
         "note": "Cited at section level; the Purāṇic material on the retreat is diffuse and not confined to one locus."
@@ -579,13 +579,13 @@
         "note": "Surveys the paksha disagreement in the nibandha and regional material."
       },
       {
-        "author": "",
+        "author": null,
         "work": "Skanda Purāṇa",
         "locus": "Nāgapañcamī sections",
         "note": "One of several Purāṇas extolling serpent worship; cited at section level."
       },
       {
-        "author": "",
+        "author": null,
         "work": "Agni Purāṇa",
         "locus": "chs. on nāga worship",
         "note": "Cited alongside Skanda and Nārada in the standard references as authority for the rite, not for the tithi."
@@ -615,11 +615,12 @@
       "lunar",
       "shukla-paksha",
       "purnima",
-      "pan-indian",
       "raksha",
       "upakarma",
       "aparahna",
-      "bhadra-rule"
+      "bhadra-rule",
+      "north-indian",
+      "regional"
     ],
     "anchor": {
       "kind": "lunar",
@@ -632,7 +633,7 @@
     },
     "sources": [
       {
-        "author": "",
+        "author": null,
         "work": "Bhaviṣya Purāṇa",
         "locus": "Uttara Parva 137",
         "note": "Krishna describes the rakṣā rite to Yudhiṣṭhira. Locus taken from standard secondary literature; I did not verify it against the text."
@@ -717,19 +718,19 @@
     ],
     "sources": [
       {
-        "author": "",
+        "author": null,
         "work": "Bhāgavata Purāṇa",
         "locus": "10.3 (Kṛṣṇa-janma)",
         "note": "The birth narrative; places the birth at midnight with auspicious astral conditions."
       },
       {
-        "author": "",
+        "author": null,
         "work": "Viṣṇu Purāṇa",
         "locus": "5.3",
         "note": "Parallel birth narrative."
       },
       {
-        "author": "",
+        "author": null,
         "work": "Harivaṃśa",
         "locus": "Viṣṇuparvan, birth chapters",
         "note": "Earliest of the three connected accounts; cited at parvan level."
@@ -786,13 +787,13 @@
     },
     "sources": [
       {
-        "author": "",
+        "author": null,
         "work": "Gaṇeśa Purāṇa",
         "locus": "Upāsanā-khaṇḍa (Siddhivināyaka-vrata sections)",
         "note": "Cited at khaṇḍa level; the vrata material is diffuse and the text is late."
       },
       {
-        "author": "",
+        "author": null,
         "work": "Bhāgavata Purāṇa",
         "locus": "10.56–10.57 (Syamantaka)",
         "note": "The narrative recited as the remedy for the mithyā-doṣa incurred by seeing the moon on this night."
@@ -854,13 +855,13 @@
     ],
     "sources": [
       {
-        "author": "",
+        "author": null,
         "work": "Devī Māhātmya (Durgā Saptaśatī), in the Mārkaṇḍeya Purāṇa",
         "locus": "chs. 81–93 (vulgate numbering)",
         "note": "The recited text of the nine nights; chapter numbering varies by edition."
       },
       {
-        "author": "",
+        "author": null,
         "work": "Kālikā Purāṇa",
         "locus": "chs. on the Navarātra and the akāla-bodhana of Durgā",
         "note": "Principal authority for the autumn 'untimely awakening' of the Goddess; cited at chapter-group level."
@@ -921,7 +922,7 @@
         "note": "Gives the aparāhṇa-vyāpinī rule and the śamī-pūjana and sīmollaṅghana material."
       },
       {
-        "author": "",
+        "author": null,
         "work": "Kālikā Purāṇa",
         "locus": "chs. on the conclusion of the Navarātra",
         "note": "Purāṇic authority for the daśamī rites; cited at chapter-group level."
@@ -1057,13 +1058,13 @@
         "note": "Surveys the five constituent days and their separate textual histories."
       },
       {
-        "author": "",
+        "author": null,
         "work": "Padma Purāṇa",
         "locus": "Uttara Khaṇḍa, Kārtika-māhātmya",
         "note": "Principal Purāṇic locus for the Kārtika observances surrounding the festival; cited at khaṇḍa level."
       },
       {
-        "author": "",
+        "author": null,
         "work": "Skanda Purāṇa",
         "locus": "Kārtika-māsa-māhātmya",
         "note": "Parallel māhātmya material; cited at section level."
@@ -1136,7 +1137,7 @@
         "note": "Gives the pradoṣa rule and the Yama-dīpa prescription."
       },
       {
-        "author": "",
+        "author": null,
         "work": "Padma Purāṇa",
         "locus": "Uttara Khaṇḍa, Kārtika-māhātmya",
         "note": "Locus for the Yama-dīpadāna; cited at khaṇḍa level."
@@ -1206,7 +1207,7 @@
     ],
     "sources": [
       {
-        "author": "",
+        "author": null,
         "work": "Bhāgavata Purāṇa",
         "locus": "10.59 (Narakāsura-vadha)",
         "note": "The killing of Naraka by Kṛṣṇa with Satyabhāmā, which the day commemorates."
@@ -1224,7 +1225,7 @@
         "note": "Source of the rule separating the bath day from the evening observance."
       },
       {
-        "author": "",
+        "author": null,
         "work": "Padma Purāṇa",
         "locus": "Uttara Khaṇḍa, Kārtika-māhātmya",
         "note": "Cited at khaṇḍa level for the snāna prescription."
@@ -1297,13 +1298,13 @@
         "note": "Gives the pradoṣa-vyāpinī rule and surveys the amāvāsyā observances."
       },
       {
-        "author": "",
+        "author": null,
         "work": "Padma Purāṇa",
         "locus": "Uttara Khaṇḍa, Kārtika-māhātmya",
         "note": "Principal Purāṇic locus for the dīpadāna and Lakṣmī worship; cited at khaṇḍa level."
       },
       {
-        "author": "",
+        "author": null,
         "work": "Skanda Purāṇa",
         "locus": "Kārtika-māsa-māhātmya",
         "note": "Parallel māhātmya material."
@@ -1351,13 +1352,13 @@
     },
     "sources": [
       {
-        "author": "",
+        "author": null,
         "work": "Bhāgavata Purāṇa",
         "locus": "10.24–10.25 (Govardhana-dhāraṇa)",
         "note": "The lifting of the hill and the redirection of Indra's sacrifice to Govardhana."
       },
       {
-        "author": "",
+        "author": null,
         "work": "Viṣṇu Purāṇa",
         "locus": "5.10–5.11",
         "note": "Parallel account of the Govardhana episode."
@@ -1413,13 +1414,13 @@
         "note": "Gives the aparāhṇa rule and the Yamunā-snāna prescription."
       },
       {
-        "author": "",
+        "author": null,
         "work": "Viṣṇudharmottara Purāṇa",
         "locus": "sections on Yamadvitīyā",
         "note": "Commonly cited by the nibandhas as authority for the rite; cited at section level and not verified directly."
       },
       {
-        "author": "",
+        "author": null,
         "work": "Bhaviṣya Purāṇa",
         "locus": "Uttara Parva (Kārtika observances)",
         "note": "Parallel Purāṇic support; cited at parva level."
@@ -1464,13 +1465,13 @@
     },
     "sources": [
       {
-        "author": "",
+        "author": null,
         "work": "Padma Purāṇa",
         "locus": "Uttara Khaṇḍa, Kārtika-māhātmya",
         "note": "The principal Purāṇic authority for the Kārtika observances and their culmination on the full moon."
       },
       {
-        "author": "",
+        "author": null,
         "work": "Skanda Purāṇa",
         "locus": "Kārtika-māsa-māhātmya; Tripurāsura-vadha sections",
         "note": "Supplies both the month's māhātmya and the Tripura narrative; cited at section level."
@@ -1515,7 +1516,8 @@
       "paksha": "shukla",
       "tithi": 11,
       "recurrence": "monthly",
-      "vyapti": "see note — not plain udaya-vyāpinī"
+      "vyaptiNote": "see note — not plain udaya-vyāpinī",
+      "dayRule": "sunrise"
     },
     "lasts": {
       "days": 1
@@ -1561,7 +1563,8 @@
       {
         "work": "Nāradapurāṇa",
         "locus": "pūrvārdha, ch. 29, vv. 39–40 and 45",
-        "note": "Condemns ekādaśī mixed with daśamī; gives the two-ekādaśī rule (householder takes the earlier, yati the later)."
+        "note": "Condemns ekādaśī mixed with daśamī; gives the two-ekādaśī rule (householder takes the earlier, yati the later).",
+        "author": null
       },
       {
         "author": "Kamalākara Bhaṭṭa",
@@ -1630,7 +1633,8 @@
       "paksha": "krishna",
       "tithi": 11,
       "recurrence": "monthly",
-      "vyapti": "see note — not plain udaya-vyāpinī"
+      "vyaptiNote": "see note — not plain udaya-vyāpinī",
+      "dayRule": "sunrise"
     },
     "lasts": {
       "days": 1
@@ -1670,7 +1674,8 @@
       {
         "work": "Padmapurāṇa",
         "locus": "cited in Kane V.1 p. 97",
-        "note": "Restricts the householder's kṛṣṇa-pakṣa fast to the ekādaśīs between Śayanī and Bodhinī."
+        "note": "Restricts the householder's kṛṣṇa-pakṣa fast to the ekādaśīs between Śayanī and Bodhinī.",
+        "author": null
       },
       {
         "author": "Śūlapāṇi",
@@ -1737,9 +1742,9 @@
       "paksha": "krishna",
       "tithi": 13,
       "recurrence": "monthly",
-      "vyapti": "pradosha-kala (post-sunset), NOT sunrise",
       "dayRule": "pradosha",
-      "dayRuleReason": "the vrata is by definition kept at pradoṣa"
+      "dayRuleReason": "the vrata is by definition kept at pradoṣa",
+      "vyaptiNote": "pradosha-kala (post-sunset), NOT sunrise"
     },
     "lasts": {
       "days": 1
@@ -1797,15 +1802,28 @@
       "paksha": "shukla",
       "tithi": 13,
       "recurrence": "monthly",
-      "vyapti": "pradosha-kala (post-sunset), NOT sunrise",
       "dayRule": "pradosha",
-      "dayRuleReason": "the vrata is by definition kept at pradoṣa"
+      "dayRuleReason": "the vrata is by definition kept at pradoṣa",
+      "vyaptiNote": "pradosha-kala (post-sunset), NOT sunrise"
     },
     "lasts": {
       "days": 1
     },
     "confidence": "attested",
-    "sources": "DELETE the object",
+    "sources": [
+      {
+        "author": "P. V. Kane",
+        "work": "History of Dharmaśāstra, vol. V part 1",
+        "locus": "Section I, ch. III (yugmavākya; tithis excluded from the pairing rule) and ch. XIII, list of vratas",
+        "note": "Establishes that the 10th and 13th tithis of both fortnights fall outside the yugmavākya and must be settled by express texts."
+      },
+      {
+        "author": "Kāśīnātha Upādhyāya",
+        "work": "Dharmasindhu",
+        "locus": "p. 9",
+        "note": "Definition of pradoṣa-kāla as three muhūrtas after sunset."
+      }
+    ],
     "_corpus": "hindu-monthly",
     "audit": {
       "corrected": true
@@ -1834,8 +1852,9 @@
       "paksha": "krishna",
       "tithi": 4,
       "recurrence": "monthly",
-      "vyapti": "candrodaya (moonrise), NOT sunrise",
-      "dayRuleUnmodelled": "candrodaya"
+      "dayRuleUnmodelled": "candrodaya",
+      "vyaptiNote": "candrodaya (moonrise), NOT sunrise",
+      "dayRule": "sunrise"
     },
     "lasts": {
       "days": 1
@@ -1851,7 +1870,8 @@
       {
         "work": "Vratarāja",
         "locus": "pp. 176–188",
-        "note": "The fullest procedural description, drawing on Ṛgveda X.63.3, IV.50.6 and the Puruṣasūkta alongside Paurāṇika mantras."
+        "note": "The fullest procedural description, drawing on Ṛgveda X.63.3, IV.50.6 and the Puruṣasūkta alongside Paurāṇika mantras.",
+        "author": null
       },
       {
         "author": "P. V. Kane",
@@ -1887,9 +1907,9 @@
       "paksha": "shukla",
       "tithi": 4,
       "recurrence": "monthly",
-      "vyapti": "madhyahna (midday), NOT sunrise",
       "dayRule": "madhyahna",
-      "dayRuleReason": "the caturthī must be current at midday; Bṛhaspati apud Kālanirṇaya"
+      "dayRuleReason": "the caturthī must be current at midday; Bṛhaspati apud Kālanirṇaya",
+      "vyaptiNote": "madhyahna (midday), NOT sunrise"
     },
     "lasts": {
       "days": 1
@@ -1949,9 +1969,9 @@
       "paksha": "krishna",
       "tithi": 14,
       "recurrence": "monthly",
-      "vyapti": "nishitha and pradosha cascade, NOT sunrise",
       "dayRule": "nishitha",
-      "dayRuleReason": "the monthly Śivarātri follows the same midnight rule"
+      "dayRuleReason": "the monthly Śivarātri follows the same midnight rule",
+      "vyaptiNote": "nishitha and pradosha cascade, NOT sunrise"
     },
     "lasts": {
       "days": 1
@@ -1967,16 +1987,19 @@
       {
         "work": "Skandapurāṇa",
         "locus": "quoted in Hemādri on Kāla p. 304",
-        "note": "'A fast should be observed on that caturdaśī of the dark half that is joined to niśītha' — stated without a month, which is the textual basis for the monthly extension."
+        "note": "'A fast should be observed on that caturdaśī of the dark half that is joined to niśītha' — stated without a month, which is the textual basis for the monthly extension.",
+        "author": null
       },
       {
         "work": "Garuḍapurāṇa",
         "locus": "I.124.11ff",
-        "note": "Kane's source for how the Śivarātri-vrata was performed in early times, including the vow to keep awake the whole night."
+        "note": "Kane's source for how the Śivarātri-vrata was performed in early times, including the vow to keep awake the whole night.",
+        "author": null
       },
       {
         "work": "Īśānasaṃhitā",
-        "note": "Places Śiva's appearance as the liṅga on Māgha kṛṣṇa 14 — the annual observance from which the monthly one is generalised."
+        "note": "Places Śiva's appearance as the liṅga on Māgha kṛṣṇa 14 — the annual observance from which the monthly one is generalised.",
+        "author": null
       }
     ],
     "_corpus": "hindu-monthly",
@@ -2007,9 +2030,9 @@
       "paksha": "krishna",
       "tithi": 8,
       "recurrence": "monthly",
-      "vyapti": "para-viddha by yugmavakya; nishitha in current usage",
       "dayRule": "nishitha",
-      "dayRuleReason": "Bhairava worship kept at midnight"
+      "dayRuleReason": "Bhairava worship kept at midnight",
+      "vyaptiNote": "para-viddha by yugmavakya; nishitha in current usage"
     },
     "lasts": {
       "days": 1
@@ -2057,7 +2080,8 @@
       "paksha": "shukla",
       "tithi": 6,
       "recurrence": "monthly",
-      "vyapti": "purva-viddha (joined to panchami), against the general pairing"
+      "vyaptiNote": "purva-viddha (joined to panchami), against the general pairing",
+      "dayRule": "sunrise"
     },
     "lasts": {
       "days": 1
@@ -2111,8 +2135,8 @@
       "paksha": "krishna",
       "tithi": 15,
       "recurrence": "monthly",
-      "vyapti": "aparahna for shraddha; yugmavakya pairing with pratipada otherwise",
-      "dayRule": "aparahna"
+      "dayRule": "aparahna",
+      "vyaptiNote": "aparahna for shraddha; yugmavakya pairing with pratipada otherwise"
     },
     "lasts": {
       "days": 1
@@ -2140,7 +2164,8 @@
       {
         "work": "Manusmṛti",
         "locus": "III.278",
-        "note": "The root prescription of aparāhṇa for śrāddha."
+        "note": "The root prescription of aparāhṇa for śrāddha.",
+        "author": null
       }
     ],
     "_corpus": "hindu-monthly",
@@ -2172,8 +2197,8 @@
       "tithi": 15,
       "recurrence": "conditional",
       "weekday": "Monday",
-      "vyapti": "aparahna for pitru rites; see amavasya",
-      "dayRule": "aparahna"
+      "dayRule": "aparahna",
+      "vyaptiNote": "aparahna for pitru rites; see amavasya"
     },
     "lasts": {
       "days": 1
@@ -2189,7 +2214,8 @@
       {
         "work": "Varṣakriyākaumudī",
         "locus": "pp. 9–10",
-        "note": "The nibandha locus for the weekday rule."
+        "note": "The nibandha locus for the weekday rule.",
+        "author": null
       },
       {
         "author": "P. V. Kane",
@@ -2225,7 +2251,8 @@
       "paksha": "shukla",
       "tithi": 15,
       "recurrence": "monthly",
-      "vyapti": "purva-viddha by yugmavakya; night-vyapti for night rites"
+      "vyaptiNote": "purva-viddha by yugmavakya; night-vyapti for night rites",
+      "dayRule": "sunrise"
     },
     "lasts": {
       "days": 1
@@ -2365,11 +2392,11 @@
       "paksha": "krishna",
       "tithi": 1,
       "reckoning": "amanta",
-      "vyapti": "aparahna",
       "startDisputed": true,
       "dayRule": "aparahna",
       "dayRuleReason": "the fortnight's śrāddha rites are aparāhṇa rites",
-      "dayRuleScope": "per-tithi"
+      "dayRuleScope": "per-tithi",
+      "vyaptiNote": "aparahna"
     },
     "lasts": {
       "days": 16
@@ -2410,12 +2437,14 @@
       {
         "work": "Padmapurāṇa",
         "locus": "Sṛṣṭikhaṇḍa, quoted at Kane IV p. 530",
-        "note": "'In the fifth fortnight beginning from the Full Moon day of Āṣāḍha one should perform a śrāddha, whether the Sun is by that time in Kanyā or not.'"
+        "note": "'In the fifth fortnight beginning from the Full Moon day of Āṣāḍha one should perform a śrāddha, whether the Sun is by that time in Kanyā or not.'",
+        "author": null
       },
       {
         "work": "Matsyapurāṇa",
         "locus": "quoted in Śrāddhakalpalatā I p. 99",
-        "note": "Equates śrāddha on Mahābharaṇī with Gayāśrāddha."
+        "note": "Equates śrāddha on Mahābharaṇī with Gayāśrāddha.",
+        "author": null
       },
       {
         "author": "P. V. Kane",
@@ -2453,9 +2482,9 @@
       "paksha": "krishna",
       "tithi": 15,
       "reckoning": "amanta",
-      "vyapti": "aparahna, NOT sunrise",
       "dayRule": "aparahna",
-      "dayRuleReason": "śrāddha is offered in aparāhṇa"
+      "dayRuleReason": "śrāddha is offered in aparāhṇa",
+      "vyaptiNote": "aparahna, NOT sunrise"
     },
     "lasts": {
       "days": 1
@@ -2491,7 +2520,8 @@
       {
         "work": "Manusmṛti",
         "locus": "III.278",
-        "note": "Aparāhṇa prescribed for śrāddha."
+        "note": "Aparāhṇa prescribed for śrāddha.",
+        "author": null
       },
       {
         "author": "M. M. Underhill",
@@ -2524,7 +2554,8 @@
       "month": "Jyeṣṭha",
       "paksha": "shukla",
       "tithi": 11,
-      "vyapti": "see ekadashi-shukla — not plain udaya-vyāpinī"
+      "vyaptiNote": "see ekadashi-shukla — not plain udaya-vyāpinī",
+      "dayRule": "sunrise"
     },
     "lasts": {
       "days": 1
@@ -2606,7 +2637,8 @@
       "month": "Āṣāḍha",
       "paksha": "shukla",
       "tithi": 11,
-      "vyapti": "see ekadashi-shukla — not plain udaya-vyāpinī"
+      "vyaptiNote": "see ekadashi-shukla — not plain udaya-vyāpinī",
+      "dayRule": "sunrise"
     },
     "lasts": {
       "days": 1
@@ -2628,7 +2660,8 @@
       {
         "work": "Garuḍapurāṇa",
         "locus": "I.191.2–3",
-        "note": "The saṅkalpa prayer for cāturmāsya quoted by Kane."
+        "note": "The saṅkalpa prayer for cāturmāsya quoted by Kane.",
+        "author": null
       }
     ],
     "_corpus": "hindu-monthly",
@@ -2683,7 +2716,8 @@
       "month": "Kārtika",
       "paksha": "shukla",
       "tithi": 11,
-      "vyapti": "see ekadashi-shukla — not plain udaya-vyāpinī"
+      "vyaptiNote": "see ekadashi-shukla — not plain udaya-vyāpinī",
+      "dayRule": "sunrise"
     },
     "lasts": {
       "days": 1
@@ -2801,7 +2835,8 @@
     "sources": [
       {
         "work": "Padmapurāṇa",
-        "note": "Source of the Murāsura and Yogamāyā legend, which expressly makes the first ekādaśī a Dhanurmāsa śukla-pakṣa ekādaśī — the textual root of the solar definition."
+        "note": "Source of the Murāsura and Yogamāyā legend, which expressly makes the first ekādaśī a Dhanurmāsa śukla-pakṣa ekādaśī — the textual root of the solar definition.",
+        "author": null
       },
       {
         "author": "P. V. Kane",
@@ -2811,7 +2846,8 @@
       },
       {
         "work": "Viṣṇupurāṇa",
-        "note": "Cited in the tradition for the claim that this fast equals the other twenty-three; recorded as māhātmya, not as a timing rule."
+        "note": "Cited in the tradition for the claim that this fast equals the other twenty-three; recorded as māhātmya, not as a timing rule.",
+        "author": null
       }
     ],
     "_corpus": "hindu-monthly",
@@ -2912,7 +2948,8 @@
       {
         "work": "Padmapurāṇa",
         "locus": "VI.64–65",
-        "note": "Cited by Kane as giving the names of the intercalary month's dark-half and bright-half ekādaśīs; the assignment could not be verified from the available scan."
+        "note": "Cited by Kane as giving the names of the intercalary month's dark-half and bright-half ekādaśīs; the assignment could not be verified from the available scan.",
+        "author": null
       }
     ],
     "_corpus": "hindu-monthly",
@@ -2997,7 +3034,8 @@
       {
         "work": "Wikipedia, 'Navaratri'",
         "locus": "section on the four Navaratris",
-        "note": "States Māgha Navarātri, 'also known as Gupt (secret) Navaratri', Śukla Pratipadā, nine nights, observed regionally or individually. Tertiary; used only to fix the tithi anchor."
+        "note": "States Māgha Navarātri, 'also known as Gupt (secret) Navaratri', Śukla Pratipadā, nine nights, observed regionally or individually. Tertiary; used only to fix the tithi anchor.",
+        "author": null
       },
       {
         "author": "David Kinsley",
@@ -3007,7 +3045,8 @@
       },
       {
         "work": "Śāktapramoda",
-        "note": "The standard nineteenth-century Śākta ritual compendium for the Mahāvidyās; cited for the existence of the observance, not quoted."
+        "note": "The standard nineteenth-century Śākta ritual compendium for the Mahāvidyās; cited for the existence of the observance, not quoted.",
+        "author": null
       }
     ],
     "confidence": "reconstructed",
@@ -3044,12 +3083,14 @@
       {
         "work": "Wikipedia, 'Navaratri'",
         "locus": "section on the four Navaratris",
-        "note": "States Āṣāḍha Navarātri, 'also known as Gupta Navaratri', Śukla Pratipadā, nine nights. Tertiary; used only to fix the tithi anchor."
+        "note": "States Āṣāḍha Navarātri, 'also known as Gupta Navaratri', Śukla Pratipadā, nine nights. Tertiary; used only to fix the tithi anchor.",
+        "author": null
       },
       {
         "work": "MyPanchang.com, Hindu Festivals 2026",
         "locus": "'Ashadha Gupta Navaratri' entry",
-        "note": "Dṛk-siddha pañcāṅga (Mahesh Shastri) listing the observance as a distinct festival."
+        "note": "Dṛk-siddha pañcāṅga (Mahesh Shastri) listing the observance as a distinct festival.",
+        "author": null
       },
       {
         "author": "David Kinsley",
@@ -3094,15 +3135,18 @@
       {
         "work": "Kṛttivāsī Rāmāyaṇa",
         "locus": "Laṅkākāṇḍa (15th c., Bengali)",
-        "note": "Source of the akāl bodhon narrative, including the 108-lotus episode."
+        "note": "Source of the akāl bodhon narrative, including the 108-lotus episode.",
+        "author": null
       },
       {
         "work": "Bṛhaddharma Purāṇa",
-        "note": "Cited in the Bengali tradition for the autumnal timing; chapter numbering varies by edition, so no locus is asserted."
+        "note": "Cited in the Bengali tradition for the autumnal timing; chapter numbering varies by edition, so no locus is asserted.",
+        "author": null
       },
       {
         "work": "Drik Panchang, Bengali Calendar 2026",
-        "locus": "Kalparambha / Akal Bodhon, 16 October 2026 — 'Ashshin Shukla Shashthi'"
+        "locus": "Kalparambha / Akal Bodhon, 16 October 2026 — 'Ashshin Shukla Shashthi'",
+        "author": null
       }
     ],
     "confidence": "attested",
@@ -3144,7 +3188,8 @@
       },
       {
         "work": "Drik Panchang, Bengali Calendar 2026",
-        "locus": "Durga Saptami, 17 October 2026 — 'Ashshin Shukla Saptami'"
+        "locus": "Durga Saptami, 17 October 2026 — 'Ashshin Shukla Saptami'",
+        "author": null
       }
     ],
     "confidence": "attested",
@@ -3196,7 +3241,8 @@
       },
       {
         "work": "Drik Panchang, Hindu Calendar / Bengali Calendar 2026",
-        "locus": "Durga Ashtami, 18 October 2026 — 'Ashwina/Ashshin Shukla Ashtami'"
+        "locus": "Durga Ashtami, 18 October 2026 — 'Ashwina/Ashshin Shukla Ashtami'",
+        "author": null
       }
     ],
     "confidence": "attested",
@@ -3235,16 +3281,19 @@
       {
         "work": "Wikipedia, 'Durga Puja'",
         "locus": "ritual section",
-        "note": "Quoted: 'The rituals are performed in the last 24 minutes of Ashtami and the first 24 minutes of Navami' — a 'forty-eight minutes long ritual commemorating the climax of battle' when Cāmuṇḍā killed Caṇḍa and Muṇḍa."
+        "note": "Quoted: 'The rituals are performed in the last 24 minutes of Ashtami and the first 24 minutes of Navami' — a 'forty-eight minutes long ritual commemorating the climax of battle' when Cāmuṇḍā killed Caṇḍa and Muṇḍa.",
+        "author": null
       },
       {
         "work": "Mārkaṇḍeya Purāṇa",
         "locus": "Devī Māhātmya, adhyāya 7 (Caṇḍa-Muṇḍa-vadha)",
-        "note": "The episode the rite commemorates."
+        "note": "The episode the rite commemorates.",
+        "author": null
       },
       {
         "work": "Bishuddha Siddhanta Panjika / Gupta Press Panjika",
-        "note": "The two competing Bengali almanac authorities whose divergence affects the computed window."
+        "note": "The two competing Bengali almanac authorities whose divergence affects the computed window.",
+        "author": null
       }
     ],
     "confidence": "attested",
@@ -3284,11 +3333,13 @@
       {
         "work": "Kālikā Purāṇa",
         "locus": "Rudhirādhyāya",
-        "note": "The classical Śākta authority on bali; cited for the practice, not reproduced."
+        "note": "The classical Śākta authority on bali; cited for the practice, not reproduced.",
+        "author": null
       },
       {
         "work": "Drik Panchang, Hindu Calendar / Bengali Calendar 2026",
-        "locus": "Maha Navami, 19 October 2026 — 'Ashwina/Ashshin Shukla Navami'"
+        "locus": "Maha Navami, 19 October 2026 — 'Ashwina/Ashshin Shukla Navami'",
+        "author": null
       }
     ],
     "confidence": "attested",
@@ -3338,12 +3389,14 @@
       {
         "work": "Prokerala, 'Lalita Panchami'",
         "locus": "festival entry",
-        "note": "Quoted: it occurs on 'the Panchami tithi (5th day) of the Shukla Paksha ... during the month of Ashwin', and 'is very popular in the states of Gujarat and Maharashtra'. General-interest almanac source; used for the tithi and the regional attribution."
+        "note": "Quoted: it occurs on 'the Panchami tithi (5th day) of the Shukla Paksha ... during the month of Ashwin', and 'is very popular in the states of Gujarat and Maharashtra'. General-interest almanac source; used for the tithi and the regional attribution.",
+        "author": null
       },
       {
         "work": "Brahmāṇḍa Purāṇa",
         "locus": "Lalitopākhyāna / Lalitā Sahasranāma, Uttarakhaṇḍa",
-        "note": "The principal Purāṇic text of Lalitā."
+        "note": "The principal Purāṇic text of Lalitā.",
+        "author": null
       }
     ],
     "confidence": "reconstructed",
@@ -3408,12 +3461,14 @@
       {
         "work": "Wikipedia, 'Kali Puja'",
         "locus": "opening section",
-        "note": "Quoted: Kālī Pūjā falls on the new moon 'of the Hindu calendar month of Ashwayuja (according to the amanta tradition) or Kartika (according to the purnimanta tradition)'. Used to fix the reckoning."
+        "note": "Quoted: Kālī Pūjā falls on the new moon 'of the Hindu calendar month of Ashwayuja (according to the amanta tradition) or Kartika (according to the purnimanta tradition)'. Used to fix the reckoning.",
+        "author": null
       },
       {
         "work": "Drik Panchang, Bengali Calendar 2026",
         "locus": "Kali Puja, 8 November 2026 — 'Ashshin Krishna Amabasya'",
-        "note": "Confirms that the Bengali calendar names this day by the amanta system."
+        "note": "Confirms that the Bengali calendar names this day by the amanta system.",
+        "author": null
       }
     ],
     "confidence": "attested",
@@ -3461,12 +3516,14 @@
       {
         "work": "Drik Panchang, Hindu Calendar 2026",
         "locus": "Kali Chaudas / Narak Chaturdashi, 7 November 2026 — 'Kartika, Krishna Chaturdashi'",
-        "note": "Purnimanta naming read directly from the source."
+        "note": "Purnimanta naming read directly from the source.",
+        "author": null
       },
       {
         "work": "MyPanchang.com, Hindu Festivals 2026",
         "locus": "'Kali Chaudash (Gujarat)' entry",
-        "note": "Confirms the Gujarati Śākta observance as a distinct listed festival."
+        "note": "Confirms the Gujarati Śākta observance as a distinct listed festival.",
+        "author": null
       },
       {
         "author": "Rachel Fell McDermott",
@@ -3510,12 +3567,14 @@
       {
         "work": "Wikipedia, 'Kali Puja'",
         "locus": "section on other Kālī Pūjās",
-        "note": "States 'Ratanti Kali Puja — observed on Magha Krishna Chaturdashi'."
+        "note": "States 'Ratanti Kali Puja — observed on Magha Krishna Chaturdashi'.",
+        "author": null
       },
       {
         "work": "Drik Panchang, Hindu Calendar 2026",
         "locus": "Mauni Amavas, 18 January 2026 — 'Magha, Krishna Amavasya'",
-        "note": "Used to identify which caturdaśī is meant and to establish that the naming is purnimanta."
+        "note": "Used to identify which caturdaśī is meant and to establish that the naming is purnimanta.",
+        "author": null
       },
       {
         "author": "Rachel Fell McDermott",
@@ -3559,7 +3618,8 @@
       {
         "work": "Wikipedia, 'Kali Puja'",
         "locus": "section on other Kālī Pūjās",
-        "note": "States 'Phalaharini Kali Puja — celebrated on Jyeshta Amavasya, noted as significant in Ramakrishna's life'."
+        "note": "States 'Phalaharini Kali Puja — celebrated on Jyeshta Amavasya, noted as significant in Ramakrishna's life'.",
+        "author": null
       },
       {
         "author": "Swami Saradananda",
@@ -3569,7 +3629,8 @@
       {
         "work": "Drik Panchang, Hindu Calendar 2026",
         "locus": "'Jyeshtha Adhika' entries, May–June 2026; nija Jyeṣṭha Pūrṇimā 29 June 2026",
-        "note": "Establishes the 2026 intercalation and hence the nija-month placement."
+        "note": "Establishes the 2026 intercalation and hence the nija-month placement.",
+        "author": null
       },
       {
         "author": "Kamalākara Bhaṭṭa",
@@ -3607,7 +3668,20 @@
       "tithi": 15,
       "reckoning": "amanta"
     },
-    "sources": "DELETE the object; if the scholarship is wanted, cite Urban, The Power of Tantra (I. B. Tauris, 2010) with a page range, as ambubachi-mela already does correctly",
+    "sources": [
+      {
+        "work": "Wikipedia, 'Kali Puja'",
+        "locus": "section on other Kālī Pūjās",
+        "note": "States 'Kaushiki Amavasya Kali Puja — associated with goddess Tara and saint Bamakhepa'.",
+        "author": null
+      },
+      {
+        "work": "Drik Panchang, Bengali Calendar 2026",
+        "locus": "September 2026 entries — 'Srabon, Krishna Panchami' (1 Sept), 'Srabon, Krishna Ashtami' (3 Sept)",
+        "note": "Amanta month-naming of the Bengali calendar confirmed directly; the terminal amāvasyā of that fortnight is the one meant.",
+        "author": null
+      }
+    ],
     "confidence": "reconstructed",
     "_corpus": "hindu-shakta",
     "audit": {
@@ -3666,12 +3740,14 @@
       {
         "work": "Brahmāṇḍa Purāṇa",
         "locus": "Uttarakhaṇḍa, Lalitopākhyāna (containing the Lalitā Sahasranāma)",
-        "note": "The principal Purāṇic text of the goddess."
+        "note": "The principal Purāṇic text of the goddess.",
+        "author": null
       },
       {
         "work": "Wikipedia, 'Tripura Sundari'",
         "locus": "festivals section",
-        "note": "States that Lalitā Jayantī is celebrated on Māgha Pūrṇimā."
+        "note": "States that Lalitā Jayantī is celebrated on Māgha Pūrṇimā.",
+        "author": null
       },
       {
         "author": "Douglas Renfrew Brooks",
@@ -3682,7 +3758,8 @@
       {
         "work": "Drik Panchang, Hindu Calendar 2026",
         "locus": "Magha Purnima, 1 February 2026",
-        "note": "Civil date of the anchor tithi."
+        "note": "Civil date of the anchor tithi.",
+        "author": null
       }
     ],
     "confidence": "attested",
@@ -3709,7 +3786,43 @@
       "paksha": "shukla",
       "tithi": 8
     },
-    "sources": "SPLIT into three source objects, one per text, or move to `note` as a genre-level reference",
+    "sources": [
+      {
+        "work": "Prokerala, 'Dhumavati Jayanti'",
+        "locus": "festival entry",
+        "note": "Quoted: 'It falls on the \"ashtami\" (8th day) during the \"Shukla Paksha\" ... in the \"Jyestha\" month of the Hindu calendar.' General-interest almanac source; the only one located that states the tithi explicitly.",
+        "author": null
+      },
+      {
+        "work": "Wikipedia, 'Dhumavati'",
+        "locus": "worship section",
+        "note": "Quoted: 'The fourth lunar day of the dark fortnight (Krishna Paksha) is considered the special day to perform her puja'; and 'Married people, however, are advised not to worship Dhumavati.'",
+        "author": null
+      },
+      {
+        "author": null,
+        "work": "Prāṇatoṣiṇī Tantra",
+        "locus": "Dhūmāvatī sections",
+        "note": "One of the Tantric sources on which the standard accounts of Dhūmāvatī rest."
+      },
+      {
+        "author": null,
+        "work": "Śaktisaṃgama Tantra",
+        "locus": "Kālī Khaṇḍa, Dhūmāvatī",
+        "note": "One of the Tantric sources on which the standard accounts of Dhūmāvatī rest."
+      },
+      {
+        "author": null,
+        "work": "Prapañcasārasāra-saṃgraha",
+        "locus": "Dhūmāvatī sections",
+        "note": "One of the Tantric sources on which the standard accounts of Dhūmāvatī rest."
+      },
+      {
+        "author": "David Kinsley",
+        "work": "Tantric Visions of the Divine Feminine: The Ten Mahāvidyās",
+        "locus": "University of California Press, 1997, ch. on Dhūmāvatī"
+      }
+    ],
     "confidence": "reconstructed",
     "_corpus": "hindu-shakta",
     "audit": {
@@ -3761,12 +3874,14 @@
       {
         "work": "Wikipedia, 'Matangi'",
         "locus": "festivals section",
-        "note": "States Mātaṅgī Jayantī is observed on 'the third day of Shukla Paksha in the month of Vaishakha'; also that 'No fasts or rituals to purify oneself before worship ... are prescribed for Matangi worship' and 'Anyone can use any mantra for worship, even though he is not initiated'. The underlying citation is a news outlet, not a critical source."
+        "note": "States Mātaṅgī Jayantī is observed on 'the third day of Shukla Paksha in the month of Vaishakha'; also that 'No fasts or rituals to purify oneself before worship ... are prescribed for Matangi worship' and 'Anyone can use any mantra for worship, even though he is not initiated'. The underlying citation is a news outlet, not a critical source.",
+        "author": null
       },
       {
         "work": "Drik Panchang, Hindu Calendar 2026",
         "locus": "Akshaya Tritiya, 19 April 2026 — 'Vaishakha, Shukla Tritiya'",
-        "note": "Independent confirmation of the tithi's civil placement."
+        "note": "Independent confirmation of the tithi's civil placement.",
+        "author": null
       },
       {
         "author": "David Kinsley",
@@ -3804,11 +3919,13 @@
       {
         "work": "Wikipedia, 'Bagalamukhi'",
         "locus": "whole article",
-        "note": "Consulted and found to give NO jayantī date; names the Bankhandi, Datia and Nalkheda temples and the Tantrasāra and Rudrayāmala as textual sources. Recorded here as negative evidence."
+        "note": "Consulted and found to give NO jayantī date; names the Bankhandi, Datia and Nalkheda temples and the Tantrasāra and Rudrayāmala as textual sources. Recorded here as negative evidence.",
+        "author": null
       },
       {
         "work": "Śāktapramoda",
-        "note": "The standard Śākta ritual compendium covering Bagalāmukhī; cited for the cult, not for the date."
+        "note": "The standard Śākta ritual compendium covering Bagalāmukhī; cited for the cult, not for the date.",
+        "author": null
       },
       {
         "author": "David Kinsley",
@@ -3818,7 +3935,8 @@
       {
         "work": "Drik Panchang, Bagalamukhi Jayanti",
         "locus": "drikpanchang.com/hindu-goddesses/parvati/mahavidya/bagalamukhi/jayanti/",
-        "note": "Vaiśākha śukla aṣṭamī; 2026 = 24 April, which the engine reproduces independently under the sunrise rule."
+        "note": "Vaiśākha śukla aṣṭamī; 2026 = 24 April, which the engine reproduces independently under the sunrise rule.",
+        "author": null
       }
     ],
     "confidence": "attested",
@@ -3848,12 +3966,14 @@
       {
         "work": "Wikipedia, 'Chinnamasta'",
         "locus": "worship section",
-        "note": "Consulted and found to give NO jayantī date (negative evidence). Quoted on restriction: worship 'mainly restricted to heroic Tantrikas'; 'only yogis and world renouncers have the ability to meditate on her using her icon'; 'The Tantrasara cautions a householder-man to invoke the goddess only in \"abstract terms\".'"
+        "note": "Consulted and found to give NO jayantī date (negative evidence). Quoted on restriction: worship 'mainly restricted to heroic Tantrikas'; 'only yogis and world renouncers have the ability to meditate on her using her icon'; 'The Tantrasara cautions a householder-man to invoke the goddess only in \"abstract terms\".'",
+        "author": null
       },
       {
         "work": "Drik Panchang, Hindu Calendar 2026",
         "locus": "Narasimha Jayanti, 29 April 2026 — 'Vaishakha, Shukla Chaturdashi'",
-        "note": "Fixes the civil placement of the claimed tithi; does not itself confirm the Chinnamastā attribution."
+        "note": "Fixes the civil placement of the claimed tithi; does not itself confirm the Chinnamastā attribution.",
+        "author": null
       },
       {
         "author": "Elisabeth Anne Benard",
@@ -3864,7 +3984,8 @@
       {
         "work": "Drik Panchang, Chhinnamasta Jayanti",
         "locus": "drikpanchang.com/hindu-goddesses/parvati/mahavidya/chhinnamasta/jayanti/",
-        "note": "Vaiśākha śukla caturdaśī; 2026 = 30 April."
+        "note": "Vaiśākha śukla caturdaśī; 2026 = 30 April.",
+        "author": null
       }
     ],
     "confidence": "attested",
@@ -3915,11 +4036,13 @@
       {
         "work": "Wikipedia, 'Jagaddhatri Puja'",
         "locus": "timing and history sections",
-        "note": "Quoted: observed during 'Shukla Paksha of the pious month of Kartika, especially the Tithi of Navami'; celebrated 'either for five days or on the Navami tithi only'."
+        "note": "Quoted: observed during 'Shukla Paksha of the pious month of Kartika, especially the Tithi of Navami'; celebrated 'either for five days or on the Navami tithi only'.",
+        "author": null
       },
       {
         "work": "Drik Panchang, Bengali Calendar 2026",
-        "locus": "Jagaddhatri Puja, 18 November 2026 — 'Kartik Shukla Nabami'"
+        "locus": "Jagaddhatri Puja, 18 November 2026 — 'Kartik Shukla Nabami'",
+        "author": null
       },
       {
         "author": "Rachel Fell McDermott",
@@ -3964,7 +4087,8 @@
       {
         "work": "Wikipedia, 'Ambubachi Mela'",
         "locus": "observance section",
-        "note": "Quoted: celebrated 'during the Assamese month Ahar, around the middle of June when the sun transits to the zodiac of Mithuna'; 'The temple remains closed for three days'; after three days the goddess is bathed and 'the doors of the temple are reopened and prasad is distributed'."
+        "note": "Quoted: celebrated 'during the Assamese month Ahar, around the middle of June when the sun transits to the zodiac of Mithuna'; 'The temple remains closed for three days'; after three days the goddess is bathed and 'the doors of the temple are reopened and prasad is distributed'.",
+        "author": null
       },
       {
         "author": "Hugh B. Urban",
@@ -3975,12 +4099,14 @@
       {
         "work": "Kālikā Purāṇa",
         "locus": "Kāmākhyā/Yoni-pīṭha sections",
-        "note": "The Purāṇic charter of the Kāmākhyā cult; chapter numbering varies by edition, so no locus is asserted."
+        "note": "The Purāṇic charter of the Kāmākhyā cult; chapter numbering varies by edition, so no locus is asserted.",
+        "author": null
       },
       {
         "work": "Drik Panchang, Hindu Calendar 2026",
         "locus": "Mithuna Sankranti, 15 June 2026",
-        "note": "Fixes the 60° reference point from which the seventh-day rule is counted."
+        "note": "Fixes the 60° reference point from which the seventh-day rule is counted.",
+        "author": null
       }
     ],
     "confidence": "reconstructed",
@@ -4019,12 +4145,14 @@
       {
         "work": "Kṛttivāsī Rāmāyaṇa",
         "locus": "Laṅkākāṇḍa (15th c., Bengali)",
-        "note": "The akāl bodhon narrative, which presupposes spring as the proper season for waking the Goddess."
+        "note": "The akāl bodhon narrative, which presupposes spring as the proper season for waking the Goddess.",
+        "author": null
       },
       {
         "work": "Wikipedia, 'Durga Puja'",
         "locus": "ritual section",
-        "note": "Confirms 'Bodhana/Akal Bodhon' as an out-of-season awakening, the premise on which the spring festival's priority rests."
+        "note": "Confirms 'Bodhana/Akal Bodhon' as an out-of-season awakening, the premise on which the spring festival's priority rests.",
+        "author": null
       },
       {
         "author": "Rachel Fell McDermott",
@@ -4034,7 +4162,8 @@
       },
       {
         "work": "Bṛhaddharma Purāṇa",
-        "note": "Cited in the Bengali tradition on the seasons of Durgā worship; no locus asserted."
+        "note": "Cited in the Bengali tradition on the seasons of Durgā worship; no locus asserted.",
+        "author": null
       }
     ],
     "confidence": "reconstructed",
@@ -4080,11 +4209,13 @@
     "sources": [
       {
         "work": "Drik Panchang, Hindu Calendar 2026",
-        "locus": "Kojagara Puja / Sharad Purnima, 25 October 2026 — 'Ashwina, Shukla Purnima'"
+        "locus": "Kojagara Puja / Sharad Purnima, 25 October 2026 — 'Ashwina, Shukla Purnima'",
+        "author": null
       },
       {
         "work": "Drik Panchang, Bengali Calendar 2026",
-        "locus": "Lakshmi Puja, 25 October 2026 — 'Ashshin Shukla Purnima'"
+        "locus": "Lakshmi Puja, 25 October 2026 — 'Ashshin Shukla Purnima'",
+        "author": null
       },
       {
         "author": "Rachel Fell McDermott",
@@ -4157,7 +4288,8 @@
       {
         "work": "Padmapurāṇa",
         "locus": "VI.64–65",
-        "note": "Cited by Kane as giving the names of the intercalary month's dark-half and bright-half ekādaśīs; the assignment could not be verified from the available scan."
+        "note": "Cited by Kane as giving the names of the intercalary month's dark-half and bright-half ekādaśīs; the assignment could not be verified from the available scan.",
+        "author": null
       }
     ],
     "_corpus": "hindu-monthly",
@@ -4245,7 +4377,7 @@
     },
     "sources": [
       {
-        "author": "",
+        "author": null,
         "work": "Bhāgavata Purāṇa",
         "locus": "8.15–8.23 (Vāmana-Bali)",
         "note": "The Vāmana avatāra and the sending of Bali to Sutala, with the boon of annual return."
@@ -4296,7 +4428,7 @@
     },
     "sources": [
       {
-        "author": "",
+        "author": null,
         "work": "Cilappatikāram",
         "locus": "Indira Vizhavu Ūr Eḍutta Kātai",
         "note": "Early Tamil notice of the Kṛttikā lamp festival."
@@ -4308,7 +4440,7 @@
         "note": "The Kṛttikā-nakṣatra lamp observance and its Skanda associations."
       },
       {
-        "author": "",
+        "author": null,
         "work": "Skanda Purāṇa",
         "locus": "Māheśvara Khaṇḍa, Aruṇācala Māhātmya",
         "note": "The column of fire at Aruṇācala, the narrative behind the summit beacon."
@@ -4355,13 +4487,13 @@
         "note": "The sixth-tithi solar vrata and the Ṣaṣṭhī Devī observances."
       },
       {
-        "author": "",
+        "author": null,
         "work": "Bhaviṣya Purāṇa",
         "locus": "Brāhma Parvan, Sūrya sections",
         "note": "Purāṇic material for Sūrya worship on ṣaṣṭhī and the arghya rite."
       },
       {
-        "author": "",
+        "author": null,
         "work": "Skanda Purāṇa",
         "locus": "s.v. Sūrya-ṣaṣṭhī vrata",
         "note": "Parallel account of the ṣaṣṭhī solar vrata."
@@ -4401,13 +4533,13 @@
     },
     "sources": [
       {
-        "author": "",
+        "author": null,
         "work": "Skanda Purāṇa",
         "locus": "Śaṅkara Saṃhitā, Sūrapadma-vadha",
         "note": "The killing of Sūrapadma and the six-day sequence."
       },
       {
-        "author": "",
+        "author": null,
         "work": "Kanda Purāṇam (Kacciyappa Civācāriyar)",
         "locus": "Asura Kāṇḍam",
         "note": "The Tamil recension behind the Tiruchendur enactment."
@@ -4478,7 +4610,7 @@
     },
     "sources": [
       {
-        "author": "",
+        "author": null,
         "work": "Mahābhārata",
         "locus": "Vana Parvan 277–283 (Sāvitrī-upākhyāna)",
         "note": "The narrative of Sāvitrī, Satyavān and Yama."
@@ -4490,7 +4622,7 @@
         "note": "Records both the amāvāsyā and pūrṇimā observances and their regional distribution."
       },
       {
-        "author": "",
+        "author": null,
         "work": "Skanda Purāṇa",
         "locus": "s.v. Vaṭa-sāvitrī",
         "note": "Purāṇic prescription of the banyan rite."
@@ -4553,7 +4685,7 @@
     },
     "sources": [
       {
-        "author": "",
+        "author": null,
         "work": "Vālmīki Rāmāyaṇa",
         "locus": "Kiṣkindhā and Sundara Kāṇḍas",
         "note": "The parentage and deeds; no calendar date is given."
@@ -4565,7 +4697,7 @@
         "note": "Records the competing dates and their regional distribution."
       },
       {
-        "author": "",
+        "author": null,
         "work": "Śiva Purāṇa",
         "locus": "Śatarudra Saṃhitā 20",
         "note": "One of the conflicting birth-accounts underlying the split."

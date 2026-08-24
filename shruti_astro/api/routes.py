@@ -763,6 +763,37 @@ async def hindu_year_endpoint(
         raise HTTPException(400, str(exc))
 
 
+@router.get("/attic-year")
+async def attic_year_endpoint(
+    year: int = Query(..., ge=1, le=9999, description="the Gregorian year the summer falls in"),
+    lat: float | None = Query(None, ge=-90, le=90),
+    lon: float | None = Query(None, ge=-180, le=180),
+    reckoning: str = Query("conjunction", description="conjunction | visibility"),
+) -> dict:
+    """
+    The Attic year as a table of months, with each month's Gregorian span.
+
+    The counterpart of `/hindu-year`, and it exists for the same reason: a
+    calendar that can only say what today is cannot show anyone when anything
+    happens.
+
+    **The year begins at the first new moon after the summer solstice**, so it
+    straddles two Gregorian years — `year` is the one the summer falls in, and
+    the table says its span rather than pretending to run January to December.
+    A thirteenth month is real when it appears, named Poseideon II and flagged.
+    """
+    from shruti_astro.core.attic import BeforeTheCycle, RECKONINGS, attic_year
+
+    if reckoning not in RECKONINGS:
+        raise HTTPException(400, f"reckoning must be one of {list(RECKONINGS)}")
+    try:
+        return attic_year(year, lat, lon, reckoning)
+    except BeforeTheCycle as exc:
+        raise HTTPException(400, str(exc))
+    except ValueError as exc:
+        raise HTTPException(400, str(exc))
+
+
 @router.get("/authorities")
 async def list_authorities() -> dict:
     """

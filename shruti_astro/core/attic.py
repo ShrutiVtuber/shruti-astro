@@ -352,3 +352,68 @@ def attic_day(
                 reckoning=reckoning, noumenia_note=note,
             )
     raise ValueError("could not place the date in an Attic month")
+
+
+def attic_year(
+    start_year: int, lat: float | None = None, lon: float | None = None,
+    reckoning: str = "conjunction",
+) -> dict:
+    """
+    The Attic year as a table of months, each with its Gregorian span.
+
+    The counterpart of `hindu_year`, and it exists for the same reason: a
+    calendar tool that can only say what today is cannot show anyone when
+    anything happens. The festivals are attached by the caller, from the
+    corpus — this function knows about months, not observances.
+
+    **The year begins at the first new moon after the summer solstice**, so it
+    straddles two Gregorian years and the table says so rather than pretending
+    to run January to December. `start_year` is the Gregorian year that summer
+    falls in.
+
+    A thirteenth month is not an anomaly to be smoothed: an intercalary year
+    genuinely has one, it is named Poseideon II, and it is flagged so a reader
+    can see why the year is longer rather than assuming a bug.
+    """
+    defaulted = lat is None or lon is None
+    if defaulted:
+        lat, lon = ATHENS
+
+    months = _attic_year(start_year, lat, lon, reckoning)
+    try:
+        following = _attic_year(start_year + 1, lat, lon, reckoning)
+        year_end = following[0][2]
+    except BeforeTheCycle:
+        following, year_end = None, None
+
+    bounds = [m[2] for m in months] + [year_end]
+    out = []
+    for i, (name, greek, first, intercalary, note) in enumerate(months):
+        nxt = bounds[i + 1]
+        # The last month of a year with no following year computed: 30 days is
+        # the honest guess and it is only ever the final row.
+        length = (nxt - first).days if nxt else 30
+        last = first + timedelta(days=length - 1)
+        out.append({
+            "name": name,
+            "greek": greek,
+            "index": i + 1,
+            "intercalary": intercalary,
+            "start": first.isoformat(),
+            "end": last.isoformat(),
+            "days": length,
+            "full": length == 30,
+            "note": note,
+        })
+
+    return {
+        "startYear": start_year,
+        "reckoning": reckoning,
+        "observer": {
+            "lat": round(lat, 4), "lon": round(lon, 4), "defaulted": defaulted,
+        },
+        "monthCount": len(out),
+        "intercalary": any(m["intercalary"] for m in out),
+        "spans": f"{out[0]['start']} to {out[-1]['end']}",
+        "months": out,
+    }

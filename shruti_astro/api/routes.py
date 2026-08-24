@@ -490,6 +490,47 @@ async def hindu_calendar_endpoint(
     return out
 
 
+@router.get("/sigil")
+async def sigil_endpoint(
+    statement: str = Query(..., min_length=1, max_length=500),
+    keep_vowels: bool = Query(False),
+    enclosure: str = Query("circle", description="none | circle | vesica"),
+    line_weight: str = Query("hairline", description="hairline | broad | engraved"),
+    svg: bool = Query(True, description="include the rendered SVG"),
+) -> dict:
+    """
+    A sigil by letter elimination, with every step of the reduction shown.
+
+    The figure is **deterministic** — the same statement always draws the same
+    sigil — and the statement is **never written into the image**. The method
+    exists to make the intent unreadable; a tool that embeds it in metadata has
+    undone the work.
+
+    Cannot-compute: the reduction can consume the sentence entirely. That is
+    reported with what to do about it, not drawn as an empty circle.
+    """
+    from shruti_astro.core.sigil import build, to_svg
+
+    try:
+        s = build(statement, keep_vowels, enclosure, line_weight)
+    except ValueError as exc:
+        raise HTTPException(400, str(exc))
+
+    out = {
+        "steps": [{"label": st.label, "value": st.value, "note": st.note}
+                  for st in s.steps],
+        "letters": s.letters,
+        "pointCount": len(s.points),
+        "path": s.path,
+        "options": s.options,
+        "exhausted": s.exhausted,
+        "exhaustedReason": s.exhausted_reason,
+    }
+    if svg and not s.exhausted:
+        out["svg"] = to_svg(s)
+    return out
+
+
 @router.get("/attic-calendar")
 async def attic_calendar_endpoint(
     when: str | None = Query(None, description="ISO-8601 date; defaults to today"),

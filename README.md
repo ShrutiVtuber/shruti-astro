@@ -54,6 +54,26 @@ Hellenistic and Vedic are first-class together, not one bolted onto the other:
 | `GET /planetary-hours` | current hour and its ruler, for a location |
 | `GET /panchanga` | tithi, nakṣatra, yoga, karaṇa for a date and place |
 | `GET /chart` | positions, houses, aspects — tropical and sidereal |
+| `GET /rise-conventions` | the sunrise toggle — both traditions, described |
+| `GET /ayanamsas` | the six ayanāṁśas |
+
+## Sunrise is a toggle, not a setting
+
+Sophia practises both traditions, so the daemon serves both definitions rather
+than merging them:
+
+| Convention | Definition | Used by |
+|---|---|---|
+| `visible_disc` *(default)* | upper limb of the apparent disc, **with** refraction | Hellenistic planetary hours, Western almanacs |
+| `hindu` | centre of the disc, **no** refraction | Indian pañcāṅgas, the Vedic day boundary |
+
+Measured difference in Athens: **~4.6 minutes**. That is enough to move a
+tithi-at-sunrise across a boundary, which is why picking one globally would
+quietly corrupt the other.
+
+`GET /panchanga?at_sunrise=true&lat=&lon=` is the mode that reproduces a printed
+Indian almanac: almanacs name the day by the tithi prevailing *at sunrise* under
+the Hindu convention, so asking at noon can legitimately disagree by a day.
 
 ## Running
 

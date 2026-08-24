@@ -13,6 +13,8 @@ which a chart is not usable by a Vedic astrologer at all:
 
 from __future__ import annotations
 
+from shruti_astro.core.divisions import division_fraction, division_index
+
 RASHIS = [
     "Meṣa", "Vṛṣabha", "Mithuna", "Karka", "Siṃha", "Kanyā",
     "Tulā", "Vṛścika", "Dhanu", "Makara", "Kumbha", "Mīna",
@@ -46,14 +48,16 @@ def rashi(sidereal_longitude: float) -> dict:
 
 def nakshatra_of(sidereal_longitude: float) -> dict:
     lon = sidereal_longitude % 360.0
-    idx = int(lon // NAKSHATRA_SPAN)
-    within = lon % NAKSHATRA_SPAN
+    idx = division_index(lon, 27)
+    frac = division_fraction(lon, 27)
     return {
         "index": idx + 1,
         "name": NAKSHATRAS[idx],
-        "pada": int(within // PADA_SPAN) + 1,
+        # Four pādas per nakṣatra — derived from the fraction so it can never
+        # disagree with the nakṣatra it belongs to.
+        "pada": min(int(frac * 4) + 1, 4),
         "lord": NAKSHATRA_LORDS[idx],
-        "fraction": round(within / NAKSHATRA_SPAN, 6),
+        "fraction": round(frac, 6),
     }
 
 
@@ -68,8 +72,8 @@ def navamsa(sidereal_longitude: float) -> dict:
     step with itself.
     """
     lon = sidereal_longitude % 360.0
-    sign = int(lon // 30)
-    part = int((lon % 30) // (30.0 / 9.0))
+    sign = division_index(lon, 12)
+    part = division_index(lon % 30, 9, of_degrees=30.0)
     idx = (sign * 9 + part) % 12
     return {"index": idx + 1, "name": RASHIS[idx]}
 

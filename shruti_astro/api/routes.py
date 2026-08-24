@@ -183,6 +183,8 @@ async def chart(
     house_system: str = Query("whole_sign"),
     include_modern: bool = Query(False, description="Uranus, Neptune, Pluto"),
     true_node: bool = Query(False, description="True node instead of mean"),
+    dasha_levels: int = Query(2, ge=1, le=3, description="Vedic: mahā / antara / pratyantara"),
+    dasha_year: str = Query("julian", description="Vedic: julian | sidereal | savana"),
 ) -> dict:
     """
     A full natal chart, in whichever tradition the visitor chooses.
@@ -197,6 +199,8 @@ async def chart(
 
     The positions are identical in both; only the frame and the reading differ.
     """
+    from shruti_astro.core import aspects as asp
+    from shruti_astro.core import dasha as da
     from shruti_astro.core import hellenistic as he
     from shruti_astro.core import vedic as ve
     from shruti_astro.core.doctrine import DEFAULT, Doctrine, DoctrineError
@@ -242,6 +246,8 @@ async def chart(
         "bodies": [],
     }
 
+    speeds = {b.name: b.speed for b in pos.bodies}
+
     if tradition == "hellenistic":
         s = he.sect(by_name["Sun"], pos.ascendant)
         out["sect"] = {
@@ -262,6 +268,22 @@ async def chart(
             if b.name not in ("Rahu", "Ketu"):
                 entry["dignities"] = he.dignities(b.name, b.longitude, s.is_day, DEFAULT)
             out["bodies"].append(entry)
+
+        # Configuration is by SIGN in the tradition; the degree list is a
+        # refinement for judging application, never a replacement.
+        out["aspects"] = {
+            "basis": "whole_sign",
+            "configurations": [
+                {"from": a.from_body, "to": a.to_body, "aspect": a.name,
+                 "separationSigns": a.separation_signs}
+                for a in asp.whole_sign_aspects(by_name)
+            ],
+            "byDegree": [
+                {"from": a.from_body, "to": a.to_body, "aspect": a.name,
+                 "orb": a.orb, "applying": a.applying}
+                for a in asp.degree_aspects(by_name, speeds)
+            ],
+        }
     else:
         asc_sign = int(pos.ascendant // 30)
         out["lagna"] = ve.rashi(pos.ascendant)
@@ -276,5 +298,39 @@ async def chart(
                 # Bhāva counted from the lagna, whole-sign.
                 "house": ((int(b.longitude // 30) - asc_sign) % 12) + 1,
             })
+
+        # Vimśottarī. The whole ladder hangs off the Moon's position within its
+        # nakṣatra, so it is derived from the same longitude shown above.
+        try:
+            periods = da.vimshottari(
+                moment, by_name["Moon"], cycles=1,
+                max_level=dasha_levels, year_length=dasha_year,
+            )
+        except ValueError as exc:
+            raise HTTPException(400, str(exc))
+
+        start_lord, remaining = da.balance_at_birth(by_name["Moon"])
+        out["dasha"] = {
+            "system": "vimshottari",
+            "yearLength": dasha_year,
+            "startingLord": start_lord,
+            "balanceAtBirth": {
+                "lord": start_lord,
+                "fractionRemaining": round(remaining, 6),
+                "years": round(da.LORD_YEARS[start_lord] * remaining, 4),
+            },
+            "active": da.active_chain(periods, moment),
+            "periods": [p.to_dict() for p in periods],
+        }
+
+        # Dṛṣṭi is asymmetric: `mutual` false means the aspect is not returned.
+        out["aspects"] = {
+            "basis": "graha_drishti",
+            "drishti": [
+                {"from": a.from_body, "to": a.to_body, "aspect": a.name,
+                 "mutual": a.mutual}
+                for a in asp.graha_drishti(by_name)
+            ],
+        }
 
     return out

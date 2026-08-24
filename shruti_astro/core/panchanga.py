@@ -12,6 +12,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from shruti_astro.core.divisions import division_fraction, division_index
+
 TITHI_NAMES = [
     "Pratipadā", "Dvitīyā", "Tṛtīyā", "Caturthī", "Pañcamī", "Ṣaṣṭhī", "Saptamī",
     "Aṣṭamī", "Navamī", "Daśamī", "Ekādaśī", "Dvādaśī", "Trayodaśī", "Caturdaśī",
@@ -57,18 +59,16 @@ def tithi(sun_long: float, moon_long: float) -> Limb:
 
 def nakshatra(moon_sidereal_long: float) -> Limb:
     """27 equal segments of 13°20' of the sidereal zodiac."""
-    span = 360.0 / 27.0
-    idx = int((moon_sidereal_long % 360.0) // span)
-    frac = ((moon_sidereal_long % 360.0) % span) / span
+    idx = division_index(moon_sidereal_long, 27)
+    frac = division_fraction(moon_sidereal_long, 27)
     return Limb(index=idx + 1, name=NAKSHATRA_NAMES[idx], fraction=frac)
 
 
 def yoga(sun_sidereal_long: float, moon_sidereal_long: float) -> Limb:
     """Yoga = the sum of the two sidereal longitudes, in 27 segments."""
-    span = 360.0 / 27.0
     total = (sun_sidereal_long + moon_sidereal_long) % 360.0
-    idx = int(total // span)
-    return Limb(index=idx + 1, name=YOGA_NAMES[idx], fraction=(total % span) / span)
+    idx = division_index(total, 27)
+    return Limb(index=idx + 1, name=YOGA_NAMES[idx], fraction=division_fraction(total, 27))
 
 
 def karana(sun_long: float, moon_long: float) -> Limb:

@@ -364,6 +364,12 @@ async def isopsephy_endpoint(
     invisible cannot be reproduced.
     """
     from shruti_astro.core.isopsephy import isopsephy as compute
+    from shruti_astro.core.katapayadi import encode
+
+    # Sanskrit is positional, not additive. Summing kaṭapayādi produces a
+    # number that means nothing, so it never reaches the additive path.
+    if cipher == "skt-katapayadi":
+        return encode(text)
 
     try:
         return compute(text, cipher, strip_marks)

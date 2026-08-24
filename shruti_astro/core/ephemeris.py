@@ -36,6 +36,7 @@ AYANAMSAS = {
     "raman": swe.SIDM_RAMAN,
     "fagan_bradley": swe.SIDM_FAGAN_BRADLEY,
     "true_citra": swe.SIDM_TRUE_CITRA,
+    "yukteshwar": swe.SIDM_YUKTESHWAR,
     "true_revati": swe.SIDM_TRUE_REVATI,
 }
 

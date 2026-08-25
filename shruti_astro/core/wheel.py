@@ -16,7 +16,16 @@ from __future__ import annotations
 
 import math
 
-SIGN_GLYPHS = "♈♉♊♋♌♍♎♏♐♑♒♓"
+# VARIATION SELECTOR-15 after every one of these, and it is not decoration.
+#
+# U+2648..U+2653 have **emoji presentation by default** in Unicode. Left alone
+# they render as filled coloured badges — the zodiac as a row of app icons —
+# while the planets (U+2609, U+263F…) default to text presentation and come out
+# as thin outlines. So the frame of the chart shouts and the reading whispers,
+# which is exactly backwards, and it looks like a styling problem rather than a
+# character-encoding one. U+FE0E asks for the text form.
+TEXT = "\ufe0e"
+SIGN_GLYPHS = [g + TEXT for g in "♈♉♊♋♌♍♎♏♐♑♒♓"]
 BODY_GLYPHS = {
     "Sun": "☉", "Moon": "☾", "Mercury": "☿", "Venus": "♀", "Mars": "♂",
     "Jupiter": "♃", "Saturn": "♄", "Uranus": "♅", "Neptune": "♆", "Pluto": "♇",
@@ -24,18 +33,56 @@ BODY_GLYPHS = {
 }
 
 # Configurations, and the stroke that distinguishes them without colour.
+# Widths are in viewBox units, where the whole chart is 100 across. These were
+# 0.5–0.9, which at that scale draws forty ropes through the middle of the
+# figure: the lines came out heavier than the planets they connect, so the eye
+# lands on the web instead of on the marks. Halved, and the hard aspects stay a
+# touch stronger than the soft ones so the distinction survives at any size and
+# without colour.
 ASPECT_STROKE = {
     "conjunction": (0.0, "none"),
-    "sextile": (0.5, "2 2"),
-    "square": (0.7, "none"),
-    "trine": (0.7, "none"),
-    "opposition": (0.9, "none"),
+    "sextile": (0.22, "2 2"),
+    "square": (0.34, "none"),
+    "trine": (0.28, "none"),
+    "opposition": (0.4, "none"),
 }
 
 
 def _pt(cx: float, cy: float, r: float, deg: float) -> tuple[float, float]:
     a = math.radians(deg)
     return cx + r * math.cos(a), cy - r * math.sin(a)
+
+
+def _spread(angles: list[float], least: float = 7.0) -> list[float]:
+    """
+    Push glyphs apart until none is closer than `least` degrees to its neighbour.
+
+    Two planets a degree apart are drawn on top of each other, and the reader
+    sees one smudge where the chart's most interesting fact — a conjunction —
+    ought to be. Nudging them apart and ticking the true degree keeps both the
+    legibility and the accuracy; drawing them where they really are keeps only
+    the accuracy, which nobody can read.
+
+    Relaxation over the angular order, and the order is fixed for the whole run:
+    the first version reversed it between passes, which flips the sign of every
+    gap and drives a tight cluster further into itself rather than opening it.
+    """
+    if len(angles) < 2:
+        return list(angles)
+    order = sorted(range(len(angles)), key=lambda i: angles[i])
+    placed = list(angles)
+    for _ in range(32):
+        moved = False
+        for a, b in zip(order, order[1:]):
+            gap = placed[b] - placed[a]
+            if gap < least:
+                push = (least - gap) / 2.0
+                placed[a] -= push
+                placed[b] += push
+                moved = True
+        if not moved:
+            break
+    return placed
 
 
 def hellenistic_wheel(
@@ -49,6 +96,11 @@ def hellenistic_wheel(
 
     Longitudes are rotated so the ascending degree sits due west on the page —
     the horizon — which is what makes the houses read anticlockwise from it.
+
+    **The planets are the reading and are drawn loudest.** The signs are the
+    frame and are drawn quietly; the aspect lines are the faintest thing here,
+    because forty of them at full strength turn the middle of the chart into a
+    ball of wool and bury the twelve marks somebody actually came to read.
     """
     cx = cy = 50.0
     aspects = aspects or []
@@ -58,13 +110,15 @@ def hellenistic_wheel(
         return (longitude - ascendant) % 360.0 + 180.0
 
     out: list[str] = []
-    out.append('<g stroke="currentColor" fill="none" stroke-width="0.4">')
-    for r in (48, 38, 26):
+
+    # Rings. The outer band holds the signs; the inner circle holds the lines.
+    out.append('<g stroke="currentColor" fill="none" stroke-width="0.35" opacity="0.55">')
+    for r in (48, 38, 24):
         out.append(f'<circle cx="{cx}" cy="{cy}" r="{r}"/>')
     out.append("</g>")
 
-    # Sign boundaries and glyphs.
-    out.append('<g stroke="currentColor" stroke-width="0.3" opacity="0.55">')
+    # Sign boundaries, only across the outer band.
+    out.append('<g stroke="currentColor" stroke-width="0.3" opacity="0.4">')
     for i in range(12):
         a = angle(i * 30.0)
         x1, y1 = _pt(cx, cy, 38, a)
@@ -72,53 +126,78 @@ def hellenistic_wheel(
         out.append(f'<line x1="{x1:.2f}" y1="{y1:.2f}" x2="{x2:.2f}" y2="{y2:.2f}"/>')
     out.append("</g>")
 
-    out.append('<g fill="currentColor" font-size="4.2" text-anchor="middle" '
-               'dominant-baseline="central" stroke="none">')
+    # Every fifth degree, ticked inside the band. Cheap, and it turns a smooth
+    # ring into something you can measure a position against by eye.
+    out.append('<g stroke="currentColor" stroke-width="0.2" opacity="0.3">')
+    for step in range(0, 360, 5):
+        a = angle(float(step))
+        long_tick = step % 30 == 0
+        x1, y1 = _pt(cx, cy, 38, a)
+        x2, y2 = _pt(cx, cy, 40 if long_tick else 39.2, a)
+        out.append(f'<line x1="{x1:.2f}" y1="{y1:.2f}" x2="{x2:.2f}" y2="{y2:.2f}"/>')
+    out.append("</g>")
+
+    # Signs: quiet, and in text presentation. See the note on SIGN_GLYPHS.
+    out.append('<g fill="currentColor" font-size="3.6" text-anchor="middle" '
+               'dominant-baseline="central" stroke="none" opacity="0.65">')
     for i in range(12):
         a = angle(i * 30.0 + 15.0)
-        x, y = _pt(cx, cy, 43, a)
+        x, y = _pt(cx, cy, 43.5, a)
         out.append(f'<text x="{x:.2f}" y="{y:.2f}">{SIGN_GLYPHS[i]}</text>')
     out.append("</g>")
 
-    # Aspect lines, inside the inner circle.
+    # Aspect lines, faint, inside the inner circle.
     by_name = {b["name"]: b["longitude"] for b in bodies}
     if aspects:
-        out.append('<g stroke="currentColor" fill="none">')
+        out.append('<g stroke="currentColor" fill="none" opacity="0.28">')
         for asp in aspects:
             a, b = asp.get("from"), asp.get("to")
             if a not in by_name or b not in by_name:
                 continue
-            width, dash = ASPECT_STROKE.get(asp.get("aspect", ""), (0.4, "1 2"))
+            width, dash = ASPECT_STROKE.get(asp.get("aspect", ""), (0.25, "1 2"))
             if width == 0.0:
                 continue                       # conjunction needs no line
-            x1, y1 = _pt(cx, cy, 26, angle(by_name[a]))
-            x2, y2 = _pt(cx, cy, 26, angle(by_name[b]))
+            x1, y1 = _pt(cx, cy, 24, angle(by_name[a]))
+            x2, y2 = _pt(cx, cy, 24, angle(by_name[b]))
             d = f' stroke-dasharray="{dash}"' if dash != "none" else ""
             out.append(f'<line x1="{x1:.2f}" y1="{y1:.2f}" x2="{x2:.2f}" '
-                       f'y2="{y2:.2f}" stroke-width="{width}" opacity="0.5"{d}/>')
+                       f'y2="{y2:.2f}" stroke-width="{width}"{d}/>')
         out.append("</g>")
 
-    # Bodies on the ring between the inner circles.
-    out.append('<g fill="currentColor" font-size="4.6" text-anchor="middle" '
-               'dominant-baseline="central" stroke="none">')
-    for b in bodies:
-        a = angle(b["longitude"])
-        x, y = _pt(cx, cy, 32, a)
-        glyph = BODY_GLYPHS.get(b["name"], b["name"][:2])
-        retro = "℞" if b.get("retrograde") else ""
-        out.append(f'<text x="{x:.2f}" y="{y:.2f}">{glyph}{retro}</text>')
-        # A tick at the exact degree, since the glyph is only approximate.
-        tx1, ty1 = _pt(cx, cy, 37, a)
-        tx2, ty2 = _pt(cx, cy, 38, a)
-        out.append(f'<line x1="{tx1:.2f}" y1="{ty1:.2f}" x2="{tx2:.2f}" '
-                   f'y2="{ty2:.2f}" stroke="currentColor" stroke-width="0.4"/>')
-    out.append("</g>")
-
-    # The horizon: ascendant to descendant.
+    # The horizon, drawn over the lines so it stays findable.
     ax, ay = _pt(cx, cy, 48, angle(ascendant))
     dx, dy = _pt(cx, cy, 48, angle(ascendant + 180))
     out.append(f'<line x1="{ax:.2f}" y1="{ay:.2f}" x2="{dx:.2f}" y2="{dy:.2f}" '
-               'stroke="currentColor" stroke-width="0.6" opacity="0.8"/>')
+               'stroke="currentColor" stroke-width="0.5" opacity="0.7"/>')
+
+    # Bodies, spread so none is drawn on top of another, each with a leader
+    # back to a tick at its true degree.
+    true_angles = [angle(b["longitude"]) for b in bodies]
+    drawn = _spread(true_angles)
+
+    out.append('<g stroke="currentColor" stroke-width="0.25" opacity="0.45" fill="none">')
+    for real, shown in zip(true_angles, drawn):
+        tx1, ty1 = _pt(cx, cy, 37.6, real)
+        tx2, ty2 = _pt(cx, cy, 34.5, real)
+        out.append(f'<line x1="{tx1:.2f}" y1="{ty1:.2f}" x2="{tx2:.2f}" y2="{ty2:.2f}"/>')
+        if abs(shown - real) > 0.4:
+            lx, ly = _pt(cx, cy, 31.6, shown)
+            out.append(f'<line x1="{tx2:.2f}" y1="{ty2:.2f}" x2="{lx:.2f}" y2="{ly:.2f}"/>')
+    out.append("</g>")
+
+    out.append('<g fill="currentColor" font-size="5" text-anchor="middle" '
+               'dominant-baseline="central" stroke="none" font-weight="600">')
+    for body, shown in zip(bodies, drawn):
+        x, y = _pt(cx, cy, 30.5, shown)
+        glyph = BODY_GLYPHS.get(body["name"], body["name"][:2])
+        out.append(f'<text x="{x:.2f}" y="{y:.2f}">{glyph}</text>')
+        if body.get("retrograde"):
+            # Beside the glyph, not inside it. Drawn inline it overlapped the
+            # body it belonged to and both became unreadable.
+            rx, ry = _pt(cx, cy, 30.5, shown)
+            out.append(f'<text x="{rx + 2.6:.2f}" y="{ry - 2.2:.2f}" font-size="2.6" '
+                       f'font-weight="400" opacity="0.8">℞</text>')
+    out.append("</g>")
 
     return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" '
             f'width="{size}" height="{size}" role="img">{"".join(out)}</svg>')

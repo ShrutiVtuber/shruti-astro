@@ -8,6 +8,15 @@ COPY pyproject.toml README.md LICENSE ./
 COPY shruti_astro ./shruti_astro
 RUN pip install --upgrade pip && pip install .
 
+# ── dev ─────────────────────────────────────────────────────────────────────
+# Tests only. The prod image deliberately carries neither pytest nor the parts
+# of the repo the tests read — packs/ and tests/ are not in it — which is
+# correct for what ships and is exactly why the suite must not be run inside
+# it. scripts/test.sh builds this stage and mounts the working tree.
+FROM base AS dev
+RUN pip install ".[dev]"
+CMD ["python", "-m", "pytest", "tests", "-q"]
+
 FROM base AS prod
 # Baked at build time so /version can report what is actually running — the
 # AGPL s13 source offer has to point at this exact tree.

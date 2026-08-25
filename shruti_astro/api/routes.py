@@ -13,6 +13,7 @@ from shruti_astro.core.ephemeris import (
     RISE_CONVENTIONS,
     SunNeverRose,
     longitudes,
+    sun_cycle,
     sun_events,
 )
 from shruti_astro.core.planetary_hours import (
@@ -89,7 +90,7 @@ async def planetary_hours(
         raise HTTPException(400, f"unknown convention; choose from {sorted(RISE_CONVENTIONS)}")
     moment = _moment(when)
     try:
-        sunrise, sunset, next_sunrise = sun_events(moment, lat, lon, convention)
+        sunrise, sunset, next_sunrise = sun_cycle(moment, lat, lon, convention)
         hours = build_hours(sunrise, sunset, next_sunrise, sunrise.weekday())
     except (SunNeverRose, NoPlanetaryHours) as exc:
         raise HTTPException(422, str(exc))
@@ -1004,7 +1005,9 @@ async def today(
     from shruti_astro.core import hellenistic as he
     from shruti_astro.core import vedic as ve
     from shruti_astro.core.attic import BeforeTheCycle, attic_day
-    from shruti_astro.core.ephemeris import SunNeverRose, chart_positions, sun_events
+    from shruti_astro.core.ephemeris import (
+        SunNeverRose, chart_positions, sun_cycle, sun_events,
+    )
     from shruti_astro.core.hindu_calendar import hindu_date
     from shruti_astro.core.planetary_hours import build_hours, current_hour
     from shruti_astro.core.stations import PRESETS, next_station, stations_for_day
@@ -1077,11 +1080,23 @@ async def today(
     # ── planetary hours ─────────────────────────────────────────────────────
     hours: dict | None = None
     try:
-        sunrise, sunset, next_sunrise = sun_events(moment, lat, lon)
+        sunrise, sunset, next_sunrise = sun_cycle(moment, lat, lon)
         built = build_hours(sunrise, sunset, next_sunrise, sunrise.weekday())
         now_hour = current_hour(built, moment)
         idx = built.index(now_hour) if now_hour else None
-        upcoming = built[idx + 1] if idx is not None and idx + 1 < len(built) else None
+        if idx is None:
+            upcoming = None
+        elif idx + 1 < len(built):
+            upcoming = built[idx + 1]
+        else:
+            # The last hour of the night. The hour after it is the first of
+            # the next cycle, not nothing — "what is coming" is the whole
+            # point of this field, and it must not go blank once a day.
+            try:
+                nsr, nss, nnsr = sun_cycle(next_sunrise, lat, lon)
+                upcoming = build_hours(nsr, nss, nnsr, nsr.weekday())[0]
+            except (SunNeverRose, NoPlanetaryHours):
+                upcoming = None
         hours = {
             "current": None if now_hour is None else {
                 "index": now_hour.index, "ruler": now_hour.ruler,

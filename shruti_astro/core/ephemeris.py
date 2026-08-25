@@ -205,6 +205,34 @@ def sun_events(
     return sunrise, sunset, next_sunrise
 
 
+def sun_cycle(
+    moment: datetime, lat: float, lon: float, convention: str = "visible_disc"
+) -> tuple[datetime, datetime, datetime]:
+    """
+    (sunrise, sunset, next sunrise) for the cycle *containing* `moment`.
+
+    Not the same question as `sun_events`, which brackets a calendar day and
+    starts looking from UTC midnight. Between midnight and dawn those two
+    answers differ: `sun_events` returns the sunrise that is still to come, so
+    the cycle it describes begins *after* the moment asked about.
+
+    That is what made a moment at half past five in the morning fall into no
+    planetary hour at all. Every instant is inside some sunrise-to-sunrise
+    cycle — a pre-dawn one belongs to the night that began the previous
+    evening — and this returns the one it is actually in.
+
+    The forward step is the same correction at the other end: a location far
+    enough east of Greenwich can have UTC midnight land before the previous
+    cycle has closed.
+    """
+    sunrise, sunset, next_sunrise = sun_events(moment, lat, lon, convention)
+    if moment < sunrise:
+        return sun_events(moment - timedelta(days=1), lat, lon, convention)
+    if moment >= next_sunrise:
+        return sun_events(moment + timedelta(days=1), lat, lon, convention)
+    return sunrise, sunset, next_sunrise
+
+
 # ── full chart positions ────────────────────────────────────────────────────
 
 # The seven traditional planets, then the lunar nodes. Vedic charts are not

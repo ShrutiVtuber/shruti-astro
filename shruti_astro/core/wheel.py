@@ -160,7 +160,11 @@ def vedic_square(
         for i in range(1, 4):
             out.append(f'<line x1="{2 + i * 24}" y1="2" x2="{2 + i * 24}" y2="98"/>')
             out.append(f'<line x1="2" y1="{2 + i * 24}" x2="98" y2="{2 + i * 24}"/>')
-        ring = [(50, 14), (74, 14), (86, 14), (86, 38), (86, 62), (86, 86),
+        # Cell centres, not arbitrary points: the grid runs 2..98 in steps of
+        # 24, so the only centres are 14, 38, 62 and 86. Meṣa sits second along
+        # the top and the signs run clockwise from it, which puts Mīna in the
+        # corner to its left — the arrangement a South Indian chart is read by.
+        ring = [(38, 14), (62, 14), (86, 14), (86, 38), (86, 62), (86, 86),
                 (62, 86), (38, 86), (14, 86), (14, 62), (14, 38), (14, 14)]
         for idx, c in enumerate(ring):
             houses[idx + 1] = c

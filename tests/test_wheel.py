@@ -93,3 +93,48 @@ def test_the_south_figure_does_not_move_with_the_lagna():
 def test_an_unknown_style_is_refused():
     with pytest.raises(ValueError):
         vedic_square(0, BODIES, "east")
+
+
+def test_every_glyph_lands_inside_a_cell():
+    """
+    A glyph on a grid line belongs to no house.
+
+    The South Indian figure is a 4×4 grid running 2..98 in steps of 24, so the
+    only x and y a cell centre can have are 14, 38, 62 and 86. Two signs were
+    drawn at x=50 and x=74 — exactly on the lines between cells — which reads
+    as a chart whose first two signs are in the wrong houses, and which every
+    other test here passed happily: the figure was still a square, still
+    differed from North, and still did not move with the lagna.
+    """
+    import re
+
+    CENTRES = {14.0, 38.0, 62.0, 86.0}
+    svg = vedic_square(0, BODIES, "south")
+    placed = re.findall(r'<text x="([\d.]+)" y="([\d.]+)"', svg)
+    assert placed, "no glyphs were drawn at all"
+    for x, y in placed:
+        assert float(x) in CENTRES, f"a glyph sits at x={x}, between cells"
+        # Sign labels sit 5 above the centre and bodies 3 below it.
+        assert float(y) in {c + d for c in CENTRES for d in (0, -5, 3)}, (
+            f"a glyph sits at y={y}, outside every cell"
+        )
+
+
+def test_the_south_figure_puts_the_signs_where_they_are_read():
+    """
+    Mīna in the top-left corner, Meṣa beside it, running clockwise.
+
+    This is the whole of what makes a South Indian chart readable: the reader
+    knows where each sign is before they look. Getting the order right but the
+    starting corner wrong produces a figure that is internally consistent and
+    still unreadable.
+    """
+    import re
+
+    svg = vedic_square(0, BODIES, "south")
+    at = {(float(x), float(y)): g
+          for x, y, g in re.findall(r'<text x="([\d.]+)" y="([\d.]+)"[^>]*>(.)</text>', svg)}
+    assert at.get((14.0, 9.0)) == "♓", "Mīna is not in the top-left corner"
+    assert at.get((38.0, 9.0)) == "♈", "Meṣa is not beside it"
+    assert at.get((62.0, 9.0)) == "♉", "the signs do not run clockwise from Meṣa"
+    assert at.get((86.0, 33.0)) == "♋", "the right-hand column is not in order"

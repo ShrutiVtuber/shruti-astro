@@ -3,8 +3,13 @@
 The Thelemic date.
 
 Three parts, and the first two are the point: the date is written as the
-positions of the luminaries, not as a number. ``☉ in 1° Virgo : ☾ in 22°
-Capricorn : Anno Vxii æræ novæ``.
+positions of the luminaries, not as a number. ``☉ in 1° ♍ : ☾ in 22° ♑ :
+Anno Vxii e.v.``
+
+Written in glyphs rather than sign names, which is how the line is set in
+practice — and the luminaries were already glyphs, so spelling out the signs
+beside them was inconsistent anyway. The names remain in the structured
+fields for anything that needs to read them.
 
 **The year turns at the March equinox**, not at midnight on 1 January, because
 the era is dated from the equinox of 1904 — so a date in February belongs to
@@ -106,14 +111,17 @@ def thelemic_date(moment: datetime) -> ThelemicDate:
     # than as an empty string with a stray space in the middle of the line.
     anno = roman(cycle, upper=True) + roman(year_in_cycle) or "0"
 
-    sun_sign = he.SIGNS[he.sign_of(L.sun_tropical)]
-    moon_sign = he.SIGNS[he.sign_of(L.moon_tropical)]
+    sun_i = he.sign_of(L.sun_tropical)
+    moon_i = he.sign_of(L.moon_tropical)
+    sun_sign = he.SIGNS[sun_i]
+    moon_sign = he.SIGNS[moon_i]
     sun_deg = he.degree_in_sign(L.sun_tropical)
     moon_deg = he.degree_in_sign(L.moon_tropical)
 
     formatted = (
-        f"☉ in {sun_deg:.0f}° {sun_sign} : ☾ in {moon_deg:.0f}° {moon_sign} "
-        f": Anno {anno} æræ novæ"
+        f"☉ in {sun_deg:.0f}° {he.SIGN_GLYPHS[sun_i]} "
+        f": ☾ in {moon_deg:.0f}° {he.SIGN_GLYPHS[moon_i]} "
+        f": Anno {anno} e.v."
     )
     return ThelemicDate(
         sun_sign=sun_sign, sun_degree=round(sun_deg, 4),

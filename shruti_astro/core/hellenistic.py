@@ -17,6 +17,13 @@ SIGNS = [
     "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces",
 ]
 
+# The same twelve as glyphs, in the same order. Kept beside the names because
+# anything that has one index has the other.
+SIGN_GLYPHS = [
+    "\u2648", "\u2649", "\u264a", "\u264b", "\u264c", "\u264d",
+    "\u264e", "\u264f", "\u2650", "\u2651", "\u2652", "\u2653",
+]
+
 DOMICILE = [
     "Mars", "Venus", "Mercury", "Moon", "Sun", "Mercury",
     "Venus", "Mars", "Jupiter", "Saturn", "Saturn", "Jupiter",

@@ -456,6 +456,98 @@ async def chart(
 
 # ── isopsephy / gematria ────────────────────────────────────────────────────
 
+@router.get("/synastry")
+async def synastry(
+    when_a: str = Query(..., description="First birth moment, ISO-8601 with offset."),
+    lat_a: float = Query(..., ge=-90, le=90),
+    lon_a: float = Query(..., ge=-180, le=180),
+    when_b: str = Query(..., description="Second birth moment, ISO-8601 with offset."),
+    lat_b: float = Query(..., ge=-90, le=90),
+    lon_b: float = Query(..., ge=-180, le=180),
+    tradition: str = Query("hellenistic", description="hellenistic | vedic"),
+    ayanamsa: str = Query("lahiri", description="Vedic only"),
+    orb: float = Query(6.0, ge=1.0, le=10.0, description="Degrees, for the degree-based pass"),
+    time_unknown_a: bool = Query(False),
+    time_unknown_b: bool = Query(False),
+) -> dict:
+    """
+    Two charts, and what each does to the other.
+
+    **Only CROSS configurations.** A synastry that included each chart's own
+    internal aspects would bury the twenty lines somebody came to read under
+    ninety they can already get from the two natal charts.
+
+    Both the sign-based and the degree-based readings are returned, because
+    they answer different questions and the tradition does not agree with
+    itself about which is primary: whole-sign says whether a configuration
+    exists at all, degrees say how close it is and whether it is applying.
+
+    **An unknown birth time is honoured rather than papered over.** Where a
+    time is not known the angles are omitted and every configuration to them
+    is withheld, because an ascendant computed from an assumed noon is
+    invented — and a synastry reading built on an invented ascendant is worse
+    than no reading, since it looks exactly as authoritative.
+    """
+    from shruti_astro.core import aspects as asp
+    from shruti_astro.core.ephemeris import chart_positions
+
+    sidereal = tradition == "vedic"
+    a = chart_positions(_moment(when_a), lat_a, lon_a, sidereal=sidereal)
+    b = chart_positions(_moment(when_b), lat_b, lon_b, sidereal=sidereal)
+
+    by_a = {f"A {x.name}": x.longitude for x in a.bodies}
+    by_b = {f"B {x.name}": x.longitude for x in b.bodies}
+    speeds = {f"A {x.name}": x.speed for x in a.bodies}
+    speeds.update({f"B {x.name}": x.speed for x in b.bodies})
+
+    # The angles join the comparison only when the time they depend on is
+    # actually known. Four minutes of error is a degree of ascendant.
+    if not time_unknown_a:
+        by_a["A Ascendant"] = a.ascendant
+        by_a["A Midheaven"] = a.midheaven
+    if not time_unknown_b:
+        by_b["B Ascendant"] = b.ascendant
+        by_b["B Midheaven"] = b.midheaven
+
+    combined = {**by_a, **by_b}
+
+    def crossing(pairs):
+        return [
+            {
+                "from": x.from_body, "to": x.to_body, "aspect": x.name,
+                "separationSigns": getattr(x, "separation_signs", None),
+                "orb": getattr(x, "orb", None),
+                "applying": getattr(x, "applying", None),
+            }
+            for x in pairs
+            # One from each chart, never two from the same one.
+            if x.from_body.startswith("A ") != x.to_body.startswith("A ")
+        ]
+
+    return {
+        "tradition": tradition,
+        "zodiac": "sidereal" if sidereal else "tropical",
+        "timeUnknown": {"a": time_unknown_a, "b": time_unknown_b},
+        "angles": {
+            "a": None if time_unknown_a else {
+                "ascendant": round(a.ascendant, 6), "midheaven": round(a.midheaven, 6),
+            },
+            "b": None if time_unknown_b else {
+                "ascendant": round(b.ascendant, 6), "midheaven": round(b.midheaven, 6),
+            },
+        },
+        "bySign": crossing(asp.whole_sign_aspects(combined)),
+        "byDegree": crossing(asp.degree_aspects(combined, speeds, orb=orb)),
+        "undefined": (
+            ["the first chart has no birth time, so its angles are undefined"]
+            if time_unknown_a else []
+        ) + (
+            ["the second chart has no birth time, so its angles are undefined"]
+            if time_unknown_b else []
+        ),
+    }
+
+
 @router.get("/ciphers")
 async def list_ciphers() -> dict:
     """

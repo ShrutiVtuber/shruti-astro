@@ -15,7 +15,7 @@ the AGPL arm, so the decisions travel and the implementation does not.
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
 
 class DoctrineError(ValueError):

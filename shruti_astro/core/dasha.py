@@ -46,7 +46,7 @@ class Period:
     level: int                 # 1 mahādaśā, 2 antardaśā, 3 pratyantardaśā
     start: datetime
     end: datetime
-    children: list["Period"]
+    children: list[Period]
 
     def to_dict(self) -> dict:
         return {

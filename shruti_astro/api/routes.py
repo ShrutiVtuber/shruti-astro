@@ -1353,3 +1353,134 @@ async def festival_traditions() -> dict:
             for name, spec in CORPORA.items()
         }
     }
+
+# ── the period, rather than the instant ─────────────────────────────────────
+
+
+def _span(start: str, end: str, most_days: int) -> tuple[datetime, datetime]:
+    """
+    Two instants, checked as a range.
+
+    Refused rather than clamped when it is too long. Silently returning eleven
+    months of a year somebody asked for is the failure that gets noticed after
+    publication, when a column is missing the events nobody was told were
+    dropped.
+    """
+    begins, ends = _moment(start), _moment(end)
+    if ends <= begins:
+        raise HTTPException(400, "end must be after start")
+    if (ends - begins).days > most_days:
+        raise HTTPException(
+            400, f"that span is longer than {most_days} days; ask for less")
+    return begins, ends
+
+
+@router.get("/events")
+async def events_endpoint(
+    start: str = Query(..., description="UTC instant or date"),
+    end: str = Query(..., description="UTC instant or date"),
+    include_modern: bool = Query(False),
+    true_node: bool = Query(True),
+    void_rule: str = Query("thirtyDegrees", description="thirtyDegrees | signExit"),
+    kinds: str = Query("", description="comma-separated; omit for everything"),
+) -> dict:
+    """
+    Everything that happens between two instants.
+
+    A column is written from a list of moments, not from a chart. This is that
+    list: ingresses in both directions, stations, lunations, eclipses, exact
+    configurations, and the Moon's void windows.
+
+    **Every time is found by root-finding and given to the second**, because an
+    ingress at 23:47 UT falls on different days either side of the Atlantic and
+    the day-level answer a reader wants can only be derived from the instant.
+
+    Perfections between every pair of bodies are much the most expensive part;
+    `kinds` narrows the work as well as the output.
+    """
+    from shruti_astro.core.events import events_in_range
+
+    begins, ends = _span(start, end, most_days=400)
+    wanted = tuple(k.strip() for k in kinds.split(",") if k.strip()) or None
+    try:
+        found = events_in_range(
+            begins, ends, include_modern=include_modern, true_node=true_node,
+            void_rule=void_rule, kinds=wanted)
+    except ValueError as exc:
+        raise HTTPException(400, str(exc)) from exc
+
+    return {
+        "start": begins.isoformat().replace("+00:00", "Z"),
+        "end": ends.isoformat().replace("+00:00", "Z"),
+        "voidRule": void_rule,
+        "count": len(found),
+        "events": [e.as_dict() for e in found],
+    }
+
+
+@router.get("/ephemeris")
+async def ephemeris_endpoint(
+    start: str = Query(..., description="UTC date"),
+    end: str = Query(..., description="UTC date"),
+    hour: str = Query("midnight", description="midnight | noon"),
+    include_modern: bool = Query(False),
+    true_node: bool = Query(True),
+    events: bool = Query(True, description="attach each day's events"),
+) -> dict:
+    """
+    The almanac page: a row per day, a column per body.
+
+    This is the other half of what an astrologer works from, and it is not a
+    chart. A student reads *down* a column to watch a planet move and *across*
+    a row to see what it meets — which is how the craft has been learned since
+    the tables were printed, and it is why declination is here as well as
+    longitude. Longitude alone cannot show a parallel or a body out of bounds.
+
+    `hour` matters for anybody checking against a book they own: Raphael's is
+    computed for noon, most modern tables for midnight, and the Moon is seven
+    degrees apart between them.
+    """
+    from shruti_astro.core.tables import daily_table
+
+    begins, ends = _span(start, end, most_days=400)
+    try:
+        days = daily_table(begins, ends, hour=hour, include_modern=include_modern,
+                           true_node=true_node, with_events=events)
+    except ValueError as exc:
+        raise HTTPException(400, str(exc)) from exc
+
+    return {
+        "start": begins.date().isoformat(),
+        "end": ends.date().isoformat(),
+        "hour": hour,
+        "note": f"positions for {hour} Universal Time on each date",
+        "days": [d.as_dict() for d in days],
+    }
+
+
+@router.get("/positions")
+async def positions_endpoint(
+    start: str = Query(..., description="UTC instant"),
+    end: str = Query(..., description="UTC instant"),
+    include_modern: bool = Query(False),
+    true_node: bool = Query(True),
+) -> dict:
+    """
+    Dense longitudes for a span, for a client to interpolate between.
+
+    **This is what lets a wheel step smoothly without an ephemeris in the
+    browser.** Compiling Swiss Ephemeris to WebAssembly would put megabytes on
+    every reader's connection and leave two implementations to keep in
+    agreement; sampling here and interpolating there costs single-figure
+    kilobytes a month and has one set of numbers, so there is nothing to
+    disagree.
+
+    Node spacing is per body and measured: cubic interpolation between these
+    samples is accurate to under a fifth of an arcsecond for every body, which
+    is finer than a wheel can draw and finer than a printed table gives.
+    """
+    from shruti_astro.core.tables import positions_table
+
+    begins, ends = _span(start, end, most_days=400)
+    return positions_table(begins, ends, include_modern=include_modern,
+                           true_node=true_node)

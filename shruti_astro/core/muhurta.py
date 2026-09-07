@@ -14,7 +14,7 @@ arithmetic, not the ruling.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import datetime, timedelta
+from datetime import datetime
 
 # Which eighth of the daylight, 1-indexed, keyed by Python weekday (Mon=0..Sun=6).
 RAHU_KALA = {0: 2, 1: 7, 2: 5, 3: 6, 4: 4, 5: 3, 6: 8}

@@ -21,7 +21,7 @@ from __future__ import annotations
 import os
 import threading
 from dataclasses import dataclass
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 import swisseph as swe
 
@@ -92,7 +92,7 @@ def _flags(sidereal: bool = False) -> int:
 
 
 def _julday(moment: datetime) -> float:
-    m = moment.astimezone(timezone.utc)
+    m = moment.astimezone(UTC)
     return swe.julday(
         m.year, m.month, m.day,
         m.hour + m.minute / 60 + m.second / 3600 + m.microsecond / 3_600_000_000,
@@ -102,7 +102,7 @@ def _julday(moment: datetime) -> float:
 
 def _from_julday(jd: float) -> datetime:
     y, mo, d, ut = swe.revjul(jd, swe.GREG_CAL)
-    return datetime(y, mo, d, tzinfo=timezone.utc) + timedelta(hours=ut)
+    return datetime(y, mo, d, tzinfo=UTC) + timedelta(hours=ut)
 
 
 def _ayanamsa_for(jd: float, flags: int) -> float:
@@ -187,7 +187,7 @@ def sun_events(
     Raises SunNeverRose at polar latitudes where one of them does not occur —
     the caller is expected to say so rather than fabricate a day.
     """
-    start = day.astimezone(timezone.utc).replace(hour=0, minute=0, second=0, microsecond=0)
+    start = day.astimezone(UTC).replace(hour=0, minute=0, second=0, microsecond=0)
     jd0 = _julday(start)
 
     sunrise = _rise_or_set(jd0, lat, lon, swe.CALC_RISE, convention)
@@ -401,7 +401,7 @@ def limb_end(kind: str, moment: datetime, ayanamsa: str = "lahiri") -> datetime 
 def moon_events(day: datetime, lat: float, lon: float) -> tuple[datetime | None, datetime | None]:
     """(moonrise, moonset) after the start of `day`. Either may be None."""
     _ensure_init()
-    start = day.astimezone(timezone.utc).replace(hour=0, minute=0, second=0, microsecond=0)
+    start = day.astimezone(UTC).replace(hour=0, minute=0, second=0, microsecond=0)
     jd0 = _julday(start)
 
     def one(rsmi: int) -> datetime | None:

@@ -19,7 +19,7 @@ explicitly here rather than left to fail quietly:
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime
 
 # Chaldean order — slowest apparent motion to fastest.
 CHALDEAN = ["Saturn", "Jupiter", "Mars", "Sun", "Venus", "Mercury", "Moon"]
@@ -72,8 +72,8 @@ def build_hours(
             PlanetaryHour(
                 index=i + 1,
                 ruler=CHALDEAN[(offset + i) % 7],
-                starts_at=begin.astimezone(timezone.utc),
-                ends_at=end.astimezone(timezone.utc),
+                starts_at=begin.astimezone(UTC),
+                ends_at=end.astimezone(UTC),
                 is_night=is_night,
             )
         )
@@ -81,7 +81,7 @@ def build_hours(
 
 
 def current_hour(hours: list[PlanetaryHour], now: datetime | None = None) -> PlanetaryHour | None:
-    now = now or datetime.now(timezone.utc)
+    now = now or datetime.now(UTC)
     for h in hours:
         if h.starts_at <= now < h.ends_at:
             return h

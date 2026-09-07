@@ -67,8 +67,21 @@ def is_void_of_course(moment, rule: str = "thirtyDegrees") -> dict:
         cur = separations(j)
         for body, sep in cur.items():
             for angle in ASPECT_ANGLES:
-                for target in ({angle, -angle} if angle else {0.0}):
-                    a, b = prev[body] - target, sep - target
+                # A square perfects at +90° and at −90°, which are two
+                # different moments. A conjunction and an opposition have one
+                # each: 0 and 360 are the same separation, and so are 180 and
+                # −180. Listing −180 as well as 180 does not find a second
+                # opposition, it finds the same one twice.
+                for target in ({0.0} if angle == 0.0 else
+                               {180.0} if angle == 180.0 else {angle, -angle}):
+                    # **Folded into (−180, 180] before the comparison.**
+                    # Without this an opposition is invisible: the separation
+                    # runs 179.9 → −179.9 through the fold, so `sep − 180`
+                    # goes −0.1 → −359.9 and never changes sign. The Moon was
+                    # reported void while an opposition was still to perfect,
+                    # which is the one direction this must never err in.
+                    a = ((prev[body] - target + 180.0) % 360.0) - 180.0
+                    b = ((sep - target + 180.0) % 360.0) - 180.0
                     if a == 0 or (a < 0) != (b < 0):
                         if abs(a - b) < 180.0:
                             perfections.append({

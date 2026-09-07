@@ -21,7 +21,7 @@ Two details that decide whether the notification fires at all:
 from __future__ import annotations
 
 import hashlib
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 from shruti_astro.core.stations import StationDay
 
@@ -32,7 +32,7 @@ REFRESH = "PT1H"
 
 
 def _stamp(dt: datetime) -> str:
-    return dt.astimezone(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    return dt.astimezone(UTC).strftime("%Y%m%dT%H%M%SZ")
 
 
 def _fold(line: str) -> str:
@@ -65,7 +65,7 @@ def _uid(body: str, station: str, at: datetime, lat: float, lon: float) -> str:
     Derived rather than random so a refetch updates the event instead of
     creating a second one beside it.
     """
-    seed = f"{body}|{station}|{at.astimezone(timezone.utc).isoformat()}|{lat:.4f},{lon:.4f}"
+    seed = f"{body}|{station}|{at.astimezone(UTC).isoformat()}|{lat:.4f},{lon:.4f}"
     return f"{hashlib.sha256(seed.encode()).hexdigest()[:32]}@shrutivtuber.com"
 
 
@@ -85,7 +85,7 @@ def to_ical(
     "no moonrise today", and inventing a zero-length event to say so would put a
     misleading entry in someone's day.
     """
-    now = generated_at or datetime.now(timezone.utc)
+    now = generated_at or datetime.now(UTC)
     body = days[0].body if days else "sun"
     name = calendar_name or f"{body.title()} stations"
 

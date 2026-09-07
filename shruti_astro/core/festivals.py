@@ -16,13 +16,13 @@ twice (*vṛddhi*). Both are reported rather than smoothed away.
 from __future__ import annotations
 
 from dataclasses import dataclass
+from datetime import UTC, datetime, timedelta
 from datetime import date as date_cls
-from datetime import datetime, timedelta, timezone
 from functools import lru_cache
 
+from shruti_astro.core.ephemeris import SunNeverRose, longitudes, sun_events
 from shruti_astro.core.hindu_calendar import MONTHS, hindu_date
 from shruti_astro.core.panchanga import tithi as tithi_of
-from shruti_astro.core.ephemeris import SunNeverRose, longitudes, sun_events
 
 # Ujjain — the classical prime meridian of Indian astronomy, and the default
 # when a pack does not name a place. Stated rather than assumed.
@@ -94,7 +94,7 @@ class Resolved:
 @lru_cache(maxsize=65536)
 def _reckoning_moment(day: date_cls, lat: float, lon: float, rule: str) -> datetime | None:
     """The instant of `day` at which the observance's tithi is judged."""
-    noon = datetime(day.year, day.month, day.day, 12, tzinfo=timezone.utc)
+    noon = datetime(day.year, day.month, day.day, 12, tzinfo=UTC)
     try:
         sunrise, sunset, next_sunrise = sun_events(noon, lat, lon, "hindu")
     except SunNeverRose:
@@ -649,8 +649,8 @@ def resolve_recurring(
 def _sun_ingress(gregorian_year: int, degrees: float, ayanamsa: str = "lahiri",
                  after: datetime | None = None) -> datetime | None:
     """The instant the Sun reaches `degrees` of **sidereal** longitude."""
-    lo = after or datetime(gregorian_year, 1, 1, tzinfo=timezone.utc)
-    hi = datetime(gregorian_year + 1, 1, 1, tzinfo=timezone.utc)
+    lo = after or datetime(gregorian_year, 1, 1, tzinfo=UTC)
+    hi = datetime(gregorian_year + 1, 1, 1, tzinfo=UTC)
 
     def gap(m: datetime) -> float:
         return ((longitudes(m, ayanamsa).sun_sidereal - degrees + 180.0) % 360.0) - 180.0

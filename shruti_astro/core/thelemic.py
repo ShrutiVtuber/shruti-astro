@@ -28,7 +28,7 @@ inputs are the same the output is the same.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from shruti_astro.core import hellenistic as he
 from shruti_astro.core.ephemeris import longitudes
@@ -65,8 +65,8 @@ def march_equinox(year: int) -> datetime:
     year by the ayanāṁśa — about 24 days at present — and put the turn in
     April.
     """
-    lo = datetime(year, 3, 17, tzinfo=timezone.utc)
-    hi = datetime(year, 3, 24, tzinfo=timezone.utc)
+    lo = datetime(year, 3, 17, tzinfo=UTC)
+    hi = datetime(year, 3, 24, tzinfo=UTC)
 
     def past(m: datetime) -> bool:
         # Longitude wraps 360 → 0 at the equinox, so test the half-circle.

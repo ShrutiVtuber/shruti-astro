@@ -39,8 +39,8 @@ are inserted via the loader in ``theourgia.core.linguistic.loader``
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from dataclasses import dataclass, field
-from typing import Mapping
 
 __all__ = [
     "BUNDLED_CIPHERS",

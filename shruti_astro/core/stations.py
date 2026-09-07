@@ -23,8 +23,8 @@ from __future__ import annotations
 
 import math
 from dataclasses import dataclass
+from datetime import UTC, datetime, timedelta
 from datetime import date as date_cls
-from datetime import datetime, timedelta, timezone
 
 import swisseph as swe
 
@@ -124,7 +124,7 @@ def _transit(jd_start: float, body: int, rsmi: int, lat: float, lon: float) -> d
 
 
 def _day_window(day: date_cls) -> tuple[float, datetime, datetime]:
-    start = datetime(day.year, day.month, day.day, tzinfo=timezone.utc)
+    start = datetime(day.year, day.month, day.day, tzinfo=UTC)
     return _julday(start), start, start + timedelta(days=1)
 
 
@@ -216,7 +216,7 @@ def next_station(
     that far away, and answering "none today" when one falls tomorrow morning is
     unhelpful to someone deciding whether to set an alarm.
     """
-    day = moment.astimezone(timezone.utc).date()
+    day = moment.astimezone(UTC).date()
     for offset in range(4):
         sd = stations_for_day(day + timedelta(days=offset), lat, lon, body, preset)
         upcoming = [s for s in sd.stations if s.at and s.at > moment]

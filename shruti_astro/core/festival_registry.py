@@ -124,7 +124,7 @@ def year(
     cannot be dated is a fact about the record, and dropping it would leave a
     consumer believing the corpus is smaller and more certain than it is.
     """
-    from shruti_astro.core.attic import ATHENS, RECKONINGS
+    from shruti_astro.core.attic import RECKONINGS
     from shruti_astro.core.festivals import UJJAIN
 
     # The default belongs to the tradition, not to the registry. Serving

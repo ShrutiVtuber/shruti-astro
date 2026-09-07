@@ -42,8 +42,8 @@ and it never fabricates an archon year.
 from __future__ import annotations
 
 from dataclasses import dataclass
+from datetime import UTC, datetime, timedelta
 from datetime import date as date_cls
-from datetime import datetime, timedelta, timezone
 from functools import lru_cache
 
 import swisseph as swe
@@ -203,8 +203,8 @@ def _new_moon_after(jd: float) -> float:
 def _summer_solstice(year: int) -> float:
     """JD of the solstice — the Attic year begins with the first noumenia after it."""
     _ensure_init()
-    lo = _julday(datetime(year, 6, 1, tzinfo=timezone.utc))
-    hi = _julday(datetime(year, 7, 15, tzinfo=timezone.utc))
+    lo = _julday(datetime(year, 6, 1, tzinfo=UTC))
+    hi = _julday(datetime(year, 7, 15, tzinfo=UTC))
     for _ in range(80):
         mid = (lo + hi) / 2
         if swe.calc_ut(mid, swe.SUN, _flags())[0][0] % 360.0 < 90.0:
@@ -337,7 +337,7 @@ def attic_day(
             length = (nxt_first - first).days if nxt_first else 30
             day = (d - first).days + 1
             g, t, decad = _day_name(day, length)
-            jd = _julday(datetime(d.year, d.month, d.day, 12, tzinfo=timezone.utc))
+            jd = _julday(datetime(d.year, d.month, d.day, 12, tzinfo=UTC))
             sun = swe.calc_ut(jd, swe.SUN, _flags())[0][0]
             moon = swe.calc_ut(jd, swe.MOON, _flags())[0][0]
             return AtticDay(

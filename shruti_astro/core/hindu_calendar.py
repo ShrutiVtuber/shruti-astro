@@ -23,11 +23,11 @@ month within a couple of years.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime
 
 import swisseph as swe
 
-from shruti_astro.core.ephemeris import AYANAMSAS, _ensure_init, _flags, _julday, _from_julday
+from shruti_astro.core.ephemeris import AYANAMSAS, _ensure_init, _flags, _from_julday, _julday
 
 # The twelve lunar months, in order from Chaitra.
 MONTHS = [
@@ -149,7 +149,7 @@ def hindu_date(
         # northern reckoning — the fortnight that makes two almanacs disagree.
         month_index = (month_index + 1) % 12
 
-    greg_year = moment.astimezone(timezone.utc).year
+    greg_year = moment.astimezone(UTC).year
     years = {
         "vikrama": greg_year + ERA_OFFSETS["vikrama"],
         "shaka": greg_year + ERA_OFFSETS["shaka"],
@@ -245,7 +245,7 @@ def hindu_date_ss(moment: datetime, reckoning: str = "amanta") -> HinduDate:
     p = ss_positions(jd)
     t = tithi_of(p.sun, p.moon)
 
-    greg_year = moment.astimezone(timezone.utc).year
+    greg_year = moment.astimezone(UTC).year
     return HinduDate(
         month=MONTHS[month_index], month_index=month_index + 1,
         is_adhika=is_adhika, is_kshaya=is_kshaya,
@@ -317,8 +317,8 @@ def hindu_year(
         raise ValueError("could not bracket the next new moon")
 
     _ensure_init()
-    start = _julday(datetime(gregorian_year, 1, 1, tzinfo=timezone.utc)) - 40
-    end = _julday(datetime(gregorian_year, 12, 31, 23, 59, tzinfo=timezone.utc))
+    start = _julday(datetime(gregorian_year, 1, 1, tzinfo=UTC)) - 40
+    end = _julday(datetime(gregorian_year, 12, 31, 23, 59, tzinfo=UTC))
 
     # Back up to a new moon before the window opens.
     cursor = next_new_moon(start - 32)
@@ -352,13 +352,13 @@ def hindu_year(
         cursor = nxt
 
     # Trim to lunations that actually touch the requested year.
-    lo = datetime(gregorian_year, 1, 1, tzinfo=timezone.utc).isoformat()
-    hi = datetime(gregorian_year, 12, 31, 23, 59, tzinfo=timezone.utc).isoformat()
+    lo = datetime(gregorian_year, 1, 1, tzinfo=UTC).isoformat()
+    hi = datetime(gregorian_year, 12, 31, 23, 59, tzinfo=UTC).isoformat()
     months = [m for m in months if m["end"] > lo and m["start"] < hi]
 
     from shruti_astro.core.samvatsara import eras
 
-    mid_year = _julday(datetime(gregorian_year, 6, 15, tzinfo=timezone.utc))
+    mid_year = _julday(datetime(gregorian_year, 6, 15, tzinfo=UTC))
     return {
         "gregorianYear": gregorian_year,
         "reckoning": reckoning,

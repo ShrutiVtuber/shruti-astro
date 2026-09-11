@@ -262,7 +262,16 @@ async def chart(
     ayanamsa: str = Query("lahiri", description="Vedic only"),
     house_system: str = Query("whole_sign"),
     include_modern: bool = Query(False, description="Uranus, Neptune, Pluto"),
-    true_node: bool = Query(False, description="True node instead of mean"),
+    # ⚠ TRUE by default, and it was False here while /events, /ephemeris and
+    # /positions all defaulted to True — so the site's own chart put Rahu up to
+    # 1.8 degrees from where the site's own ephemeris put it, and five times in
+    # a 300-year sample in a different SIGN. Nothing reported it; the two pages
+    # simply disagreed.
+    #
+    # Her call, 11 September 2026: "we should use true for everything site and
+    # app". The true node is where the Moon's path actually crosses the
+    # ecliptic; the mean node is its smoothed average.
+    true_node: bool = Query(True, description="True node rather than mean"),
     solar_phase: str = Query("paulus", description="Hellenistic: paulus | lilly1647 | medievalUnattributed"),
     dasha_levels: int = Query(2, ge=1, le=3, description="Vedic: mahā / antara / pratyantara"),
     dasha_year: str = Query("julian", description="Vedic: julian | sidereal | savana"),

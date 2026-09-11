@@ -282,7 +282,10 @@ def chart_positions(
     ayanamsa: str = "lahiri",
     house_system: str = "whole_sign",
     include_modern: bool = False,
-    true_node: bool = False,
+    # ⚠ TRUE, matching every other default in this package and the app. It was
+    # False here and True in the events and ephemeris paths, so the same sky
+    # came back differently depending on which door you came in by.
+    true_node: bool = True,
 ) -> ChartPositions:
     """
     One computation, serving both traditions.

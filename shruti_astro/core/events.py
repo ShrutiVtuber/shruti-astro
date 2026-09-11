@@ -154,7 +154,7 @@ def _wrapped(delta: float) -> float:
 
 
 def ingresses(start: datetime, end: datetime, *, include_modern: bool = False,
-              true_node: bool = False) -> list[Event]:
+              true_node: bool = True) -> list[Event]:
     """
     Every sign boundary crossed, in either direction.
 
@@ -357,7 +357,7 @@ def _targets(angle: float) -> tuple[float, ...]:
 
 
 def perfections(start: datetime, end: datetime, *, include_modern: bool = False,
-                true_node: bool = False, angles: tuple[float, ...] = PTOLEMAIC_ANGLES,
+                true_node: bool = True, angles: tuple[float, ...] = PTOLEMAIC_ANGLES,
                 ) -> list[Event]:
     """
     Every exact configuration between two enabled bodies.
@@ -529,7 +529,7 @@ def _window(began: datetime, ends: datetime, rule: str, after: Event) -> Event:
 
 
 def events_in_range(start: datetime, end: datetime, *, include_modern: bool = False,
-                    true_node: bool = False, void_rule: str = "thirtyDegrees",
+                    true_node: bool = True, void_rule: str = "thirtyDegrees",
                     kinds: tuple[str, ...] | None = None) -> list[Event]:
     """
     The whole list for a period, sorted, ready for a table or a column.

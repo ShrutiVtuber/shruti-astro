@@ -146,7 +146,7 @@ def _phase(jd: float) -> float:
 
 
 def daily_table(start: datetime, end: datetime, *, hour: str = "midnight",
-                include_modern: bool = False, true_node: bool = False,
+                include_modern: bool = False, true_node: bool = True,
                 with_events: bool = True) -> list[Day]:
     """
     A row per day between two dates, with that day's events beside it.
@@ -205,7 +205,7 @@ DEFAULT_SPACING = 1.0
 
 
 def positions_table(start: datetime, end: datetime, *, include_modern: bool = False,
-                    true_node: bool = False) -> dict:
+                    true_node: bool = True) -> dict:
     """
     Dense longitudes for a span, for a client to interpolate between.
 
